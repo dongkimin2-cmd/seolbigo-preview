@@ -1,0 +1,672 @@
+
+<!-- ============================================================
+     관리사무소 센터 (B2B)
+     ============================================================ -->
+
+<!-- ---------------------------- 단지 대시보드 ---------------------------- -->
+<section class="page pro" id="p-mgr-home">
+  <header class="prognb"><div class="prognb__in">
+    <div class="logo" data-go="home" style="font-size:19px">설비고<span class="prognb__tag" style="background:var(--sg-bg-success)">관리사무소</span></div>
+    <div class="gnb__sp"></div>
+    <div class="row gap12">
+      <span class="badge b-green b12">래미안아파트 · 21개동 1,240세대</span>
+      <div class="row gap8"><div class="avatar ci" style="width:32px;height:32px;font-size:13px">소</div>
+        <span class="t-b14 fw6">김관리 소장</span></div>
+    </div>
+  </div></header>
+  <div class="prowrap">
+    <nav class="pronav">
+      <a class="on" data-go="mgr-home">🏢 단지 현황</a>
+      <a data-go="mgr-map">🗺 디지털 이력 지도</a>
+      <a data-go="mgr-report">🎥 오염도 리포트</a>
+      <a data-go="mgr-contract">📅 정기 세정 계약</a>
+      <a data-go="mgr-bid">📋 입찰 대응</a>
+      <a data-go="mgr-brief">📊 입대의 보고자료</a>
+      <hr class="hair" style="margin:12px 8px">
+      <a data-go="home">↩ 고객 화면으로</a>
+    </nav>
+    <div class="probody">
+      <div class="row between" style="margin-bottom:20px;align-items:flex-start">
+        <div><h1 class="t-h24" style="margin:0">래미안아파트 배관 현황</h1>
+          <p class="t-b14 c-sec" style="margin:4px 0 0">준공 1999년 · 27년차 · 21개동 1,240세대 · 중앙난방</p></div>
+        <div class="row gap8">
+          <button class="btn medium outlined" data-go="mgr-brief">입대의 보고자료 생성</button>
+          <button class="btn medium primary" data-go="mgr-map">이력 지도 열기</button></div>
+      </div>
+
+      <div class="grid g4" style="gap:12px;margin-bottom:16px">
+        <div class="panel"><div class="t-b12 c-sec">누적 기록된 이력</div>
+          <div class="t-h24 num" style="margin:4px 0 2px">318건</div>
+          <div class="t-b12 c-sec">2019년~ · 좌표 단위 기록</div></div>
+        <div class="panel" style="background:var(--sg-bg-warning-subtle);box-shadow:none">
+          <div class="t-b12 c-sec">세정 주기 초과 라인</div>
+          <div class="t-h24 num" style="margin:4px 0 2px;color:var(--sg-text-warning)">6개</div>
+          <div class="t-b12 c-sec">103·107·112동 오수관</div></div>
+        <div class="panel"><div class="t-b12 c-sec">올해 하자 발생</div>
+          <div class="t-h24 num" style="margin:4px 0 2px">14건</div>
+          <div class="t-b12 c-suc fw6">작년 대비 −38%</div></div>
+        <div class="panel"><div class="t-b12 c-sec">절감한 유지보수비</div>
+          <div class="t-h24 num c-brand" style="margin:4px 0 2px">2,840만원</div>
+          <div class="t-b12 c-sec">예방 세정 도입 후 2년</div></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start">
+        <div>
+          <div class="panel" style="margin-bottom:16px">
+            <div class="row between" style="margin-bottom:14px">
+              <h3 class="panel__t" style="margin:0">동별 배관 위험도</h3>
+              <span class="t-b12 c-sec">오염도 · 연식 · 하자 이력 종합</span></div>
+            <div id="dongGrid" class="donggrid"></div>
+            <div class="row gap16" style="margin-top:14px;flex-wrap:wrap">
+              <span class="t-b12 c-sec"><i class="lg" style="background:#E7FCEF"></i>양호</span>
+              <span class="t-b12 c-sec"><i class="lg" style="background:#FFF7F0"></i>관찰</span>
+              <span class="t-b12 c-sec"><i class="lg" style="background:#FFE0CC"></i>주의</span>
+              <span class="t-b12 c-sec"><i class="lg" style="background:#FDEBEC"></i>즉시 조치</span>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="row between" style="margin-bottom:14px">
+              <h3 class="panel__t" style="margin:0">조치가 필요한 항목</h3>
+              <span class="more" data-go="mgr-report">리포트 보기 ›</span></div>
+            <div class="col gap8">
+              <div class="jobrow">
+                <span class="badge b-red">즉시</span>
+                <div style="flex:1"><div class="t-b14 fw7">103동 오수관 — 오염도 81점</div>
+                  <div class="t-b12 c-sec">관경 42% 협착 · 저층 역류 위험 · 마지막 세정 기록 없음</div></div>
+                <button class="btn small primary" data-go="mgr-contract">세정 발주</button></div>
+              <div class="jobrow">
+                <span class="badge b-orange">주의</span>
+                <div style="flex:1"><div class="t-b14 fw7">107동 입상관 — 세정 주기 8개월 초과</div>
+                  <div class="t-b12 c-sec">직전 세정 2024.03 · 권장 주기 1년 (노후 단지)</div></div>
+                <button class="btn small outlined" data-go="mgr-contract">일정 잡기</button></div>
+              <div class="jobrow">
+                <span class="badge b-gray">예정</span>
+                <div style="flex:1"><div class="t-b14 fw7">112동 상가 그리스트랩 — 6개월 주기 도래</div>
+                  <div class="t-b12 c-sec">음식점 4곳 · 2027.01 예정</div></div>
+                <button class="btn small ghost">자동 배정됨</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col gap12">
+          <div class="panel" style="background:var(--sg-bg-brand-subtle);box-shadow:none">
+            <div class="t-b14 fw7" style="margin-bottom:6px">소장이 바뀌어도 이력은 남습니다</div>
+            <p class="t-b12 c-sec" style="margin:0">종이 서류와 담당자 기억에 있던 배관 병력이
+              좌표 단위로 보존됩니다. 인수인계 시 계정만 넘기면 됩니다.</p>
+          </div>
+          <div class="panel">
+            <h3 class="panel__t">이번 달 일정</h3>
+            <div class="col gap10" style="gap:10px">
+              <div class="row between"><span class="t-b14">103동 오수관 세정</span><span class="badge b-orange">발주 대기</span></div>
+              <div class="row between"><span class="t-b14">105동 세대 클리닝 공동구매</span><span class="badge b-brand">모집중 18/24</span></div>
+              <div class="row between"><span class="t-b14">장기수선충당금 집행 보고</span><span class="badge b-gline">11.28</span></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3 class="panel__t">세대 공동구매 연계</h3>
+            <p class="t-b12 c-sec" style="margin:-8px 0 12px">공용관 세정 시공팀이 들어간 김에
+              같은 라인 세대를 묶으면 입주민 부담이 내려갑니다.</p>
+            <div class="row between" style="margin-bottom:8px">
+              <span class="t-b12 c-sec">105동 참여</span><span class="t-b14 fw7 num">18 / 24세대</span></div>
+            <div class="gauge" style="margin-bottom:12px"><i style="width:75%"></i></div>
+            <button class="btn small outlined block">관리사무소 공지 발송</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------------------------- 디지털 이력 지도 ---------------------------- -->
+<section class="page pro" id="p-mgr-map">
+  <header class="prognb"><div class="prognb__in">
+    <div class="logo" data-go="home" style="font-size:19px">설비고<span class="prognb__tag" style="background:var(--sg-bg-success)">관리사무소</span></div>
+    <div class="gnb__sp"></div>
+    <div class="row gap12"><span class="badge b-green b12">래미안아파트 · 21개동 1,240세대</span>
+      <div class="row gap8"><div class="avatar ci" style="width:32px;height:32px;font-size:13px">소</div>
+        <span class="t-b14 fw6">김관리 소장</span></div></div>
+  </div></header>
+  <div class="prowrap">
+    <nav class="pronav">
+      <a data-go="mgr-home">🏢 단지 현황</a>
+      <a class="on" data-go="mgr-map">🗺 디지털 이력 지도</a>
+      <a data-go="mgr-report">🎥 오염도 리포트</a>
+      <a data-go="mgr-contract">📅 정기 세정 계약</a>
+      <a data-go="mgr-bid">📋 입찰 대응</a>
+      <a data-go="mgr-brief">📊 입대의 보고자료</a>
+      <hr class="hair" style="margin:12px 8px">
+      <a data-go="home">↩ 고객 화면으로</a>
+    </nav>
+    <div class="probody">
+      <div class="row between" style="margin-bottom:16px;align-items:flex-start">
+        <div><h1 class="t-h24" style="margin:0">디지털 이력 지도 — 103동</h1>
+          <p class="t-b14 c-sec" style="margin:4px 0 0">입상관 계통도 위에 수리·세정·교체 이력이 좌표 단위로 쌓입니다. 셀을 클릭해 보세요.</p></div>
+        <div class="row gap8">
+          <select class="inp" style="width:auto;height:38px;padding:0 34px 0 12px;font-size:14px">
+            <option>103동</option><option>105동</option><option>107동</option></select>
+          <button class="btn medium outlined">PDF 내려받기</button></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start">
+        <div class="panel">
+          <div class="row gap6" style="margin-bottom:16px;flex-wrap:wrap">
+            <button class="chip sm" aria-pressed="true">전체 이력</button>
+            <button class="chip sm">누수 보수</button>
+            <button class="chip sm">고압세정</button>
+            <button class="chip sm">배관 교체</button>
+            <button class="chip sm">최근 1년</button>
+          </div>
+          <div class="riserwrap">
+            <div class="riserhd">
+              <span></span><span>1라인</span><span>2라인</span><span>3라인</span><span>4라인</span></div>
+            <div id="riserGrid" class="risergrid"></div>
+          </div>
+          <div class="row gap16" style="margin-top:16px;flex-wrap:wrap">
+            <span class="t-b12 c-sec"><i class="lg" style="background:#F6F7F9"></i>이력 없음</span>
+            <span class="t-b12 c-sec"><i class="lg" style="background:#E7F4FF"></i>세정</span>
+            <span class="t-b12 c-sec"><i class="lg" style="background:#F1EEFF"></i>누수 보수</span>
+            <span class="t-b12 c-sec"><i class="lg" style="background:#E7FCEF"></i>배관 교체</span>
+            <span class="t-b12 c-sec"><i class="lg" style="background:#FDEBEC"></i>반복 하자</span>
+          </div>
+        </div>
+
+        <div class="col gap12" style="position:sticky;top:88px">
+          <div class="panel">
+            <div class="row between" style="margin-bottom:12px">
+              <h3 class="panel__t" style="margin:0">1204호 · 3라인 12층</h3>
+              <span class="badge b-red">반복 하자</span></div>
+            <div class="tl" style="padding-left:24px">
+              <div class="tl__i done" style="padding-bottom:16px">
+                <div class="t-b14 fw7">배관 이음부 보수 + 천장 복구</div>
+                <div class="t-b12 c-sec">2026.11.19 · 깨끗한집설비 · 490,000원</div>
+                <div class="row gap4" style="margin-top:4px"><span class="badge b-green">보험 처리</span>
+                  <span class="badge b-brand">보증중</span></div></div>
+              <div class="tl__i done" style="padding-bottom:16px">
+                <div class="t-b14 fw7">동일 부위 누수 (1차)</div>
+                <div class="t-b12 c-sec">2024.07.02 · 외부 업체 · 기록만 존재</div></div>
+              <div class="tl__i done" style="padding-bottom:0">
+                <div class="t-b14 fw7">입상관 고압세정</div>
+                <div class="t-b12 c-sec">2023.05.18 · 단지 일괄 시공</div></div>
+            </div>
+            <hr class="hair" style="margin:16px 0">
+            <div class="callout warn" style="padding:12px">
+              <span class="c-dan" style="flex:0 0 20px">!</span>
+              <p class="t-b12" style="margin:0"><b>2년 내 같은 부위 2회 누수.</b>
+                슬래브 관통부 구조적 결함 가능성이 있어 정밀 진단을 권장합니다.</p>
+            </div>
+          </div>
+          <div class="panel">
+            <h3 class="panel__t">103동 통계</h3>
+            <div class="col gap8">
+              <div class="row between"><span class="t-b14 c-sec">누적 이력</span><span class="t-b14 fw6 num">42건</span></div>
+              <div class="row between"><span class="t-b14 c-sec">반복 하자 세대</span><span class="t-b14 fw6" style="color:var(--sg-text-danger)">3세대</span></div>
+              <div class="row between"><span class="t-b14 c-sec">최근 세정</span><span class="t-b14 fw6">2023.05</span></div>
+              <div class="row between"><span class="t-b14 c-sec">누적 집행액</span><span class="t-b14 fw6 num">1,840만원</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------------------------- 오염도 리포트 ---------------------------- -->
+<section class="page pro" id="p-mgr-report">
+  <header class="prognb"><div class="prognb__in">
+    <div class="logo" data-go="home" style="font-size:19px">설비고<span class="prognb__tag" style="background:var(--sg-bg-success)">관리사무소</span></div>
+    <div class="gnb__sp"></div>
+    <div class="row gap12"><span class="badge b-green b12">래미안아파트 · 21개동 1,240세대</span>
+      <div class="row gap8"><div class="avatar ci" style="width:32px;height:32px;font-size:13px">소</div>
+        <span class="t-b14 fw6">김관리 소장</span></div></div>
+  </div></header>
+  <div class="prowrap">
+    <nav class="pronav">
+      <a data-go="mgr-home">🏢 단지 현황</a>
+      <a data-go="mgr-map">🗺 디지털 이력 지도</a>
+      <a class="on" data-go="mgr-report">🎥 오염도 리포트</a>
+      <a data-go="mgr-contract">📅 정기 세정 계약</a>
+      <a data-go="mgr-bid">📋 입찰 대응</a>
+      <a data-go="mgr-brief">📊 입대의 보고자료</a>
+      <hr class="hair" style="margin:12px 8px">
+      <a data-go="home">↩ 고객 화면으로</a>
+    </nav>
+    <div class="probody">
+      <h1 class="t-h24" style="margin:0 0 4px">오염도 리포트 — 103동 오수관</h1>
+      <p class="t-b14 c-sec" style="margin:0 0 20px">2026.11.14 내시경 조사 · 조사번호 S-2611-0103 · 촬영 구간 12개소</p>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start">
+        <div>
+          <div class="panel" style="margin-bottom:16px">
+            <div class="row gap24" style="gap:24px;align-items:center;flex-wrap:wrap">
+              <div class="ring" style="width:120px;height:120px;flex:0 0 120px">
+                <svg width="120" height="120"><circle cx="60" cy="60" r="50" fill="none" stroke="#EFF1F5" stroke-width="13"/>
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="#FF3541" stroke-width="13" stroke-linecap="round"
+                    stroke-dasharray="314" stroke-dashoffset="60"/></svg>
+                <div class="ring__t"><div class="t-h24 num">81</div><div class="t-b12 c-sec">오염도</div></div></div>
+              <div style="flex:1;min-width:280px">
+                <span class="urg urgent" style="margin-bottom:10px"><i></i>즉시 세정 권장</span>
+                <p class="t-b14 c-sec" style="margin:8px 0 14px">관경의 약 <b>42%</b>가 기름때와 침전물로 좁아진 상태입니다.
+                  동일 조건(1999년 준공·음식점 라인 없음) 건물 대비 <b>상위 12%</b> 오염 수준입니다.</p>
+                <div class="tier on"><div><div class="t-b14 fw7">다음 세정 권장 시점</div>
+                  <div class="t-b12 c-sec">이 건물의 오염 축적 속도로 산출 · 특허 출원 준비 중</div></div>
+                  <span class="t-b16 fw7 c-brand">10개월 후</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-bottom:16px">
+            <h3 class="panel__t">라인별 오염도</h3>
+            <div class="col gap12" style="margin-top:14px">
+              <div><div class="row between t-b14" style="margin-bottom:6px">
+                  <span class="fw6">3라인 (저층 역류 발생 구간)</span>
+                  <span class="fw7 num" style="color:var(--sg-text-danger)">92</span></div>
+                <div class="posbar"><i style="position:absolute;left:0;top:0;bottom:0;width:92%;border-radius:999px;background:var(--sg-bg-danger)"></i></div></div>
+              <div><div class="row between t-b14" style="margin-bottom:6px">
+                  <span class="fw6">4라인</span><span class="fw7 num" style="color:var(--sg-text-warning)">78</span></div>
+                <div class="posbar"><i style="position:absolute;left:0;top:0;bottom:0;width:78%;border-radius:999px;background:var(--sg-bg-warning)"></i></div></div>
+              <div><div class="row between t-b14" style="margin-bottom:6px">
+                  <span class="fw6">2라인</span><span class="fw7 num" style="color:var(--sg-text-warning)">74</span></div>
+                <div class="posbar"><i style="position:absolute;left:0;top:0;bottom:0;width:74%;border-radius:999px;background:var(--sg-bg-warning)"></i></div></div>
+              <div><div class="row between t-b14" style="margin-bottom:6px">
+                  <span class="fw6">1라인</span><span class="fw7 num c-suc">61</span></div>
+                <div class="posbar"><i style="position:absolute;left:0;top:0;bottom:0;width:61%;border-radius:999px;background:var(--sg-bg-success)"></i></div></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-bottom:0">
+            <h3 class="panel__t">내시경 촬영 기록</h3>
+            <p class="t-b12 c-sec" style="margin:-8px 0 14px">촬영 구간별 원본 영상은 단지 계정에 영구 보관됩니다.</p>
+            <div class="grid g4" style="gap:12px">
+              <div><div class="ph pipe" style="aspect-ratio:4/3;border-radius:8px"></div>
+                <div class="t-b12 c-sec" style="margin-top:6px">3라인 B1 · 오염도 92</div></div>
+              <div><div class="ph pipe" style="aspect-ratio:4/3;border-radius:8px"></div>
+                <div class="t-b12 c-sec" style="margin-top:6px">3라인 5F · 오염도 88</div></div>
+              <div><div class="ph clean" style="aspect-ratio:4/3;border-radius:8px"></div>
+                <div class="t-b12 c-sec" style="margin-top:6px">1라인 B1 · 오염도 61</div></div>
+              <div><div class="ph clean" style="aspect-ratio:4/3;border-radius:8px"></div>
+                <div class="t-b12 c-sec" style="margin-top:6px">1라인 10F · 오염도 58</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col gap12" style="position:sticky;top:88px">
+          <div class="panel">
+            <h3 class="panel__t">권장 조치</h3>
+            <div class="col gap8" style="margin-bottom:14px">
+              <div class="row between"><span class="t-b14 c-sec">세정 범위</span><span class="t-b14 fw6">전 라인 (4개)</span></div>
+              <div class="row between"><span class="t-b14 c-sec">예상 공사비</span><span class="t-b14 fw6 num">1,430,000원</span></div>
+              <div class="row between"><span class="t-b14 c-sec">소요 기간</span><span class="t-b14 fw6">1일</span></div>
+              <div class="row between"><span class="t-b14 c-sec">집행 계정</span><span class="t-b14 fw6">수선유지비</span></div>
+            </div>
+            <hr class="hair" style="margin:0 0 14px">
+            <div class="callout" style="padding:12px;margin-bottom:14px">
+              <p class="t-b12 c-sec" style="margin:0">500만원 이하이므로 <b>경쟁입찰 의무 대상이 아닙니다.</b>
+                수의계약 근거 자료가 자동 첨부됩니다.</p></div>
+            <button class="btn large primary block" data-go="mgr-contract">세정 발주하기</button>
+            <button class="btn medium outlined block" style="margin-top:8px" data-go="mgr-brief">입대의 보고자료로</button>
+          </div>
+          <div class="panel" style="background:var(--sg-bg-success-subtle);box-shadow:none">
+            <div class="t-b14 fw7" style="margin-bottom:6px">왜 주기를 우리가 정하나요</div>
+            <p class="t-b12 c-sec" style="margin:0">일본은 배수설비 청소를 6개월마다 법으로 의무화했지만
+              한국에는 법정 주기가 없습니다. 관행적인 2~3년 대신, 이 건물의 실제 오염 속도로 다음 시점을 계산합니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------------------------- 정기 세정 계약 ---------------------------- -->
+<section class="page pro" id="p-mgr-contract">
+  <header class="prognb"><div class="prognb__in">
+    <div class="logo" data-go="home" style="font-size:19px">설비고<span class="prognb__tag" style="background:var(--sg-bg-success)">관리사무소</span></div>
+    <div class="gnb__sp"></div>
+    <div class="row gap12"><span class="badge b-green b12">래미안아파트 · 21개동 1,240세대</span>
+      <div class="row gap8"><div class="avatar ci" style="width:32px;height:32px;font-size:13px">소</div>
+        <span class="t-b14 fw6">김관리 소장</span></div></div>
+  </div></header>
+  <div class="prowrap">
+    <nav class="pronav">
+      <a data-go="mgr-home">🏢 단지 현황</a>
+      <a data-go="mgr-map">🗺 디지털 이력 지도</a>
+      <a data-go="mgr-report">🎥 오염도 리포트</a>
+      <a class="on" data-go="mgr-contract">📅 정기 세정 계약</a>
+      <a data-go="mgr-bid">📋 입찰 대응</a>
+      <a data-go="mgr-brief">📊 입대의 보고자료</a>
+      <hr class="hair" style="margin:12px 8px">
+      <a data-go="home">↩ 고객 화면으로</a>
+    </nav>
+    <div class="probody">
+      <h1 class="t-h24" style="margin:0 0 4px">정기 세정 계약</h1>
+      <p class="t-b14 c-sec" style="margin:0 0 20px">건물별 오염 속도로 산출된 주기에 맞춰 일정이 자동 배정됩니다. 장기수선계획·관리비 예산 주기와 연동됩니다.</p>
+
+      <div class="grid g4" style="gap:12px;margin-bottom:16px">
+        <div class="panel"><div class="t-b12 c-sec">계약중인 동</div>
+          <div class="t-h24 num" style="margin:4px 0 2px">14 / 21</div>
+          <div class="t-b12 c-sec">미계약 7개동</div></div>
+        <div class="panel"><div class="t-b12 c-sec">연간 계약금액</div>
+          <div class="t-h24 num" style="margin:4px 0 2px">1,860만원</div>
+          <div class="t-b12 c-sec">수선유지비 집행</div></div>
+        <div class="panel" style="background:var(--sg-bg-warning-subtle);box-shadow:none">
+          <div class="t-b12 c-sec">주기 초과</div>
+          <div class="t-h24 num" style="margin:4px 0 2px;color:var(--sg-text-warning)">6개 라인</div>
+          <div class="t-b12 c-sec">발주 필요</div></div>
+        <div class="panel"><div class="t-b12 c-sec">다음 시공</div>
+          <div class="t-h24 num" style="margin:4px 0 2px">D-9</div>
+          <div class="t-b12 c-sec">105동 · 11.28</div></div>
+      </div>
+
+      <div class="panel" style="margin-bottom:16px">
+        <h3 class="panel__t">기준 주기</h3>
+        <p class="t-b12 c-sec" style="margin:-8px 0 14px">설비고 표준 주기를 기본값으로 쓰되,
+          오염도 조사 결과가 있으면 그 건물의 실측 주기로 자동 대체됩니다.</p>
+        <div class="grid g3" style="gap:12px">
+          <div class="tier"><div><div class="t-b14 fw7">음식점 라인</div>
+            <div class="t-b12 c-sec">그리스트랩 포함</div></div><span class="t-b16 fw7">6개월</span></div>
+          <div class="tier on"><div><div class="t-b14 fw7">노후 단지 (25년↑)</div>
+            <div class="t-b12 c-sec">우리 단지 적용중</div></div><span class="t-b16 fw7 c-brand">1년</span></div>
+          <div class="tier"><div><div class="t-b14 fw7">일반 단지</div>
+            <div class="t-b12 c-sec">준공 25년 미만</div></div><span class="t-b16 fw7">2년</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="row between" style="margin-bottom:14px">
+          <h3 class="panel__t" style="margin:0">동별 계약 · 일정</h3>
+          <div class="row gap6"><button class="chip sm" aria-pressed="true">전체 21</button>
+            <button class="chip sm">계약중 14</button><button class="chip sm">주기 초과 6</button></div></div>
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <tr><th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">동</th>
+            <th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">대상</th>
+            <th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">직전 시공</th>
+            <th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">산출 주기</th>
+            <th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">다음 예정</th>
+            <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">상태</th></tr>
+          <tr><td style="padding:12px 0;border-bottom:1px solid var(--sg-border-subtle)"><b>103동</b></td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">오수관 4라인</td>
+            <td class="num c-sec" style="border-bottom:1px solid var(--sg-border-subtle)">기록 없음</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)"><b class="c-brand">10개월</b> <span class="t-b12 c-sec">(실측)</span></td>
+            <td class="num" style="border-bottom:1px solid var(--sg-border-subtle)">즉시</td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-red">발주 필요</span></td></tr>
+          <tr><td style="padding:12px 0;border-bottom:1px solid var(--sg-border-subtle)"><b>105동</b></td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">입상관 4라인</td>
+            <td class="num c-sec" style="border-bottom:1px solid var(--sg-border-subtle)">2025.11.28</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">1년 <span class="t-b12 c-sec">(표준)</span></td>
+            <td class="num" style="border-bottom:1px solid var(--sg-border-subtle)">2026.11.28</td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-brand">D-9</span></td></tr>
+          <tr><td style="padding:12px 0;border-bottom:1px solid var(--sg-border-subtle)"><b>107동</b></td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">입상관 4라인</td>
+            <td class="num c-sec" style="border-bottom:1px solid var(--sg-border-subtle)">2024.03.12</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">1년 <span class="t-b12 c-sec">(표준)</span></td>
+            <td class="num" style="border-bottom:1px solid var(--sg-border-subtle)">2025.03 초과</td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-orange">8개월 초과</span></td></tr>
+          <tr><td style="padding:12px 0;border-bottom:1px solid var(--sg-border-subtle)"><b>112동</b></td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">그리스트랩 (음식점 4)</td>
+            <td class="num c-sec" style="border-bottom:1px solid var(--sg-border-subtle)">2026.07.05</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">6개월 <span class="t-b12 c-sec">(표준)</span></td>
+            <td class="num" style="border-bottom:1px solid var(--sg-border-subtle)">2027.01.05</td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-green">자동 배정</span></td></tr>
+          <tr><td style="padding:12px 0"><b>115동</b></td>
+            <td>입상관 4라인</td><td class="num c-sec">2026.09.02</td>
+            <td>1년 <span class="t-b12 c-sec">(표준)</span></td><td class="num">2027.09.02</td>
+            <td style="text-align:right"><span class="badge b-green">정상</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------------------------- 입찰 대응 ---------------------------- -->
+<section class="page pro" id="p-mgr-bid">
+  <header class="prognb"><div class="prognb__in">
+    <div class="logo" data-go="home" style="font-size:19px">설비고<span class="prognb__tag" style="background:var(--sg-bg-success)">관리사무소</span></div>
+    <div class="gnb__sp"></div>
+    <div class="row gap12"><span class="badge b-green b12">래미안아파트 · 21개동 1,240세대</span>
+      <div class="row gap8"><div class="avatar ci" style="width:32px;height:32px;font-size:13px">소</div>
+        <span class="t-b14 fw6">김관리 소장</span></div></div>
+  </div></header>
+  <div class="prowrap">
+    <nav class="pronav">
+      <a data-go="mgr-home">🏢 단지 현황</a>
+      <a data-go="mgr-map">🗺 디지털 이력 지도</a>
+      <a data-go="mgr-report">🎥 오염도 리포트</a>
+      <a data-go="mgr-contract">📅 정기 세정 계약</a>
+      <a class="on" data-go="mgr-bid">📋 입찰 대응</a>
+      <a data-go="mgr-brief">📊 입대의 보고자료</a>
+      <hr class="hair" style="margin:12px 8px">
+      <a data-go="home">↩ 고객 화면으로</a>
+    </nav>
+    <div class="probody">
+      <h1 class="t-h24" style="margin:0 0 4px">입찰 대응 도구</h1>
+      <p class="t-b14 c-sec" style="margin:0 0 20px">500만원(부가세 제외) 초과 계약은 경쟁입찰 의무 대상입니다.
+        사양서와 적격심사 서류를 표준안으로 자동 생성합니다.</p>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start">
+        <div>
+          <div class="callout info" style="margin-bottom:16px">
+            <span class="c-inf" style="flex:0 0 20px">⚖️</span>
+            <div><p class="t-b14 fw6" style="margin:0 0 2px">이번 건은 경쟁입찰 대상입니다</p>
+              <p class="t-b14 c-sec" style="margin:0">21개동 입상관 일괄 세정 · 예정가격 <b class="num">2,940만원</b> —
+                「주택관리업자 및 사업자 선정지침」에 따라 K-apt 전자입찰을 거쳐야 합니다.</p></div>
+          </div>
+
+          <div class="block" style="box-shadow:0 0 0 1px var(--sg-border-subtle) inset;background:#fff;margin-bottom:16px">
+            <h2 class="block__t">자동 생성 서류</h2>
+            <p class="block__d">단지 이력과 오염도 데이터를 근거로 채워집니다. 내려받아 수정한 뒤 K-apt에 올리세요.</p>
+            <div class="col gap8" style="margin-top:14px">
+              <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
+                <span style="font-size:20px">📄</span>
+                <div style="flex:1"><div class="t-b14 fw7">입찰 사양서 (표준안)</div>
+                  <div class="t-b12 c-sec">세정 범위·공법·검수 기준·하자보증 조건 — 12페이지</div></div>
+                <span class="verified">✓ 생성 완료</span>
+                <button class="btn small outlined">내려받기</button></div>
+              <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
+                <span style="font-size:20px">📊</span>
+                <div style="flex:1"><div class="t-b14 fw7">예정가격 산출 근거</div>
+                  <div class="t-b12 c-sec">동일 규모 단지 42건의 실제 계약금액 분포 · 표준 공정 DB 단가</div></div>
+                <span class="verified">✓ 생성 완료</span>
+                <button class="btn small outlined">내려받기</button></div>
+              <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
+                <span style="font-size:20px">📋</span>
+                <div style="flex:1"><div class="t-b14 fw7">적격심사 평가표</div>
+                  <div class="t-b12 c-sec">지침 별표 기준 · 배점표 자동 반영</div></div>
+                <span class="verified">✓ 생성 완료</span>
+                <button class="btn small outlined">내려받기</button></div>
+              <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
+                <span style="font-size:20px">🗂</span>
+                <div style="flex:1"><div class="t-b14 fw7">현장설명회 자료</div>
+                  <div class="t-b12 c-sec">이력 지도 · 오염도 리포트 발췌본</div></div>
+                <span class="badge b-orange">생성중</span>
+                <button class="btn small ghost" disabled>대기</button></div>
+            </div>
+          </div>
+
+          <div class="block" style="box-shadow:0 0 0 1px var(--sg-border-subtle) inset;background:#fff;margin-bottom:0">
+            <h2 class="block__t">예정가격 산출 근거</h2>
+            <p class="block__d">동일 규모·연식 단지의 실제 계약금액입니다. 유착 의혹을 막는 가장 강한 자료입니다.</p>
+            <div class="range" style="padding-top:36px">
+              <div class="range__bar">
+                <div class="range__fair" style="left:20%;right:22%"></div>
+                <div class="range__mark" style="left:49%"></div>
+                <div class="range__cap" style="left:49%">우리 예정가 2,940만원</div>
+              </div>
+              <div class="range__lbl"><span class="num">2,180만원</span>
+                <span class="c-suc fw6">적정 구간 (42개 단지)</span><span class="num">3,860만원</span></div>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:24px">
+              <tr><th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">항목</th>
+                <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">수량</th>
+                <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">표준 단가</th>
+                <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">금액</th></tr>
+              <tr><td style="padding:11px 0;border-bottom:1px solid var(--sg-border-subtle)">입상관 고압세정</td>
+                <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">84라인</td>
+                <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">280,000</td>
+                <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">23,520,000</td></tr>
+              <tr><td style="padding:11px 0;border-bottom:1px solid var(--sg-border-subtle)">내시경 조사 · 리포트</td>
+                <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">21개동</td>
+                <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">180,000</td>
+                <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">3,780,000</td></tr>
+              <tr><td style="padding:11px 0">폐수 처리 · 정리</td>
+                <td class="num" style="text-align:right">1식</td>
+                <td class="num c-sec" style="text-align:right">2,100,000</td>
+                <td class="num" style="text-align:right">2,100,000</td></tr>
+              <tr><td class="t-h16" style="padding:14px 0 0" colspan="3">예정가격 (VAT 별도)</td>
+                <td class="t-h20 num c-brand" style="text-align:right;padding:14px 0 0">29,400,000원</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="col gap12" style="position:sticky;top:88px">
+          <div class="panel">
+            <h3 class="panel__t">입찰 진행 상황</h3>
+            <div class="tl" style="padding-left:24px;margin-top:8px">
+              <div class="tl__i done" style="padding-bottom:16px">
+                <div class="t-b14 fw7">서류 자동 생성</div>
+                <div class="t-b12 c-sec">11.19 · 4종 중 3종 완료</div></div>
+              <div class="tl__i now" style="padding-bottom:16px">
+                <div class="t-b14 fw7">입대의 심의</div>
+                <div class="t-b12 c-sec">11.28 정기회의 상정 예정</div></div>
+              <div class="tl__i" style="padding-bottom:16px">
+                <div class="t-b14 fw7 c-ter">K-apt 공고</div>
+                <div class="t-b12 c-ter">10일 이상 공고</div></div>
+              <div class="tl__i" style="padding-bottom:0">
+                <div class="t-b14 fw7 c-ter">개찰 · 적격심사</div></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3 class="panel__t">집행 근거</h3>
+            <div class="col gap8" style="margin-bottom:12px">
+              <div class="row between"><span class="t-b14 c-sec">집행 계정</span><span class="t-b14 fw6">수선유지비</span></div>
+              <div class="row between"><span class="t-b14 c-sec">상품 분류</span><span class="t-b14 fw6">청소 용역</span></div>
+              <div class="row between"><span class="t-b14 c-sec">입찰 방식</span><span class="t-b14 fw6">적격심사제</span></div>
+            </div>
+            <div class="callout" style="padding:12px">
+              <p class="t-b12 c-sec" style="margin:0">세정은 자본적 지출이 아닌 <b>청소 용역</b>으로 분류되어
+                관리비(수선유지비) 집행이 가능합니다. 지자체 질의회신 자료가 첨부됩니다.</p></div>
+            <button class="btn medium outlined block" style="margin-top:12px">질의회신 자료 보기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------------------------- 입대의 보고자료 ---------------------------- -->
+<section class="page pro" id="p-mgr-brief">
+  <header class="prognb"><div class="prognb__in">
+    <div class="logo" data-go="home" style="font-size:19px">설비고<span class="prognb__tag" style="background:var(--sg-bg-success)">관리사무소</span></div>
+    <div class="gnb__sp"></div>
+    <div class="row gap12"><span class="badge b-green b12">래미안아파트 · 21개동 1,240세대</span>
+      <div class="row gap8"><div class="avatar ci" style="width:32px;height:32px;font-size:13px">소</div>
+        <span class="t-b14 fw6">김관리 소장</span></div></div>
+  </div></header>
+  <div class="prowrap">
+    <nav class="pronav">
+      <a data-go="mgr-home">🏢 단지 현황</a>
+      <a data-go="mgr-map">🗺 디지털 이력 지도</a>
+      <a data-go="mgr-report">🎥 오염도 리포트</a>
+      <a data-go="mgr-contract">📅 정기 세정 계약</a>
+      <a data-go="mgr-bid">📋 입찰 대응</a>
+      <a class="on" data-go="mgr-brief">📊 입대의 보고자료</a>
+      <hr class="hair" style="margin:12px 8px">
+      <a data-go="home">↩ 고객 화면으로</a>
+    </nav>
+    <div class="probody">
+      <div class="row between" style="margin-bottom:20px;align-items:flex-start">
+        <div><h1 class="t-h24" style="margin:0">입주자대표회의 보고자료</h1>
+          <p class="t-b14 c-sec" style="margin:4px 0 0">“왜 이 업체를, 이 금액에” — 설명해야 하는 것을 데이터로 대신합니다.</p></div>
+        <div class="row gap8">
+          <button class="btn medium outlined">PDF 내려받기</button>
+          <button class="btn medium primary">회의 자료로 제출</button></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start">
+        <div class="doc" style="padding:36px">
+          <div class="doc__hd">
+            <div><div style="font-size:19px;font-weight:800;letter-spacing:-.4px">103동 오수관 고압세정 시행 건</div>
+              <div class="t-b12 c-sec" style="margin-top:4px">2026년 11월 정기 입주자대표회의 안건 · 래미안아파트 관리사무소</div></div>
+            <div style="text-align:right" class="t-b12 c-sec">
+              <div>작성일 2026.11.19</div><div class="num">B-2611-0103</div></div>
+          </div>
+
+          <div class="t-b14 fw7" style="margin:0 0 10px">1. 시행 필요성</div>
+          <p class="t-b14 c-sec" style="margin:0 0 8px;line-height:22px">
+            2026.11.14 내시경 조사 결과 103동 오수관의 오염도는 <b class="c-dan">81점(즉시 세정 권장)</b>으로,
+            관경의 약 42%가 협착된 상태입니다. 3라인은 92점으로 이미 저층 세대 역류가 2회 발생했습니다.</p>
+          <div class="row gap12" style="margin:14px 0 24px">
+            <div class="ph pipe" style="width:150px;height:112px;border-radius:8px"></div>
+            <div class="ph pipe" style="width:150px;height:112px;border-radius:8px"></div>
+            <div style="flex:1;padding:14px;border-radius:8px;background:var(--sg-bg-danger-subtle)">
+              <div class="t-b12 fw7 c-dan" style="margin-bottom:4px">방치 시 예상</div>
+              <div class="t-b12 c-sec">저층 4개 세대 역류 사고 시 세대당 복구비 180~300만원,
+                단지 배상 분쟁 발생 가능. 예방 세정비의 약 5배.</div></div>
+          </div>
+
+          <div class="t-b14 fw7" style="margin:0 0 10px">2. 금액의 적정성</div>
+          <p class="t-b14 c-sec" style="margin:0 0 14px;line-height:22px">
+            설비고 플랫폼에 축적된 <b>동일 규모·연식 단지 42건</b>의 실제 계약금액 분포와 대조한 결과,
+            본 건 예정가격은 적정 구간 내에 있습니다.</p>
+          <div class="range" style="padding-top:36px;margin-bottom:24px">
+            <div class="range__bar">
+              <div class="range__fair" style="left:20%;right:22%"></div>
+              <div class="range__mark" style="left:44%"></div>
+              <div class="range__cap" style="left:44%">본 건 143만원</div>
+            </div>
+            <div class="range__lbl"><span class="num">112만원</span>
+              <span class="c-suc fw6">적정 구간</span><span class="num">198만원</span></div>
+          </div>
+
+          <div class="t-b14 fw7" style="margin:0 0 10px">3. 업체 선정 근거</div>
+          <table style="margin-bottom:24px">
+            <tr><th>업체</th><th>신용등급</th><th>필모그래피</th><th>재시공률</th><th style="text-align:right">견적</th></tr>
+            <tr><td><b>깨끗한집설비</b> <span class="badge b-brands">선정</span></td>
+              <td>플래티넘 86점</td><td class="num">84건</td><td class="num c-suc">1.2%</td>
+              <td class="n"><b>1,430,000</b></td></tr>
+            <tr><td>한빛배관</td><td>골드 74점</td><td class="num">51건</td><td class="num">2.0%</td>
+              <td class="n">1,380,000</td></tr>
+            <tr><td>대성설비</td><td>실버 61점</td><td class="num">12건</td><td class="num">4.1%</td>
+              <td class="n">1,620,000</td></tr>
+          </table>
+          <p class="t-b12 c-sec" style="margin:0 0 24px">
+            최저가는 한빛배관이나, 재시공률과 검증 필모그래피 건수를 반영한 적격심사 결과 깨끗한집설비를 선정했습니다.
+            차액 5만원 대비 재시공 리스크 절감 효과가 크다고 판단했습니다.</p>
+
+          <div class="t-b14 fw7" style="margin:0 0 10px">4. 집행 계정</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;margin-bottom:8px">
+            <div class="row between"><span class="c-sec">집행 계정</span><span>수선유지비</span></div>
+            <div class="row between"><span class="c-sec">상품 분류</span><span>청소 용역</span></div>
+            <div class="row between"><span class="c-sec">계약 방식</span><span>수의계약 (500만원 이하)</span></div>
+            <div class="row between"><span class="c-sec">근거</span><span>선정지침 제4조 별표2</span></div>
+          </div>
+        </div>
+
+        <div class="col gap12" style="position:sticky;top:88px">
+          <div class="panel" style="background:var(--sg-bg-brand-subtle);box-shadow:none">
+            <div class="t-b14 fw7" style="margin-bottom:6px">유착 의혹을 막는 방법</div>
+            <p class="t-b12 c-sec" style="margin:0">"왜 저 업체냐"는 질문에 <b>친분이 아니라 숫자로</b> 답합니다.
+              신용등급·재시공률·42개 단지 실거래 분포가 모두 플랫폼 기록이라 소장이 만든 자료가 아닙니다.</p>
+          </div>
+          <div class="panel">
+            <h3 class="panel__t">포함된 근거</h3>
+            <div class="col gap10" style="gap:10px">
+              <div class="row gap8"><span class="c-suc">✓</span><span class="t-b14">내시경 조사 원본 영상</span></div>
+              <div class="row gap8"><span class="c-suc">✓</span><span class="t-b14">42개 단지 실거래 분포</span></div>
+              <div class="row gap8"><span class="c-suc">✓</span><span class="t-b14">3개사 견적 비교표</span></div>
+              <div class="row gap8"><span class="c-suc">✓</span><span class="t-b14">업체 신용등급 산정 근거</span></div>
+              <div class="row gap8"><span class="c-suc">✓</span><span class="t-b14">집행 계정 질의회신</span></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3 class="panel__t">이전 보고자료</h3>
+            <div class="col gap8">
+              <div class="row between"><span class="t-b14">2026.08 · 105동 세정</span><span class="badge b-gray">가결</span></div>
+              <div class="row between"><span class="t-b14">2026.05 · 112동 그리스트랩</span><span class="badge b-gray">가결</span></div>
+              <div class="row between"><span class="t-b14">2026.02 · 이력 지도 도입</span><span class="badge b-gray">가결</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,154 @@
+
+<!-- ============================ 방수·도장 — 사진 + 면적 하이브리드 ============================ -->
+<section class="page" id="p-area">
+  <div class="phead"><div class="phead__in">
+    <div class="crumb"><a data-go="home">홈</a><span>›</span><a data-go="services">전체 서비스</a><span>›</span><b>방수·도장</b></div>
+    <h1>사진으로 상태를 보고, 면적으로 물량을 냅니다</h1>
+    <p class="sub"><span class="badge b-brand b12" style="margin-right:6px">사진 진단</span>
+      <span class="badge b-blue b12" style="margin-right:6px">면적 산출</span>
+      방수는 하자 상태와 시공 면적이 함께 있어야 금액이 나옵니다. 둘 다 입력하면 ㎡ 단가 기준으로 기준가를 계산합니다.</p>
+  </div></div>
+
+  <div class="flow">
+    <div>
+      <div class="steps">
+        <div class="on">1. 상태 · 면적</div><div>2. 공법 산정</div><div>3. 기준가 · 견적</div>
+      </div>
+
+      <div class="block">
+        <h2 class="block__t">시공 부위</h2>
+        <div class="grid g2" style="gap:12px;margin-top:14px">
+          <button class="opt on"><span class="opt__k">옥상 · 지붕</span>
+            <span class="opt__d">우레탄 도막 · 시트 방수</span></button>
+          <button class="opt"><span class="opt__k">베란다 · 발코니</span>
+            <span class="opt__d">누수 재발 구간 재시공</span></button>
+          <button class="opt"><span class="opt__k">욕실 · 화장실</span>
+            <span class="opt__d">방수층 철거 후 재방수</span></button>
+          <button class="opt"><span class="opt__k">외벽 · 창호 주변</span>
+            <span class="opt__d">코킹·크랙 보수 + 도장</span></button>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2 class="block__t">현장 사진 <span class="c-dan">*</span></h2>
+        <p class="block__d">들뜸·균열·백화 상태가 보이면 AI가 방수층 손상 정도와 철거 필요 여부를 판정합니다.</p>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div class="ph wet" style="aspect-ratio:1/1;border-radius:10px;position:relative">
+            <span class="badge b-dim" style="position:absolute;top:8px;left:8px">1</span></div>
+          <div class="ph pipe" style="aspect-ratio:1/1;border-radius:10px;position:relative">
+            <span class="badge b-dim" style="position:absolute;top:8px;left:8px">2</span></div>
+          <div style="aspect-ratio:1/1;border-radius:10px;border:1px dashed var(--sg-border-strong);
+            display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;
+            color:var(--sg-text-tertiary)"><span style="font-size:26px">＋</span><span class="t-b12">사진 추가</span></div>
+          <div style="aspect-ratio:1/1;border-radius:10px;background:var(--sg-bg-subtle);padding:12px;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+            <span class="t-b12 c-sec">전체가 한 컷에<br>들어간 사진 1장을<br>꼭 넣어주세요</span></div>
+        </div>
+        <div class="callout" style="margin-top:16px">
+          <span class="c-suc" style="flex:0 0 20px">✓</span>
+          <div><p class="t-b14 fw6" style="margin:0 0 2px">AI 1차 판정 — 방수층 부분 손상 (신뢰도 82%)</p>
+            <p class="t-b14 c-sec" style="margin:0">도막 들뜸이 국부적으로 관찰됩니다. 전면 철거 없이
+              <b>부분 보수 + 상부 재도포</b>로 처리 가능한 상태로 보입니다.</p></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2 class="block__t">시공 면적 <span class="c-dan">*</span></h2>
+        <p class="block__d">아는 값으로 입력하세요. 하나만 넣어도 나머지는 자동 계산됩니다.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px">
+          <div class="field"><span class="lb">면적 직접 입력</span>
+            <div class="row gap8"><input class="inp" value="86" style="text-align:right">
+              <span class="t-b16 c-sec" style="flex:0 0 auto">㎡</span></div>
+            <span class="help">약 26평</span></div>
+          <div class="field"><span class="lb">또는 평형으로 선택</span>
+            <select class="inp"><option>직접 입력함 (86㎡)</option><option>25평형 옥상</option>
+              <option>34평형 옥상</option><option>45평형 옥상</option></select></div>
+          <div class="field"><span class="lb">파라펫 · 입상 구간 길이</span>
+            <div class="row gap8"><input class="inp" value="38" style="text-align:right">
+              <span class="t-b16 c-sec" style="flex:0 0 auto">m</span></div>
+            <span class="help">벽면으로 올라가는 구간 — 단가가 다릅니다</span></div>
+          <div class="field"><span class="lb">건물 층수</span>
+            <select class="inp"><option>5층 이하</option><option>6~10층</option><option>11층 이상 (장비 필요)</option></select></div>
+          <div class="field" style="grid-column:1/-1"><span class="lb">기존 방수층</span>
+            <select class="inp"><option>우레탄 도막 (재시공 이력 있음)</option><option>시트 방수</option>
+              <option>없음 · 콘크리트 노출</option><option>모름</option></select></div>
+        </div>
+      </div>
+
+      <div class="block" style="margin-bottom:0">
+        <h2 class="block__t">공법 · 물량 산출</h2>
+        <p class="block__d">AI 판정 상태와 입력 면적을 곱해 자동 산출된 물량입니다. 실제 시공 전 사업자가 검증합니다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:14px">
+          <tr><th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);
+            color:var(--sg-text-secondary);font-weight:600">공정</th>
+            <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);
+              color:var(--sg-text-secondary);font-weight:600">물량</th>
+            <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);
+              color:var(--sg-text-secondary);font-weight:600">㎡ 단가</th>
+            <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);
+              color:var(--sg-text-secondary);font-weight:600">소계</th></tr>
+          <tr><td style="padding:11px 0;border-bottom:1px solid var(--sg-border-subtle)">고압 세척 · 바탕 정리</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">86㎡</td>
+            <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">4,000</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">344,000</td></tr>
+          <tr><td style="padding:11px 0;border-bottom:1px solid var(--sg-border-subtle)">들뜸 구간 부분 철거</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">21㎡</td>
+            <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">9,000</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">189,000</td></tr>
+          <tr><td style="padding:11px 0;border-bottom:1px solid var(--sg-border-subtle)">우레탄 도막 2회 도포</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">86㎡</td>
+            <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">18,000</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">1,548,000</td></tr>
+          <tr><td style="padding:11px 0;border-bottom:1px solid var(--sg-border-subtle)">파라펫 입상 마감</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">38m</td>
+            <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">11,000/m</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">418,000</td></tr>
+          <tr><td style="padding:11px 0">보호 도장 (탑코트)</td>
+            <td class="num" style="text-align:right">86㎡</td>
+            <td class="num c-sec" style="text-align:right">6,000</td>
+            <td class="num" style="text-align:right">516,000</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <aside class="side">
+      <div class="panel">
+        <h3 class="panel__t">산출된 기준가</h3>
+        <div class="range" style="padding-top:32px">
+          <div class="range__bar">
+            <div class="range__fair" style="left:20%;right:24%"></div>
+            <div class="range__mark" style="left:48%"></div>
+            <div class="range__cap" style="left:48%">301만원</div>
+          </div>
+          <div class="range__lbl"><span class="num">248만</span><span class="num">372만</span></div>
+        </div>
+        <hr class="hair" style="margin:20px 0 14px">
+        <div class="col gap8" style="margin-bottom:14px">
+          <div class="row between"><span class="t-b14 c-sec">시공 면적</span><span class="t-b14 fw6 num">86㎡</span></div>
+          <div class="row between"><span class="t-b14 c-sec">㎡당 평균</span><span class="t-b14 fw6 num">35,000원</span></div>
+          <div class="row between"><span class="t-b14 c-sec">유사 시공 사례</span><span class="t-b14 fw6 num">31건</span></div>
+        </div>
+        <hr class="hair" style="margin:0 0 14px">
+        <div class="row between" style="margin-bottom:14px">
+          <span class="t-h16">기준가 중앙값</span><span class="t-h24 num c-brand">301만원</span></div>
+        <button class="btn large primary block" data-go="quotes">견적 3곳 받기</button>
+        <div class="t-b12 c-ter" style="margin-top:10px;text-align:center">
+          면적 실측 결과에 따라 ±10% 조정될 수 있습니다</div>
+      </div>
+
+      <div class="panel" style="background:var(--sg-bg-info-subtle);box-shadow:none">
+        <div class="t-b14 fw7" style="margin-bottom:6px">왜 사진만으로는 안 되나요?</div>
+        <p class="t-b12 c-sec" style="margin:0">누수는 <b>원인 하나</b>를 찾으면 되지만, 방수는
+          <b>면적 전체</b>에 재료를 바르는 일입니다. 같은 들뜸 사진이어도 20㎡와 120㎡의 금액은 여섯 배 차이납니다.
+          그래서 상태(사진)와 물량(면적)을 함께 받습니다.</p>
+      </div>
+
+      <div class="panel">
+        <h3 class="panel__t">면적을 모르시나요?</h3>
+        <p class="t-b12 c-sec" style="margin:0 0 12px">무료 실측 방문을 신청하면 사업자가 직접 재고
+          도면 기반으로 물량을 확정합니다.</p>
+        <button class="btn medium outlined block" data-go="survey">무료 실측 신청</button>
+      </div>
+    </aside>
+  </div>
+</section>

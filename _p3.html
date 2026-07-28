@@ -1,0 +1,433 @@
+
+<!-- ============================ AI 진단 1 · 업로드 ============================ -->
+<section class="page" id="p-diag1">
+  <div class="phead"><div class="phead__in">
+    <div class="crumb"><a data-go="home">홈</a><span>›</span><a data-go="services">전체 서비스</a><span>›</span><b id="svcTag">누수피해복구</b></div>
+    <h1>사진 한 장으로 하자 유형과 기준가를 확인하세요</h1>
+    <p class="sub"><span class="badge b-brand b12" style="margin-right:6px">사진 진단</span>진단은 무료입니다.
+      시공을 맡기지 않아도 결과와 유사 사례를 그대로 받아보실 수 있어요.</p>
+  </div></div>
+
+  <div class="flow">
+    <div>
+      <div class="steps">
+        <div class="on">1. 현장 사진</div><div>2. AI 분석</div><div>3. 진단 결과</div>
+      </div>
+
+      <div class="block">
+        <h2 class="block__t">현장 사진 · 동영상</h2>
+        <p class="block__d">천장·벽 얼룩, 물이 새는 부위, 배관 연결부가 잘 보이게 2~3장이면 충분합니다.</p>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div class="ph wet" style="aspect-ratio:1/1;border-radius:10px;position:relative">
+            <span class="badge b-dim" style="position:absolute;top:8px;left:8px">1</span></div>
+          <div class="ph pipe" style="aspect-ratio:1/1;border-radius:10px;position:relative">
+            <span class="badge b-dim" style="position:absolute;top:8px;left:8px">2</span></div>
+          <div style="aspect-ratio:1/1;border-radius:10px;border:1px dashed var(--sg-border-strong);
+            display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;
+            color:var(--sg-text-tertiary)">
+            <span style="font-size:26px">＋</span><span class="t-b12">파일 추가</span></div>
+          <div style="aspect-ratio:1/1;border-radius:10px;background:var(--sg-bg-subtle);
+            display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px;text-align:center">
+            <span class="t-b12 c-sec">드래그해서<br>올려도 됩니다</span></div>
+        </div>
+        <div class="t-b12 c-sec" style="margin-top:12px">JPG · PNG · MP4 / 최대 5개 / 개당 50MB</div>
+      </div>
+
+      <div class="block">
+        <h2 class="block__t">어떤 증상인가요? <span class="c-dan">*</span></h2>
+        <p class="block__d">해당하는 항목을 모두 선택하세요. 선택할수록 유사 사례 매칭이 정확해집니다.</p>
+        <div class="row gap6" style="flex-wrap:wrap">
+          <button class="chip sm" aria-pressed="true">천장에서 물이 떨어져요</button>
+          <button class="chip sm" aria-pressed="true">벽지가 젖었어요</button>
+          <button class="chip sm">물이 잘 안 내려가요</button>
+          <button class="chip sm">온수가 미지근해요</button>
+          <button class="chip sm">수압이 약해요</button>
+          <button class="chip sm">녹물이 나와요</button>
+          <button class="chip sm">냄새가 올라와요</button>
+          <button class="chip sm">배관에서 소리가 나요</button>
+        </div>
+      </div>
+
+      <div class="block" style="margin-bottom:0">
+        <h2 class="block__t">건물 정보</h2>
+        <p class="block__d">같은 연식·같은 배관 재질의 사례만 골라 비교하기 위해 필요합니다.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="field" style="grid-column:1/-1"><span class="lb">아파트 · 주소 <span class="rq">*</span></span>
+            <input class="inp" value="서울 강남구 래미안아파트 103동 1204호"></div>
+          <div class="field"><span class="lb">준공연도</span>
+            <select class="inp"><option>1999년 (27년차)</option><option>2005년</option><option>2015년</option></select></div>
+          <div class="field"><span class="lb">난방 방식</span>
+            <select class="inp"><option>중앙난방</option><option>개별난방</option><option>지역난방</option></select></div>
+          <div class="field"><span class="lb">배관 재질 (아는 경우)</span>
+            <select class="inp"><option>모름</option><option>동관</option><option>강관(백관)</option><option>PB·XL</option></select></div>
+          <div class="field"><span class="lb">발생 시점</span>
+            <select class="inp"><option>3일 전부터</option><option>오늘 처음</option><option>1주일 이상</option></select></div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="side">
+      <div class="panel">
+        <h3 class="panel__t">진단 요약</h3>
+        <div class="col gap10" style="gap:10px">
+          <div class="row between"><span class="t-b14 c-sec">첨부</span><span class="t-b14 fw6">사진 2장</span></div>
+          <div class="row between"><span class="t-b14 c-sec">증상</span><span class="t-b14 fw6">2개 선택</span></div>
+          <div class="row between"><span class="t-b14 c-sec">건물</span><span class="t-b14 fw6">1999년 · 중앙난방</span></div>
+        </div>
+        <hr class="hair" style="margin:16px 0">
+        <div class="row between"><span class="t-b14 c-sec">비교 대상 사례</span><span class="t-b16 fw7 num c-brand">4,182건</span></div>
+        <button class="btn large primary block" data-go="diag2" style="margin-top:16px">AI 진단 시작하기</button>
+        <div class="t-b12 c-ter" style="margin-top:10px;text-align:center">무료 · 약 20초 소요</div>
+      </div>
+      <div class="panel" style="background:var(--sg-bg-brand-subtle);box-shadow:none">
+        <div class="t-b14 fw7" style="margin-bottom:6px">왜 사진을 요구하나요?</div>
+        <p class="t-b12 c-sec" style="margin:0">얼룩의 경계 형태와 번진 방향만으로도 누수인지 결로인지 상당 부분 구분됩니다.
+          AI 1차 분류 뒤 전문가가 검수해 결과를 확정합니다.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================ AI 진단 2 · 분석중 ============================ -->
+<section class="page" id="p-diag2">
+  <div class="flow solo" style="padding-top:80px;padding-bottom:120px">
+    <div style="max-width:520px;margin:0 auto;text-align:center">
+      <div style="width:112px;height:112px;border-radius:50%;background:var(--sg-bg-brand-subtle);
+        display:flex;align-items:center;justify-content:center;font-size:44px;margin:0 auto 24px">🔎</div>
+      <h2 class="t-h24" style="margin:0 0 6px">사진을 분석하고 있어요</h2>
+      <p class="t-b16 c-sec" style="margin:0 0 28px">보통 20초 정도 걸립니다</p>
+      <div class="gauge" style="height:8px"><i id="diagbar" style="width:12%;transition:width .5s ease"></i></div>
+      <div class="panel" style="margin-top:24px;text-align:left">
+        <div class="col gap12">
+          <div class="row gap8"><span class="c-suc">✓</span><span class="t-b14">하자 유형 분류</span></div>
+          <div class="row gap8"><span class="c-suc">✓</span><span class="t-b14">긴급도 판정</span></div>
+          <div class="row gap8" id="diagstep3"><span class="c-ter">◌</span><span class="t-b14 c-sec">유사 시공 사례 4,182건 대조</span></div>
+          <div class="row gap8" id="diagstep4"><span class="c-ter">◌</span><span class="t-b14 c-sec">전문가 검수 대기</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ AI 진단 3 · 결과 ============================ -->
+<section class="page" id="p-diag3">
+  <div class="phead"><div class="phead__in">
+    <div class="crumb"><a data-go="home">홈</a><span>›</span><a data-go="diag1">AI 사진 진단</a><span>›</span><b>진단 결과</b></div>
+    <div class="row between" style="align-items:flex-start">
+      <div>
+        <h1>배관 이음부 누수로 보입니다</h1>
+        <p class="sub">서울 강남구 래미안아파트 · 준공 1999년 · 12층 · 중앙난방 · 진단번호 D-2611-0417</p>
+      </div>
+      <div class="row gap8">
+        <span class="urg caution"><i></i>주의 — 48시간 내 점검 권장</span>
+        <span class="verified">✓ 전문가 검수 완료</span>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="flow">
+    <div>
+      <div class="steps">
+        <div class="done">1. 현장 사진</div><div class="done">2. AI 분석</div><div class="on">3. 진단 결과</div>
+      </div>
+
+      <div class="block">
+        <h2 class="block__t">진단 내용</h2>
+        <p class="block__d">윗집 화장실 배수관과 연결된 슬래브 관통부에서 물이 스며든 형태입니다.
+          벽지 얼룩의 경계가 뚜렷하고 아래로 번진 방향이 일정합니다.</p>
+        <div style="display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;align-items:start">
+          <div class="ph wet" style="aspect-ratio:4/3;border-radius:10px"></div>
+          <div>
+            <div class="row between" style="margin-bottom:12px">
+              <span class="t-b14 fw6">AI 분류 신뢰도</span><span class="t-b14 fw7 num c-brand">87%</span></div>
+            <div class="col gap10" style="gap:10px">
+              <div class="row between gap12"><span class="t-b14" style="flex:0 0 130px">배관 이음부 누수</span>
+                <div class="posbar" style="flex:1"><i style="position:absolute;left:0;top:0;bottom:0;width:87%;border-radius:999px;background:var(--sg-brand-primary)"></i></div>
+                <span class="t-b12 num c-sec" style="width:34px;text-align:right">87%</span></div>
+              <div class="row between gap12"><span class="t-b14 c-sec" style="flex:0 0 130px">방수층 손상</span>
+                <div class="posbar" style="flex:1"><i style="position:absolute;left:0;top:0;bottom:0;width:9%;border-radius:999px;background:var(--sg-gray-300)"></i></div>
+                <span class="t-b12 num c-sec" style="width:34px;text-align:right">9%</span></div>
+              <div class="row between gap12"><span class="t-b14 c-sec" style="flex:0 0 130px">결로</span>
+                <div class="posbar" style="flex:1"><i style="position:absolute;left:0;top:0;bottom:0;width:4%;border-radius:999px;background:var(--sg-gray-300)"></i></div>
+                <span class="t-b12 num c-sec" style="width:34px;text-align:right">4%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2 class="block__t">이 조건의 기준가 범위</h2>
+        <p class="block__d">강남구 · 준공 27년차 · 중앙난방 · 배관 이음부 누수 <b class="c-brand">유사 사례 12건</b> 기준</p>
+        <div class="range" style="padding-top:34px">
+          <div class="range__bar">
+            <div class="range__fair" style="left:22%;right:22%"></div>
+            <div class="range__mark" style="left:50%"></div>
+            <div class="range__cap" style="left:50%">중앙값 41만원</div>
+          </div>
+          <div class="range__lbl"><span class="num">최저 32만원</span><span class="c-suc fw6">적정 구간 35~50만원</span><span class="num">최고 58만원</span></div>
+        </div>
+        <hr class="hair" style="margin:22px 0 16px">
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <tr><td style="padding:9px 0;border-bottom:1px solid var(--sg-border-subtle);color:var(--sg-text-secondary)">누수 탐지 (청음 · 열화상)</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">80,000 ~ 120,000</td></tr>
+          <tr><td style="padding:9px 0;border-bottom:1px solid var(--sg-border-subtle);color:var(--sg-text-secondary)">배관 이음부 보수</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">150,000 ~ 280,000</td></tr>
+          <tr><td style="padding:9px 0;color:var(--sg-text-secondary)">천장 마감 복구</td>
+            <td class="num" style="text-align:right">90,000 ~ 180,000</td></tr>
+        </table>
+        <div class="callout" style="margin-top:18px">
+          <span class="c-ter" style="flex:0 0 20px">ⓘ</span>
+          <p class="t-b12 c-sec" style="margin:0">이 금액은 <b>참고 기준가</b>이며 확정 견적이 아닙니다.
+            현장 상황에 따라 달라질 수 있으며, 달라지는 경우 항목별로 승인을 받은 뒤에만 청구됩니다.</p>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="row between" style="margin-bottom:16px">
+          <h2 class="block__t" style="margin:0">나와 같은 집, 같은 증상 <span class="c-brand num">12건</span></h2>
+          <span class="more" data-go="cases">모두 보기 ›</span>
+        </div>
+        <div class="grid g3" style="gap:16px">
+          <div class="casecard card" style="overflow:hidden" data-go="case-detail">
+            <div class="ph wet" style="aspect-ratio:4/3;border-radius:0"></div>
+            <div style="padding:12px 14px 14px">
+              <div class="t-b12 c-sec">래미안 · 1999년 · 12층</div>
+              <div class="t-b14 fw6">이음부 보수 + 천장 복구</div>
+              <div class="t-h18 num" style="margin-top:4px">38만원</div></div></div>
+          <div class="casecard card" style="overflow:hidden" data-go="case-detail">
+            <div class="ph pipe" style="aspect-ratio:4/3;border-radius:0"></div>
+            <div style="padding:12px 14px 14px">
+              <div class="t-b12 c-sec">개포 · 2001년 · 8층</div>
+              <div class="t-b14 fw6">탐지 + 이음부 교체</div>
+              <div class="t-h18 num" style="margin-top:4px">45만원</div></div></div>
+          <div class="casecard card" style="overflow:hidden" data-go="case-detail">
+            <div class="ph clean" style="aspect-ratio:4/3;border-radius:0"></div>
+            <div style="padding:12px 14px 14px">
+              <div class="t-b12 c-sec">역삼 · 1997년 · 5층</div>
+              <div class="t-b14 fw6">이음부 보수만</div>
+              <div class="t-h18 num" style="margin-top:4px">33만원</div></div></div>
+        </div>
+      </div>
+
+      <div class="block" style="margin-bottom:0">
+        <h2 class="block__t">지금 해야 할 일</h2>
+        <div class="col gap12" style="margin-top:14px">
+          <div class="row gap10" style="gap:10px"><span class="badge b-red">1</span>
+            <span class="t-b14">윗집에 연락해 사용을 잠시 멈춰달라고 요청하세요.</span></div>
+          <div class="row gap10" style="gap:10px"><span class="badge b-orange">2</span>
+            <span class="t-b14">누수 부위 아래 가구·가전을 옮기고 현재 상태를 사진으로 남겨두세요.</span></div>
+          <div class="row gap10" style="gap:10px"><span class="badge b-gray">3</span>
+            <span class="t-b14">일상생활배상책임보험 가입 여부를 확인하세요. 윗집 보험으로 처리될 수 있습니다.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="side">
+      <div class="panel">
+        <h3 class="panel__t">이 진단으로 할 수 있는 것</h3>
+        <div class="col gap8">
+          <button class="btn large primary block" data-go="quotes">견적 3곳 받기</button>
+          <button class="btn medium outlined block" data-go="cases">유사 사례 12건 보기</button>
+          <button class="btn medium ghost block">진단서 PDF 내려받기</button>
+        </div>
+        <hr class="hair" style="margin:16px 0">
+        <div class="col gap8">
+          <div class="row between"><span class="t-b14 c-sec">예상 소요</span><span class="t-b14 fw6">4시간</span></div>
+          <div class="row between"><span class="t-b14 c-sec">보험 처리 가능성</span><span class="t-b14 fw6 c-suc">높음</span></div>
+          <div class="row between"><span class="t-b14 c-sec">방문 가능 사업자</span><span class="t-b14 fw6">7곳</span></div>
+        </div>
+      </div>
+      <div class="panel" style="background:var(--sg-bg-info-subtle);box-shadow:none">
+        <div class="t-b14 fw7" style="margin-bottom:6px">보험으로 처리될 수 있어요</div>
+        <p class="t-b12 c-sec" style="margin:0 0 12px">윗집 원인 누수는 상대방 일상생활배상책임보험 대상입니다.
+          설비고는 시공 내역을 보험사 청구용 사실자료로 자동 정리해 드립니다.</p>
+        <button class="btn small outlined block" data-go="insurance">보험 청구 절차 보기</button>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================ 유사 사례 목록 ============================ -->
+<section class="page" id="p-cases">
+  <div class="phead"><div class="phead__in">
+    <div class="crumb"><a data-go="home">홈</a><span>›</span><a data-go="diag3">진단 결과</a><span>›</span><b>유사 시공 사례</b></div>
+    <h1>같은 집, 같은 증상은 어떻게 고쳤을까요</h1>
+    <p class="sub">판례를 찾아보듯 조건이 같은 실제 시공을 확인하세요. 모두 플랫폼 결제·검증을 거친 사례입니다.</p>
+  </div></div>
+
+  <div class="flow">
+    <div>
+      <div class="panel" style="margin-bottom:16px;padding:16px 20px">
+        <div class="row between gap12" style="flex-wrap:wrap">
+          <div class="row gap6" style="flex-wrap:wrap">
+            <button class="chip sm" aria-pressed="true">같은 아파트</button>
+            <button class="chip sm">같은 연식 ±3년</button>
+            <button class="chip sm" aria-pressed="true">같은 증상</button>
+            <button class="chip sm">같은 층수대</button>
+            <button class="chip sm">보험 처리 건만</button>
+          </div>
+          <select class="inp" style="width:auto;height:38px;padding:0 36px 0 12px;font-size:14px">
+            <option>최신순</option><option>금액 낮은순</option><option>유사도순</option></select>
+        </div>
+      </div>
+
+      <div class="row between" style="margin:0 4px 12px">
+        <span class="t-b14 c-sec">총 <b class="c-brand num">12</b>건</span>
+        <span class="t-b14 c-sec">평균 <b class="num">41.2만원</b> · 평균 소요 <b class="num">4시간</b></span>
+      </div>
+
+      <div class="col gap12">
+        <div class="card" style="padding:18px;display:flex;gap:18px;cursor:pointer" data-go="case-detail">
+          <div class="ph wet" style="width:150px;height:112px;flex:0 0 150px;border-radius:10px"></div>
+          <div style="flex:1;min-width:0">
+            <div class="row gap4" style="margin-bottom:6px">
+              <span class="badge b-brand">같은 아파트</span><span class="badge b-gline">1999년</span>
+              <span class="badge b-gline">12층</span><span class="badge b-gline">중앙난방</span></div>
+            <div class="t-h18">배관 이음부 보수 + 천장 마감 복구</div>
+            <div class="t-b14 c-sec" style="margin:4px 0 10px">누수 탐지 → 이음부 실링 → 석고 보수 → 도배 · 총 4시간</div>
+            <div class="row between">
+              <span class="t-b14 c-sec">깨끗한집설비 · ★ 4.9 (126)</span>
+              <span class="t-h20 num">380,000원</span></div>
+          </div>
+        </div>
+        <div class="card" style="padding:18px;display:flex;gap:18px;cursor:pointer" data-go="case-detail">
+          <div class="ph pipe" style="width:150px;height:112px;flex:0 0 150px;border-radius:10px"></div>
+          <div style="flex:1;min-width:0">
+            <div class="row gap4" style="margin-bottom:6px">
+              <span class="badge b-gline">개포주공</span><span class="badge b-gline">2001년</span>
+              <span class="badge b-orange">야간작업</span></div>
+            <div class="t-h18">누수 탐지 + 이음부 전체 교체</div>
+            <div class="t-b14 c-sec" style="margin:4px 0 10px">매립관 동관 · 야간 추가금 40,000원 포함 · 총 6시간</div>
+            <div class="row between">
+              <span class="t-b14 c-sec">한빛배관 · ★ 4.8 (89)</span>
+              <span class="t-h20 num">450,000원</span></div>
+          </div>
+        </div>
+        <div class="card" style="padding:18px;display:flex;gap:18px;cursor:pointer" data-go="case-detail">
+          <div class="ph clean" style="width:150px;height:112px;flex:0 0 150px;border-radius:10px"></div>
+          <div style="flex:1;min-width:0">
+            <div class="row gap4" style="margin-bottom:6px">
+              <span class="badge b-gline">역삼래미안</span><span class="badge b-gline">1997년</span>
+              <span class="badge b-green">보험 전액 처리</span></div>
+            <div class="t-h18">이음부 보수 (마감 복구 없음)</div>
+            <div class="t-b14 c-sec" style="margin:4px 0 10px">윗집 일상생활배상책임보험으로 전액 처리 · 총 3시간</div>
+            <div class="row between">
+              <span class="t-b14 c-sec">우성설비 · ★ 4.7 (52)</span>
+              <span class="t-h20 num">330,000원</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="side">
+      <div class="panel">
+        <h3 class="panel__t">12건 요약</h3>
+        <div class="range" style="padding-top:30px">
+          <div class="range__bar">
+            <div class="range__fair" style="left:22%;right:22%"></div>
+            <div class="range__mark" style="left:50%"></div>
+            <div class="range__cap" style="left:50%">중앙값 41만</div>
+          </div>
+          <div class="range__lbl"><span class="num">32만</span><span class="num">58만</span></div>
+        </div>
+        <hr class="hair" style="margin:18px 0">
+        <div class="col gap8">
+          <div class="row between"><span class="t-b14 c-sec">천장 복구 포함</span><span class="t-b14 fw6">9건</span></div>
+          <div class="row between"><span class="t-b14 c-sec">보험 처리</span><span class="t-b14 fw6">5건</span></div>
+          <div class="row between"><span class="t-b14 c-sec">재시공 발생</span><span class="t-b14 fw6 c-suc">0건</span></div>
+        </div>
+        <button class="btn large primary block" data-go="quotes" style="margin-top:18px">이 조건으로 견적 받기</button>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================ 사례 상세 ============================ -->
+<section class="page" id="p-case-detail">
+  <div class="phead"><div class="phead__in">
+    <div class="crumb"><a data-go="home">홈</a><span>›</span><a data-go="cases">유사 시공 사례</a><span>›</span><b>C-2411-0382</b></div>
+    <h1>배관 이음부 보수 + 천장 마감 복구</h1>
+    <p class="sub">서울 강남구 래미안아파트 · 준공 1999년 · 12층 · 중앙난방 · 2026.11.14 시공</p>
+  </div></div>
+
+  <div class="flow">
+    <div>
+      <div class="block">
+        <div class="ba" id="ba1" style="margin-bottom:12px">
+          <div class="ba__l ph wet"></div>
+          <div class="ba__r ph clean"></div>
+          <span class="ba__tag l">BEFORE</span><span class="ba__tag r">AFTER</span>
+          <div class="ba__hd"></div>
+        </div>
+        <div class="row gap6" style="flex-wrap:wrap">
+          <span class="verified">✓ 촬영 메타데이터 검증됨</span>
+          <span class="badge b-gline">2026.11.14 14:32 촬영</span>
+          <span class="badge b-gline">시공 일정과 일치</span>
+          <span class="badge b-gline">위치 좌표 일치</span>
+        </div>
+        <p class="t-b12 c-sec" style="margin:12px 0 0">가운데 손잡이를 좌우로 끌어 Before/After를 비교할 수 있습니다.</p>
+      </div>
+
+      <div class="block">
+        <h2 class="block__t">공정과 금액</h2>
+        <p class="block__d">플랫폼 표준 공정 DB의 항목으로만 구성되어 다른 사례와 1:1 비교가 가능합니다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <tr><th style="text-align:left;padding:8px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">공정</th>
+            <th style="text-align:left;padding:8px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">내용</th>
+            <th style="text-align:right;padding:8px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">금액</th></tr>
+          <tr><td style="padding:11px 0;border-bottom:1px solid var(--sg-border-subtle)">누수 탐지</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle);color:var(--sg-text-secondary)">청음 + 열화상</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">100,000</td></tr>
+          <tr><td style="padding:11px 0;border-bottom:1px solid var(--sg-border-subtle)">배관 이음부</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle);color:var(--sg-text-secondary)">실링·보수 2개소</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">180,000</td></tr>
+          <tr><td style="padding:11px 0;border-bottom:1px solid var(--sg-border-subtle)">마감 복구</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle);color:var(--sg-text-secondary)">석고보드 보수 + 도배</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">100,000</td></tr>
+          <tr><td style="padding:11px 0;color:var(--sg-text-warning)">현장 변수</td>
+            <td style="color:var(--sg-text-warning)">준공 25년 초과 노후 배관 <span class="badge b-orange">고객 승인</span></td>
+            <td class="num" style="text-align:right;color:var(--sg-text-warning)">+30,000</td></tr>
+          <tr><td class="t-h16" style="padding:16px 0 0" colspan="2">합계</td>
+            <td class="t-h20 num c-brand" style="text-align:right;padding:16px 0 0">380,000원</td></tr>
+        </table>
+      </div>
+
+      <div class="block" style="margin-bottom:0">
+        <h2 class="block__t">고객 후기</h2>
+        <div class="callout" style="margin-top:12px">
+          <span style="flex:0 0 20px">💬</span>
+          <div><div class="row gap4" style="margin-bottom:4px">
+            <span style="color:var(--sg-accent-amber)">★★★★★</span>
+            <span class="t-b12 c-sec">1204호 고객 · 2026.11.15</span></div>
+          <p class="t-b14" style="margin:0">원인 설명이 명확했고 추가금도 미리 항목으로 알려줘서 납득이 됐습니다. 마감까지 깔끔했어요.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="side">
+      <div class="panel">
+        <div class="row gap12" style="margin-bottom:14px">
+          <div class="avatar sq" style="width:52px;height:52px">깨</div>
+          <div style="flex:1">
+            <div class="row gap4"><span class="t-b16 fw7">깨끗한집설비</span></div>
+            <div class="t-b12 c-sec">★ 4.9 (126) · 필모그래피 84건</div>
+          </div>
+        </div>
+        <span class="badge b-brand" style="margin-bottom:14px">설비고 인증 사업자</span>
+        <div class="col gap8" style="margin-top:14px">
+          <button class="btn large primary block" data-go="quotes">이 조건으로 견적 받기</button>
+          <button class="btn medium outlined block" data-go="pro">사업자 프로필 보기</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h3 class="panel__t">이 사례의 신뢰 근거</h3>
+        <div class="col gap10" style="gap:10px">
+          <div class="row gap8"><span class="c-suc">✓</span><span class="t-b14">플랫폼 에스크로 결제 건</span></div>
+          <div class="row gap8"><span class="c-suc">✓</span><span class="t-b14">촬영 메타데이터 검증 통과</span></div>
+          <div class="row gap8"><span class="c-suc">✓</span><span class="t-b14">1년 보증 기간 내 재시공 없음</span></div>
+          <div class="row gap8"><span class="c-suc">✓</span><span class="t-b14">표준 공정 DB 항목으로 구성</span></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>

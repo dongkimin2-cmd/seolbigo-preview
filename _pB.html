@@ -1,0 +1,539 @@
+
+<!-- ============================================================
+     손해보험사 센터 (B2B2C)
+     ============================================================ -->
+
+<!-- ---------------------------- 청구 심사 인박스 ---------------------------- -->
+<section class="page pro" id="p-ins-home">
+  <header class="prognb"><div class="prognb__in">
+    <div class="logo" data-go="home" style="font-size:19px">설비고<span class="prognb__tag" style="background:var(--sg-bg-info)">보험사</span></div>
+    <div class="gnb__sp"></div>
+    <div class="row gap12">
+      <span class="badge b-blue b12">○○화재해상보험 · 일상생활배상책임</span>
+      <div class="row gap8"><div class="avatar ci" style="width:32px;height:32px;font-size:13px">보</div>
+        <span class="t-b14 fw6">보상팀 이심사</span></div>
+    </div>
+  </div></header>
+  <div class="prowrap">
+    <nav class="pronav">
+      <a class="on" data-go="ins-home">📥 청구 심사</a>
+      <a data-go="ins-case">📄 사실자료 상세</a>
+      <a data-go="ins-analytics">📈 손해율 대시보드</a>
+      <a data-go="ins-campaign">🎟 예방 캠페인</a>
+      <hr class="hair" style="margin:12px 8px">
+      <a data-go="home">↩ 고객 화면으로</a>
+    </nav>
+    <div class="probody">
+      <div class="row between" style="margin-bottom:20px;align-items:flex-start">
+        <div><h1 class="t-h24" style="margin:0">누수 청구 심사</h1>
+          <p class="t-b14 c-sec" style="margin:4px 0 0">설비고 연계 건은 표준 공정 DB 대조 결과가 함께 들어옵니다. 판단은 손해사정이 합니다.</p></div>
+        <button class="btn medium outlined">엑셀 내려받기</button>
+      </div>
+
+      <div class="grid g4" style="gap:12px;margin-bottom:16px">
+        <div class="panel"><div class="t-b12 c-sec">이번 달 누수 접수</div>
+          <div class="t-h24 num" style="margin:4px 0 2px">1,284건</div>
+          <div class="t-b12 c-sec">전체 청구의 52.7%</div></div>
+        <div class="panel" style="background:var(--sg-bg-info-subtle);box-shadow:none">
+          <div class="t-b12 c-sec">설비고 연계 건</div>
+          <div class="t-h24 num c-inf" style="margin:4px 0 2px">218건</div>
+          <div class="t-b12 c-sec">17.0% · 전월 대비 +4.2%p</div></div>
+        <div class="panel"><div class="t-b12 c-sec">평균 정산 소요</div>
+          <div class="t-h24 num" style="margin:4px 0 2px">2.4일</div>
+          <div class="t-b12 c-sec">비연계 건 11.6일</div></div>
+        <div class="panel"><div class="t-b12 c-sec">현장조사 생략률</div>
+          <div class="t-h24 num c-suc" style="margin:4px 0 2px">71%</div>
+          <div class="t-b12 c-sec">연계 건 기준 · 건당 18만원 절감</div></div>
+      </div>
+
+      <div class="panel" style="padding:14px 18px;margin-bottom:16px">
+        <div class="row gap6" style="flex-wrap:wrap">
+          <button class="chip sm" aria-pressed="true">설비고 연계 218</button>
+          <button class="chip sm">표준 범위 내 186</button>
+          <button class="chip sm">검토 필요 24</button>
+          <button class="chip sm">이상치 8</button>
+          <button class="chip sm">서류 미비 12</button>
+          <div style="flex:1"></div>
+          <select class="inp" style="width:auto;height:34px;padding:0 34px 0 12px;font-size:13px">
+            <option>접수 최신순</option><option>금액 높은순</option><option>이상치 우선</option></select>
+        </div>
+      </div>
+
+      <div class="panel">
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <tr><th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">접수번호</th>
+            <th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">사고</th>
+            <th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">피보험자</th>
+            <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">청구액</th>
+            <th style="text-align:left;padding:9px 0 9px 16px;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">표준 분포 대조</th>
+            <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">상태</th>
+            <th style="width:90px;border-bottom:1px solid var(--sg-border-default)"></th></tr>
+
+          <tr><td class="num" style="padding:13px 0;border-bottom:1px solid var(--sg-border-subtle)">2026-114-88213</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">배관 이음부 누수 · 래미안 1204호</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">1304호 (상층)</td>
+            <td class="num fw7" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">490,000</td>
+            <td style="padding-left:16px;border-bottom:1px solid var(--sg-border-subtle);width:180px">
+              <div class="posbar"><span style="left:47%"></span></div>
+              <div class="t-b12 c-suc fw6" style="margin-top:4px">범위 내 · 중앙값 근접</div></td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-orange">심사 대기</span></td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">
+              <button class="btn tiny primary" data-go="ins-case">열기</button></td></tr>
+
+          <tr><td class="num" style="padding:13px 0;border-bottom:1px solid var(--sg-border-subtle)">2026-114-88207</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">화장실 바닥 누수 · 개포주공 902호</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">1002호 (상층)</td>
+            <td class="num fw7" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">2,840,000</td>
+            <td style="padding-left:16px;border-bottom:1px solid var(--sg-border-subtle)">
+              <div class="posbar"><span style="left:94%;box-shadow:0 0 0 3px var(--sg-bg-danger) inset,var(--sg-shadow-up-1)"></span></div>
+              <div class="t-b12 fw6" style="margin-top:4px;color:var(--sg-text-danger)">상위 6% · 이상치</div></td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-red">조사 배정</span></td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">
+              <button class="btn tiny outlined" data-go="ins-case">열기</button></td></tr>
+
+          <tr><td class="num" style="padding:13px 0;border-bottom:1px solid var(--sg-border-subtle)">2026-114-88198</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">주방 배수관 누수 · 역삼래미안 508호</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">608호 (상층)</td>
+            <td class="num fw7" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">330,000</td>
+            <td style="padding-left:16px;border-bottom:1px solid var(--sg-border-subtle)">
+              <div class="posbar"><span style="left:28%"></span></div>
+              <div class="t-b12 c-suc fw6" style="margin-top:4px">범위 내</div></td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-green">지급 완료</span></td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">
+              <button class="btn tiny ghost" data-go="ins-case">열기</button></td></tr>
+
+          <tr><td class="num" style="padding:13px 0;border-bottom:1px solid var(--sg-border-subtle)">2026-114-88176</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">천장 누수 · 신도림푸르지오 1801호</td>
+            <td style="border-bottom:1px solid var(--sg-border-subtle)">1901호 (상층)</td>
+            <td class="num fw7" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">1,120,000</td>
+            <td style="padding-left:16px;border-bottom:1px solid var(--sg-border-subtle)">
+              <div class="posbar"><span style="left:72%;box-shadow:0 0 0 3px var(--sg-bg-warning) inset,var(--sg-shadow-up-1)"></span></div>
+              <div class="t-b12 fw6" style="margin-top:4px;color:var(--sg-text-warning)">상위 28% · 검토 필요</div></td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-orange">심사 대기</span></td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">
+              <button class="btn tiny outlined" data-go="ins-case">열기</button></td></tr>
+
+          <tr><td class="num" style="padding:13px 0">2026-114-88154</td>
+            <td>세면대 하부 누수 · 잠실엘스 704호</td>
+            <td>804호 (상층)</td>
+            <td class="num fw7" style="text-align:right">180,000</td>
+            <td style="padding-left:16px">
+              <div class="posbar"><span style="left:38%"></span></div>
+              <div class="t-b12 c-suc fw6" style="margin-top:4px">범위 내</div></td>
+            <td style="text-align:right"><span class="badge b-green">지급 완료</span></td>
+            <td style="text-align:right"><button class="btn tiny ghost" data-go="ins-case">열기</button></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------------------------- 사실자료 상세 심사 ---------------------------- -->
+<section class="page pro" id="p-ins-case">
+  <header class="prognb"><div class="prognb__in">
+    <div class="logo" data-go="home" style="font-size:19px">설비고<span class="prognb__tag" style="background:var(--sg-bg-info)">보험사</span></div>
+    <div class="gnb__sp"></div>
+    <div class="row gap12"><span class="badge b-blue b12">○○화재해상보험 · 일상생활배상책임</span>
+      <div class="row gap8"><div class="avatar ci" style="width:32px;height:32px;font-size:13px">보</div>
+        <span class="t-b14 fw6">보상팀 이심사</span></div></div>
+  </div></header>
+  <div class="prowrap">
+    <nav class="pronav">
+      <a data-go="ins-home">📥 청구 심사</a>
+      <a class="on" data-go="ins-case">📄 사실자료 상세</a>
+      <a data-go="ins-analytics">📈 손해율 대시보드</a>
+      <a data-go="ins-campaign">🎟 예방 캠페인</a>
+      <hr class="hair" style="margin:12px 8px">
+      <a data-go="home">↩ 고객 화면으로</a>
+    </nav>
+    <div class="probody">
+      <div class="crumb" style="margin-bottom:6px"><a data-go="ins-home">청구 심사</a><span>›</span><b>2026-114-88213</b></div>
+      <h1 class="t-h24" style="margin:0 0 4px">배관 이음부 누수 — 래미안아파트 1204호</h1>
+      <p class="t-b14 c-sec" style="margin:0 0 20px">접수 2026.11.19 19:24 · 피보험자 1304호 · 설비고 리포트 R-2611-0417 연계</p>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start">
+        <div>
+          <div class="panel" style="margin-bottom:16px">
+            <h3 class="panel__t">가격 구성 — 표준 분포 대조</h3>
+            <p class="t-b12 c-sec" style="margin:-8px 0 16px">플랫폼 표준 공정 DB의 같은 조건(강남구·준공 27년차·중앙난방)
+              시공 <b>1,284건</b> 분포와 대조한 결과입니다. 적정성 판단이 아니라 <b>사실 대조</b>입니다.</p>
+            <table style="width:100%;border-collapse:collapse;font-size:14px">
+              <tr><th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">공정</th>
+                <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">청구액</th>
+                <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">표준 분포</th>
+                <th style="text-align:left;padding:9px 0 9px 16px;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600;width:150px">위치</th>
+                <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">판정</th></tr>
+              <tr><td style="padding:13px 0;border-bottom:1px solid var(--sg-border-subtle)">누수 탐지 (청음+열화상)</td>
+                <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">100,000</td>
+                <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">80,000~120,000</td>
+                <td style="padding-left:16px;border-bottom:1px solid var(--sg-border-subtle)">
+                  <div class="posbar"><span style="left:50%"></span></div></td>
+                <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-green">적정</span></td></tr>
+              <tr><td style="padding:13px 0;border-bottom:1px solid var(--sg-border-subtle)">배관 이음부 보수 (2개소)</td>
+                <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">210,000</td>
+                <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">150,000~280,000</td>
+                <td style="padding-left:16px;border-bottom:1px solid var(--sg-border-subtle)">
+                  <div class="posbar"><span style="left:46%"></span></div></td>
+                <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-green">적정</span></td></tr>
+              <tr><td style="padding:13px 0;border-bottom:1px solid var(--sg-border-subtle)">천장 마감 복구 (3.3㎡)</td>
+                <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">100,000</td>
+                <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">90,000~180,000</td>
+                <td style="padding-left:16px;border-bottom:1px solid var(--sg-border-subtle)">
+                  <div class="posbar"><span style="left:16%"></span></div></td>
+                <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-green">적정</span></td></tr>
+              <tr><td style="padding:13px 0;border-bottom:1px solid var(--sg-border-subtle)">현장 변수 (고객 승인 완료)</td>
+                <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">80,000</td>
+                <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">65,000~95,000</td>
+                <td style="padding-left:16px;border-bottom:1px solid var(--sg-border-subtle)">
+                  <div class="posbar"><span style="left:50%"></span></div></td>
+                <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-green">적정</span></td></tr>
+              <tr><td class="t-h16" style="padding:16px 0 0">합계</td>
+                <td class="t-h18 num" style="text-align:right;padding:16px 0 0">490,000</td>
+                <td class="num c-sec" style="text-align:right;padding:16px 0 0">320,000~580,000</td>
+                <td style="padding:16px 0 0 16px"><div class="posbar"><span style="left:47%"></span></div></td>
+                <td style="text-align:right;padding:16px 0 0"><span class="badge b-green b12">범위 내</span></td></tr>
+            </table>
+          </div>
+
+          <div class="panel" style="margin-bottom:16px">
+            <h3 class="panel__t">사실 증거</h3>
+            <div class="grid g4" style="gap:12px;margin-top:12px">
+              <div><div class="ph wet" style="aspect-ratio:4/3;border-radius:8px"></div>
+                <div class="t-b12 c-sec" style="margin-top:6px">피해 부위 · 11.17 21:02</div></div>
+              <div><div class="ph pipe" style="aspect-ratio:4/3;border-radius:8px"></div>
+                <div class="t-b12 c-sec" style="margin-top:6px">원인 부위 · 11.19 14:26</div></div>
+              <div><div class="ph pipe" style="aspect-ratio:4/3;border-radius:8px"></div>
+                <div class="t-b12 c-sec" style="margin-top:6px">열화상 판독 · 11.19 14:12</div></div>
+              <div><div class="ph clean" style="aspect-ratio:4/3;border-radius:8px"></div>
+                <div class="t-b12 c-sec" style="margin-top:6px">복구 완료 · 11.19 17:48</div></div>
+            </div>
+            <div class="row gap6" style="margin-top:14px;flex-wrap:wrap">
+              <span class="verified">✓ 촬영 시각 검증</span>
+              <span class="verified">✓ 위치 좌표 검증</span>
+              <span class="verified">✓ 시공 일정과 일치</span>
+              <span class="verified">✓ 에스크로 결제 확인</span>
+              <span class="verified">✓ 사업자 배상책임보험 유효</span>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-bottom:0">
+            <h3 class="panel__t">단지 배관 이력 조회</h3>
+            <p class="t-b12 c-sec" style="margin:-8px 0 14px">관리사무소가 동의한 범위에서 해당 좌표의 과거 이력을 확인할 수 있습니다.</p>
+            <div class="callout warn">
+              <span class="c-dan" style="flex:0 0 20px">!</span>
+              <div><p class="t-b14 fw6" style="margin:0 0 2px">동일 부위 2024.07 누수 이력이 있습니다</p>
+                <p class="t-b14 c-sec" style="margin:0">외부 업체 시공 기록만 존재하며 시공 내역은 없습니다.
+                  구조적 결함이라면 반복 청구가 예상되므로, 근본 원인 진단을 조건으로 지급하는 방안을 검토할 수 있습니다.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col gap12" style="position:sticky;top:88px">
+          <div class="panel">
+            <h3 class="panel__t">지급 결정</h3>
+            <div class="col gap8" style="margin-bottom:14px">
+              <div class="row between"><span class="t-b14 c-sec">청구 금액</span><span class="t-b14 num">490,000</span></div>
+              <div class="row between"><span class="t-b14 c-sec">자기부담금</span><span class="t-b14 num c-sec">−200,000</span></div>
+              <div class="row between"><span class="t-b14 c-sec">보상 한도</span><span class="t-b14 num">1억원</span></div>
+            </div>
+            <hr class="hair" style="margin:0 0 14px">
+            <div class="row between" style="margin-bottom:16px">
+              <span class="t-h16">지급 예정액</span><span class="t-h24 num c-brand">290,000원</span></div>
+            <button class="btn large primary block">현장조사 없이 승인</button>
+            <button class="btn medium outlined block" style="margin-top:8px">손해사정 배정</button>
+            <button class="btn medium ghost block" style="margin-top:4px">추가 자료 요청</button>
+          </div>
+
+          <div class="panel" style="background:var(--sg-bg-success-subtle);box-shadow:none">
+            <div class="t-b14 fw7" style="margin-bottom:6px">조사 생략 권고</div>
+            <p class="t-b12 c-sec" style="margin:0 0 10px">4개 공정 모두 표준 분포 내이고 사실 증거 5종이 검증되었습니다.
+              동일 패턴 건의 조사 후 감액률은 <b class="num">1.8%</b>로, 조사 비용(건당 18만원)이 감액분을 초과합니다.</p>
+            <div class="row between"><span class="t-b12 c-sec">예상 절감</span>
+              <span class="t-b14 fw7 c-suc num">174,000원</span></div>
+          </div>
+
+          <div class="panel">
+            <h3 class="panel__t">법적 경계</h3>
+            <p class="t-b12 c-sec" style="margin:0">설비고는 <b>사실자료 제공</b>만 수행하며 보험금 사정이나
+              적정성 판단을 대행하지 않습니다. 지급 결정과 손해사정은 귀사 및 등록 손해사정법인의 업무입니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------------------------- 손해율 대시보드 ---------------------------- -->
+<section class="page pro" id="p-ins-analytics">
+  <header class="prognb"><div class="prognb__in">
+    <div class="logo" data-go="home" style="font-size:19px">설비고<span class="prognb__tag" style="background:var(--sg-bg-info)">보험사</span></div>
+    <div class="gnb__sp"></div>
+    <div class="row gap12"><span class="badge b-blue b12">○○화재해상보험 · 일상생활배상책임</span>
+      <div class="row gap8"><div class="avatar ci" style="width:32px;height:32px;font-size:13px">보</div>
+        <span class="t-b14 fw6">보상팀 이심사</span></div></div>
+  </div></header>
+  <div class="prowrap">
+    <nav class="pronav">
+      <a data-go="ins-home">📥 청구 심사</a>
+      <a data-go="ins-case">📄 사실자료 상세</a>
+      <a class="on" data-go="ins-analytics">📈 손해율 대시보드</a>
+      <a data-go="ins-campaign">🎟 예방 캠페인</a>
+      <hr class="hair" style="margin:12px 8px">
+      <a data-go="home">↩ 고객 화면으로</a>
+    </nav>
+    <div class="probody">
+      <div class="row between" style="margin-bottom:20px;align-items:flex-start">
+        <div><h1 class="t-h24" style="margin:0">손해율 절감 실적</h1>
+          <p class="t-b14 c-sec" style="margin:4px 0 0">설비고 연계 건과 비연계 건의 실제 차이입니다. 2026년 1~11월 누적.</p></div>
+        <select class="inp" style="width:auto;height:38px;padding:0 34px 0 12px;font-size:14px">
+          <option>2026년 누적</option><option>최근 6개월</option><option>이번 달</option></select>
+      </div>
+
+      <div class="panel" style="margin-bottom:16px">
+        <h3 class="panel__t">연계 건 vs 비연계 건</h3>
+        <div class="col gap16" style="margin-top:16px">
+          <div><div class="row between t-b14" style="margin-bottom:8px">
+              <span class="fw6">건당 평균 지급액</span>
+              <span class="c-sec">연계 <b class="num c-inf">438,000원</b> · 비연계 <b class="num">571,000원</b></span></div>
+            <div class="row gap12"><span class="t-b12 c-sec" style="width:52px">연계</span>
+              <div class="posbar" style="flex:1"><i style="position:absolute;left:0;top:0;bottom:0;width:77%;border-radius:999px;background:var(--sg-bg-info)"></i></div>
+              <span class="t-b12 fw7 num c-suc" style="width:56px;text-align:right">−23.3%</span></div>
+            <div class="row gap12" style="margin-top:6px"><span class="t-b12 c-sec" style="width:52px">비연계</span>
+              <div class="posbar" style="flex:1"><i style="position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:999px;background:var(--sg-gray-300)"></i></div>
+              <span class="t-b12 c-sec" style="width:56px;text-align:right">기준</span></div></div>
+
+          <div><div class="row between t-b14" style="margin-bottom:8px">
+              <span class="fw6">현장조사 실시율</span>
+              <span class="c-sec">연계 <b class="num c-inf">29%</b> · 비연계 <b class="num">86%</b></span></div>
+            <div class="row gap12"><span class="t-b12 c-sec" style="width:52px">연계</span>
+              <div class="posbar" style="flex:1"><i style="position:absolute;left:0;top:0;bottom:0;width:29%;border-radius:999px;background:var(--sg-bg-info)"></i></div>
+              <span class="t-b12 fw7 num c-suc" style="width:56px;text-align:right">−57%p</span></div>
+            <div class="row gap12" style="margin-top:6px"><span class="t-b12 c-sec" style="width:52px">비연계</span>
+              <div class="posbar" style="flex:1"><i style="position:absolute;left:0;top:0;bottom:0;width:86%;border-radius:999px;background:var(--sg-gray-300)"></i></div>
+              <span class="t-b12 c-sec" style="width:56px;text-align:right">기준</span></div></div>
+
+          <div><div class="row between t-b14" style="margin-bottom:8px">
+              <span class="fw6">정산 소요일</span>
+              <span class="c-sec">연계 <b class="num c-inf">2.4일</b> · 비연계 <b class="num">11.6일</b></span></div>
+            <div class="row gap12"><span class="t-b12 c-sec" style="width:52px">연계</span>
+              <div class="posbar" style="flex:1"><i style="position:absolute;left:0;top:0;bottom:0;width:21%;border-radius:999px;background:var(--sg-bg-info)"></i></div>
+              <span class="t-b12 fw7 num c-suc" style="width:56px;text-align:right">−79%</span></div>
+            <div class="row gap12" style="margin-top:6px"><span class="t-b12 c-sec" style="width:52px">비연계</span>
+              <div class="posbar" style="flex:1"><i style="position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:999px;background:var(--sg-gray-300)"></i></div>
+              <span class="t-b12 c-sec" style="width:56px;text-align:right">기준</span></div></div>
+
+          <div><div class="row between t-b14" style="margin-bottom:8px">
+              <span class="fw6">1년 내 동일 부위 재청구율</span>
+              <span class="c-sec">연계 <b class="num c-inf">2.1%</b> · 비연계 <b class="num">7.8%</b></span></div>
+            <div class="row gap12"><span class="t-b12 c-sec" style="width:52px">연계</span>
+              <div class="posbar" style="flex:1"><i style="position:absolute;left:0;top:0;bottom:0;width:27%;border-radius:999px;background:var(--sg-bg-info)"></i></div>
+              <span class="t-b12 fw7 num c-suc" style="width:56px;text-align:right">−73%</span></div>
+            <div class="row gap12" style="margin-top:6px"><span class="t-b12 c-sec" style="width:52px">비연계</span>
+              <div class="posbar" style="flex:1"><i style="position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:999px;background:var(--sg-gray-300)"></i></div>
+              <span class="t-b12 c-sec" style="width:56px;text-align:right">기준</span></div></div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start">
+        <div class="panel">
+          <h3 class="panel__t">절감 효과 산출</h3>
+          <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:12px">
+            <tr><th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">항목</th>
+              <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">건수</th>
+              <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">건당</th>
+              <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">누적 절감</th></tr>
+            <tr><td style="padding:12px 0;border-bottom:1px solid var(--sg-border-subtle)">현장조사 생략</td>
+              <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">1,412</td>
+              <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">180,000</td>
+              <td class="num fw7" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">254,160,000</td></tr>
+            <tr><td style="padding:12px 0;border-bottom:1px solid var(--sg-border-subtle)">과다 청구 사전 차단</td>
+              <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">86</td>
+              <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">412,000</td>
+              <td class="num fw7" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">35,432,000</td></tr>
+            <tr><td style="padding:12px 0;border-bottom:1px solid var(--sg-border-subtle)">재청구 감소</td>
+              <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">108</td>
+              <td class="num c-sec" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">571,000</td>
+              <td class="num fw7" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">61,668,000</td></tr>
+            <tr><td style="padding:12px 0">CS 응대 · 분쟁 처리</td>
+              <td class="num" style="text-align:right">1,946</td>
+              <td class="num c-sec" style="text-align:right">24,000</td>
+              <td class="num fw7" style="text-align:right">46,704,000</td></tr>
+            <tr><td class="t-h16" style="padding:16px 0 0" colspan="3">2026년 누적 절감액</td>
+              <td class="t-h20 num c-brand" style="text-align:right;padding:16px 0 0">3억 9,796만원</td></tr>
+          </table>
+        </div>
+
+        <div class="col gap12">
+          <div class="panel" style="background:var(--sg-bg-info-subtle);box-shadow:none">
+            <div class="t-b12 c-sec">누수 지급보험금 (반기)</div>
+            <div class="t-h24 num" style="margin:4px 0 2px">1,517억원</div>
+            <div class="t-b12 c-sec">지급 원인 1위 · 금액 비중 65.6%<br>(한국신용정보원, 2023 상반기)</div>
+            <hr class="hair" style="margin:14px 0">
+            <p class="t-b12 c-sec" style="margin:0">이 규모에서는 <b>1%의 절감도 연 30억원</b>입니다.
+              연계율을 17%에서 50%로 올리면 절감 효과는 세 배가 됩니다.</p>
+          </div>
+          <div class="panel">
+            <h3 class="panel__t">데이터 제공 범위</h3>
+            <div class="col gap10" style="gap:10px">
+              <div class="row between"><span class="t-b14 c-sec">사실자료 리포트</span><span class="badge b-green">제공중</span></div>
+              <div class="row between"><span class="t-b14 c-sec">표준 분포 대조</span><span class="badge b-green">제공중</span></div>
+              <div class="row between"><span class="t-b14 c-sec">단지 이력 조회 API</span><span class="badge b-orange">협의중</span></div>
+              <div class="row between"><span class="t-b14 c-sec">위험 예측 스코어</span><span class="badge b-gline">2027 예정</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------------------------- 예방 캠페인 ---------------------------- -->
+<section class="page pro" id="p-ins-campaign">
+  <header class="prognb"><div class="prognb__in">
+    <div class="logo" data-go="home" style="font-size:19px">설비고<span class="prognb__tag" style="background:var(--sg-bg-info)">보험사</span></div>
+    <div class="gnb__sp"></div>
+    <div class="row gap12"><span class="badge b-blue b12">○○화재해상보험 · 일상생활배상책임</span>
+      <div class="row gap8"><div class="avatar ci" style="width:32px;height:32px;font-size:13px">보</div>
+        <span class="t-b14 fw6">보상팀 이심사</span></div></div>
+  </div></header>
+  <div class="prowrap">
+    <nav class="pronav">
+      <a data-go="ins-home">📥 청구 심사</a>
+      <a data-go="ins-case">📄 사실자료 상세</a>
+      <a data-go="ins-analytics">📈 손해율 대시보드</a>
+      <a class="on" data-go="ins-campaign">🎟 예방 캠페인</a>
+      <hr class="hair" style="margin:12px 8px">
+      <a data-go="home">↩ 고객 화면으로</a>
+    </nav>
+    <div class="probody">
+      <div class="row between" style="margin-bottom:20px;align-items:flex-start">
+        <div><h1 class="t-h24" style="margin:0">예방 쿠폰 캠페인</h1>
+          <p class="t-b14 c-sec" style="margin:4px 0 0">사고가 나기 전에 막는 것이 가장 싼 보상입니다. 고위험 가입자에게 점검·클리닝 쿠폰을 배포합니다.</p></div>
+        <button class="btn medium primary">＋ 캠페인 만들기</button>
+      </div>
+
+      <div class="grid g4" style="gap:12px;margin-bottom:16px">
+        <div class="panel"><div class="t-b12 c-sec">배포한 쿠폰</div>
+          <div class="t-h24 num" style="margin:4px 0 2px">4,280장</div>
+          <div class="t-b12 c-sec">3개 캠페인 누적</div></div>
+        <div class="panel"><div class="t-b12 c-sec">사용률</div>
+          <div class="t-h24 num" style="margin:4px 0 2px">38.2%</div>
+          <div class="t-b12 c-sec">1,636장 사용</div></div>
+        <div class="panel"><div class="t-b12 c-sec">예방 추정 사고</div>
+          <div class="t-h24 num c-suc" style="margin:4px 0 2px">62건</div>
+          <div class="t-b12 c-sec">대조군 대비 청구율 차이</div></div>
+        <div class="panel" style="background:var(--sg-bg-success-subtle);box-shadow:none">
+          <div class="t-b12 c-sec">캠페인 ROI</div>
+          <div class="t-h24 num c-suc" style="margin:4px 0 2px">164%</div>
+          <div class="t-b12 c-sec">투입 2.1억 · 회수 5.5억</div></div>
+      </div>
+
+      <div class="panel" style="margin-bottom:16px">
+        <h3 class="panel__t">고위험 세그먼트</h3>
+        <p class="t-b12 c-sec" style="margin:-8px 0 14px">아파트 준공연도 · 배관 재질 · 난방 방식 · 과거 청구 이력을 결합해 산출합니다.
+          설비고에 축적된 실제 하자·세정 케이스가 가중치를 보정합니다.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <tr><th style="text-align:left;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">세그먼트</th>
+            <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">가입자</th>
+            <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">연 청구율</th>
+            <th style="text-align:left;padding:9px 0 9px 16px;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600;width:160px">위험도</th>
+            <th style="text-align:right;padding:9px 0;border-bottom:1px solid var(--sg-border-default);color:var(--sg-text-secondary);font-weight:600">권장 조치</th></tr>
+          <tr><td style="padding:13px 0;border-bottom:1px solid var(--sg-border-subtle)">준공 30년↑ · 중앙난방 · 강관</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">18,420</td>
+            <td class="num fw7" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle);color:var(--sg-text-danger)">4.8%</td>
+            <td style="padding-left:16px;border-bottom:1px solid var(--sg-border-subtle)">
+              <div class="posbar"><i style="position:absolute;left:0;top:0;bottom:0;width:88%;border-radius:999px;background:var(--sg-bg-danger)"></i></div></td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-red">배관 클리닝</span></td></tr>
+          <tr><td style="padding:13px 0;border-bottom:1px solid var(--sg-border-subtle)">준공 25~29년 · 과거 청구 이력</td>
+            <td class="num" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)">9,860</td>
+            <td class="num fw7" style="text-align:right;border-bottom:1px solid var(--sg-border-subtle);color:var(--sg-text-warning)">3.2%</td>
+            <td style="padding-left:16px;border-bottom:1px solid var(--sg-border-subtle)">
+              <div class="posbar"><i style="position:absolute;left:0;top:0;bottom:0;width:62%;border-radius:999px;background:var(--sg-bg-warning)"></i></div></td>
+            <td style="text-align:right;border-bottom:1px solid var(--sg-border-subtle)"><span class="badge b-orange">무료 점검</span></td></tr>
+          <tr><td style="padding:13px 0">준공 20~24년 · 개별난방</td>
+            <td class="num" style="text-align:right">24,180</td>
+            <td class="num fw7" style="text-align:right">1.4%</td>
+            <td style="padding-left:16px">
+              <div class="posbar"><i style="position:absolute;left:0;top:0;bottom:0;width:26%;border-radius:999px;background:var(--sg-bg-success)"></i></div></td>
+            <td style="text-align:right"><span class="badge b-gline">알림만</span></td></tr>
+        </table>
+      </div>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start">
+        <div class="panel">
+          <h3 class="panel__t">진행 중인 캠페인</h3>
+          <div class="col gap12" style="margin-top:14px">
+            <div class="jobrow" style="align-items:flex-start">
+              <span style="font-size:22px">🚿</span>
+              <div style="flex:1">
+                <div class="row gap4" style="margin-bottom:4px">
+                  <span class="t-b14 fw7">노후 단지 배관 클리닝 50% 지원</span>
+                  <span class="badge b-brand">진행중</span></div>
+                <div class="t-b12 c-sec" style="margin-bottom:8px">준공 30년↑ 중앙난방 가입자 대상 · 2026.09.01 ~ 2026.12.31</div>
+                <div class="row gap16" style="flex-wrap:wrap">
+                  <span class="t-b12 c-sec">배포 <b class="num">2,400장</b></span>
+                  <span class="t-b12 c-sec">사용 <b class="num">1,012장 (42%)</b></span>
+                  <span class="t-b12 c-sec">예방 추정 <b class="num c-suc">41건</b></span>
+                  <span class="t-b12 c-sec">ROI <b class="num c-suc">187%</b></span></div>
+              </div>
+              <button class="btn small outlined">리포트</button></div>
+
+            <div class="jobrow" style="align-items:flex-start">
+              <span style="font-size:22px">🔍</span>
+              <div style="flex:1">
+                <div class="row gap4" style="margin-bottom:4px">
+                  <span class="t-b14 fw7">재청구 이력 가입자 무료 점검</span>
+                  <span class="badge b-brand">진행중</span></div>
+                <div class="t-b12 c-sec" style="margin-bottom:8px">1년 내 청구 이력 가입자 대상 · 2026.10.01 ~ 2027.03.31</div>
+                <div class="row gap16" style="flex-wrap:wrap">
+                  <span class="t-b12 c-sec">배포 <b class="num">1,280장</b></span>
+                  <span class="t-b12 c-sec">사용 <b class="num">418장 (33%)</b></span>
+                  <span class="t-b12 c-sec">예방 추정 <b class="num c-suc">14건</b></span>
+                  <span class="t-b12 c-sec">ROI <b class="num c-suc">142%</b></span></div>
+              </div>
+              <button class="btn small outlined">리포트</button></div>
+
+            <div class="jobrow" style="align-items:flex-start;opacity:.6">
+              <span style="font-size:22px">🌀</span>
+              <div style="flex:1">
+                <div class="row gap4" style="margin-bottom:4px">
+                  <span class="t-b14 fw7">상가 그리스트랩 정기 관리 제휴</span>
+                  <span class="badge b-gray">종료</span></div>
+                <div class="t-b12 c-sec" style="margin-bottom:8px">음식점 영업배상 가입자 대상 · 2026.03 ~ 2026.08</div>
+                <div class="row gap16" style="flex-wrap:wrap">
+                  <span class="t-b12 c-sec">배포 <b class="num">600장</b></span>
+                  <span class="t-b12 c-sec">사용 <b class="num">206장 (34%)</b></span>
+                  <span class="t-b12 c-sec">예방 추정 <b class="num">7건</b></span>
+                  <span class="t-b12 c-sec">ROI <b class="num">118%</b></span></div>
+              </div>
+              <button class="btn small ghost">리포트</button></div>
+          </div>
+        </div>
+
+        <div class="col gap12">
+          <div class="panel" style="background:var(--sg-bg-info-subtle);box-shadow:none">
+            <div class="t-b14 fw7" style="margin-bottom:6px">해외 검증 사례</div>
+            <p class="t-b12 c-sec" style="margin:0 0 10px">영국 Ondo InsurTech의 <b>LeakBot</b>은 보험사가 누수 감지기를
+              가입자에게 배포하고 기기당 월 구독료를 내는 구조로 <b>보험사 ROI 188%</b>를 실증하며
+              15.1만 대를 보급했습니다.</p>
+            <p class="t-b12 c-sec" style="margin:0">설비고는 센서 이전에 <b>사람의 손(세정·점검)</b>으로 같은 예방 가치를
+              먼저 증명하고, 중기적으로 IoT 감지기 배포를 얹습니다.</p>
+          </div>
+          <div class="panel">
+            <h3 class="panel__t">쿠폰 단가</h3>
+            <div class="col gap8">
+              <div class="row between"><span class="t-b14 c-sec">배관 클리닝 50% 지원</span><span class="t-b14 fw6 num">90,000원</span></div>
+              <div class="row between"><span class="t-b14 c-sec">무료 배관 점검</span><span class="t-b14 fw6 num">40,000원</span></div>
+              <div class="row between"><span class="t-b14 c-sec">그리스트랩 관리</span><span class="t-b14 fw6 num">120,000원</span></div>
+            </div>
+            <hr class="hair" style="margin:14px 0">
+            <div class="row between"><span class="t-b14 c-sec">건당 평균 누수 지급액</span>
+              <span class="t-b14 fw7 num">571,000원</span></div>
+            <p class="t-b12 c-sec" style="margin:10px 0 0">쿠폰 6장이 사고 1건을 막으면 손익분기입니다.
+              현재 실측 전환은 <b class="c-suc">쿠폰 26장당 1건</b> 예방입니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

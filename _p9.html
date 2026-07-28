@@ -1,0 +1,161 @@
+
+</main>
+</div>
+
+<script>
+(function(){
+  var pages = document.querySelectorAll('.page');
+  var gnb = document.querySelector('.gnb');
+  function go(id){
+    pages.forEach(function(p){ p.classList.toggle('on', p.id === 'p'+'-'+id); });
+    var cur = document.getElementById('p-'+id);
+    if(gnb) gnb.style.display = (cur && cur.classList.contains('pro')) ? 'none' : '';
+    window.scrollTo({top:0, behavior:'instant'});
+    if(mnav) mnav.classList.remove('open');
+    if(window.__syncCta) window.__syncCta();
+    if(id === 'diag2') runDiag();
+  }
+  function setSvc(name){
+    if(!name) return;
+    ['svcTag','instTitle'].forEach(function(id){
+      var el = document.getElementById(id); if(el) el.textContent = name;
+    });
+  }
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-go]');
+    if(t){ e.preventDefault(); setSvc(t.getAttribute('data-svc')); go(t.getAttribute('data-go')); return; }
+    var o = e.target.closest('.opt');
+    if(o){ var box = o.parentElement;
+      box.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('on'); });
+      o.classList.add('on'); return; }
+    var c = e.target.closest('.chip');
+    if(c && !c.disabled){ c.setAttribute('aria-pressed', c.getAttribute('aria-pressed')==='true' ? 'false':'true'); }
+  });
+
+  /* AI 분석 진행 연출 */
+  var timer;
+  function runDiag(){
+    var bar = document.getElementById('diagbar');
+    var s3 = document.getElementById('diagstep3'), s4 = document.getElementById('diagstep4');
+    if(!bar) return;
+    bar.style.width = '12%';
+    s3.innerHTML = '<span class="c-ter">◌</span><span class="t-b14 c-sec">유사 시공 사례 4,182건 대조</span>';
+    s4.innerHTML = '<span class="c-ter">◌</span><span class="t-b14 c-sec">전문가 검수 대기</span>';
+    clearTimeout(timer);
+    setTimeout(function(){ bar.style.width='48%'; }, 300);
+    setTimeout(function(){ bar.style.width='76%';
+      s3.innerHTML = '<span class="c-suc">✓</span><span class="t-b14">유사 시공 사례 12건 매칭</span>'; }, 1200);
+    setTimeout(function(){ bar.style.width='100%';
+      s4.innerHTML = '<span class="c-suc">✓</span><span class="t-b14">전문가 검수 완료</span>'; }, 2100);
+    timer = setTimeout(function(){ go('diag3'); }, 2900);
+  }
+
+  /* ---------- 모바일 대응 ---------- */
+  var mnav = document.getElementById('mnav'), mbtn = document.getElementById('mnavBtn');
+  if(mbtn) mbtn.addEventListener('click', function(){ mnav.classList.toggle('open'); });
+
+  /* 인라인 grid-template-columns 를 모바일에서 1열로 */
+  document.querySelectorAll('[style*="grid-template-columns"]').forEach(function(el){
+    if(el.closest('.cats')) return;
+    var s = el.getAttribute('style') || '';
+    el.classList.add('gcol');
+    if(/repeat\(4,1fr\)|repeat\(3,1fr\)/.test(s.replace(/\s/g,''))) el.classList.add('keep2');
+  });
+
+  /* 넓은 표는 가로 스크롤 컨테이너로 감싸기 */
+  document.querySelectorAll('table').forEach(function(tb){
+    if(tb.parentElement && tb.parentElement.classList.contains('tblwrap')) return;
+    var cols = 0;
+    tb.querySelectorAll('tr').forEach(function(tr){ cols = Math.max(cols, tr.children.length); });
+    var w = document.createElement('div');
+    w.className = 'tblwrap' + (cols >= 3 ? ' wide' : '');
+    tb.parentNode.insertBefore(w, tb); w.appendChild(tb);
+  });
+
+  /* .svc 카드가 든 그리드는 모바일에서 1열 */
+  document.querySelectorAll('.svc').forEach(function(el){
+    var g = el.closest('.grid'); if(g) g.classList.add('svcgrid');
+  });
+
+  /* 인라인 sticky 는 모바일에서 해제 */
+  document.querySelectorAll('[style*="position:sticky"]').forEach(function(el){
+    el.classList.add('instk');
+  });
+
+  /* 모바일 하단 고정 CTA — 우측 패널의 주요 버튼을 복제 */
+  var mcta = document.createElement('div'); mcta.className = 'mcta'; mcta.id = 'mcta';
+  document.getElementById('app').appendChild(mcta);
+  function syncCta(){
+    mcta.innerHTML = '';
+    if(window.innerWidth > 767) return;
+    var cur = document.querySelector('.page.on');
+    if(!cur || cur.classList.contains('pro')) return;
+    var btn = cur.querySelector('.side .btn.primary');
+    if(!btn) return;
+    var c = btn.cloneNode(true);
+    c.classList.remove('medium','small'); c.classList.add('large','block');
+    mcta.appendChild(c);
+  }
+  window.addEventListener('resize', syncCta);
+  window.__syncCta = syncCta;
+  syncCta();
+
+  /* 단지 동별 위험도 */
+  var dg = document.getElementById('dongGrid');
+  if(dg){
+    var risk=[3,1,0,2,1,0,1, 0,2,1,0,3,1,0, 1,0,1,2,0,1,0];
+    var bg=['#E7FCEF','#FFF7F0','#FFE0CC','#FDEBEC'];
+    var fg=['#00A163','#C46000','#B4520A','#D0212E'];
+    var lb=['양호','관찰','주의','조치'];
+    var h='';
+    for(var i=0;i<21;i++){ var r=risk[i];
+      h+='<div class="dong" style="background:'+bg[r]+';color:'+fg[r]+'">'+(101+i*2)+'동<em>'+lb[r]+'</em></div>'; }
+    dg.innerHTML=h;
+  }
+
+  /* 입상관 계통도 */
+  var rg = document.getElementById('riserGrid');
+  if(rg){
+    var hist={ '12-3':['repeat','2회'], '12-1':['leak','누수'], '9-3':['leak','누수'],
+      '5-2':['clean','세정'], '5-3':['clean','세정'], '5-1':['clean','세정'], '5-4':['clean','세정'],
+      '3-4':['swap','교체'], '15-2':['leak','누수'], '7-1':['clean','세정'], '18-3':['leak','누수'] };
+    var col={leak:['#F1EEFF','#5400D7'], clean:['#E7F4FF','#0060B8'],
+      swap:['#E7FCEF','#00733F'], repeat:['#FDEBEC','#C11C26']};
+    var h='';
+    for(var f=20;f>=1;f--){
+      h+='<div class="fl">'+f+'F</div>';
+      for(var l=1;l<=4;l++){
+        var k=f+'-'+l, d=hist[k];
+        if(d){ h+='<div class="cell'+(k==='12-3'?' sel':'')+'" style="background:'+col[d[0]][0]+
+          ';color:'+col[d[0]][1]+'">'+d[1]+'</div>'; }
+        else { h+='<div class="cell"></div>'; }
+      }
+    }
+    rg.innerHTML=h;
+    rg.addEventListener('click', function(e){
+      var c=e.target.closest('.cell'); if(!c) return;
+      rg.querySelectorAll('.cell').forEach(function(x){x.classList.remove('sel')});
+      c.classList.add('sel');
+    });
+  }
+
+  /* Before / After 슬라이더 */
+  document.querySelectorAll('.ba').forEach(function(el){
+    function set(ev){
+      var r = el.getBoundingClientRect();
+      var x = ((ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left) / r.width * 100;
+      el.style.setProperty('--x', Math.max(2, Math.min(98, x)) + '%');
+    }
+    var on = false;
+    el.addEventListener('mousedown', function(e){ on = true; set(e); e.preventDefault(); });
+    el.addEventListener('mousemove', function(e){ if(on) set(e); });
+    el.addEventListener('touchstart', function(e){ on = true; set(e); });
+    el.addEventListener('touchmove', function(e){ if(on) set(e); });
+    window.addEventListener('mouseup', function(){ on = false; });
+    window.addEventListener('touchend', function(){ on = false; });
+    el.addEventListener('click', set);
+  });
+})();
+</script>
+</body>
+</html>

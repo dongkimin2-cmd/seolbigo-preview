@@ -1,0 +1,33 @@
+/* Pretendard — 숨고 브랜드 서체
+   원본: prisma/foundation/typo/fonts/Pretendard-{Regular,Medium,SemiBold,Bold}.woff2
+   배포: https://github.com/orioncactus/pretendard (SIL Open Font License 1.1)
+   숨고가 실제로 사용하는 4개 웨이트만 포함했습니다. */
+
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./Pretendard-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./Pretendard-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./Pretendard-SemiBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./Pretendard-Bold.woff2") format("woff2");
+}
