@@ -1,101 +1,123 @@
+'use client';
+// p-cases — 데이터 기반으로 전환 완료: 필터·정렬이 실제로 동작합니다.
+// SimilarCase[] (lib/mock-data) 를 필터링·정렬해 렌더하고, 요약 패널 수치도 결과에서 계산.
+import { useMemo, useState } from 'react';
+import { DEMO_DIAGNOSIS, DEMO_SIMILAR_CASES, type SimilarCase } from '../../lib/mock-data';
 
-// 자동 이식된 목업 화면 p-cases — 원본: seolbigo-preview/index.html
-// 인터랙션(토스트·검증·칩 등)은 components/MockupBridge 가 위임 처리합니다.
+const FILTERS = [
+  { id: 'sameApt', label: '같은 아파트', test: (c: SimilarCase) => c.sameApt },
+  { id: 'year', label: '같은 연식 ±3년', test: (c: SimilarCase) => Math.abs(c.year - 1999) <= 3 },
+  { id: 'sameSymptom', label: '같은 증상', test: (c: SimilarCase) => c.sameSymptom },
+  { id: 'floorBand', label: '같은 층수대', test: (c: SimilarCase) => c.floorBand },
+  { id: 'insurance', label: '보험 처리 건만', test: (c: SimilarCase) => c.insurance },
+] as const;
+
+type SortKey = 'similarity' | 'priceAsc' | 'latest';
+
 export default function Page() {
-  
+  const [active, setActive] = useState<Set<string>>(() => new Set(['sameSymptom']));
+  const [sort, setSort] = useState<SortKey>('similarity');
+
+  const toggle = (id: string) => setActive(prev => {
+    const next = new Set(prev);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    return next;
+  });
+
+  const list = useMemo(() => {
+    let out = DEMO_SIMILAR_CASES.filter(c =>
+      FILTERS.every(f => !active.has(f.id) || f.test(c)));
+    if (sort === 'priceAsc') out = [...out].sort((a, b) => a.priceWon - b.priceWon);
+    else if (sort === 'similarity') out = [...out].sort((a, b) => b.similarity - a.similarity);
+    return out;
+  }, [active, sort]);
+
+  const avgMan = list.length
+    ? (list.reduce((s, c) => s + c.priceWon, 0) / list.length / 10_000).toFixed(1)
+    : '0';
+  const nRestore = list.filter(c => c.restore).length;
+  const nInsurance = list.filter(c => c.insurance).length;
+  const D = DEMO_DIAGNOSIS;
+
   return (
-    <section className="page on" id="p-cases">
-      <><div className="phead"><div className="phead__in">
-          <div className="crumb"><a data-go="home">&#54856;</a><span>›</span><a data-go="diag3">&#51652;&#45800; &#44208;&#44284;</a><span>›</span><b>&#50976;&#49324; &#49884;&#44277; &#49324;&#47168;</b></div>
-          <h1>&#44057;&#51008; &#51665;, &#44057;&#51008; &#51613;&#49345;&#51008; &#50612;&#46523;&#44172; &#44256;&#52452;&#51012;&#44620;&#50836;</h1>
-          <p className="sub">&#54032;&#47168;&#47484; &#52286;&#50500;&#48372;&#46319; &#51312;&#44148;&#51060; &#44057;&#51008; &#49892;&#51228; &#49884;&#44277;&#51012; &#54869;&#51064;&#54616;&#49464;&#50836;. &#47784;&#46160; &#54540;&#47019;&#54268; &#44208;&#51228;·&#44160;&#51613;&#51012; &#44144;&#52828; &#49324;&#47168;&#51077;&#45768;&#45796;.</p>
-        </div></div>
-      
-        <div className="flow">
-          <div>
-            <div className="panel" style={{ marginBottom: 16, padding: "16px 20px" }}>
-              <div className="row between gap12" style={{ flexWrap: "wrap" }}>
-                <div className="row gap6" style={{ flexWrap: "wrap" }}>
-                  <button className="chip sm" aria-pressed="true">&#44057;&#51008; &#50500;&#54028;&#53944;</button>
-                  <button className="chip sm">&#44057;&#51008; &#50672;&#49885; ±3&#45380;</button>
-                  <button className="chip sm" aria-pressed="true">&#44057;&#51008; &#51613;&#49345;</button>
-                  <button className="chip sm">&#44057;&#51008; &#52789;&#49688;&#45824;</button>
-                  <button className="chip sm">&#48372;&#54744; &#52376;&#47532; &#44148;&#47564;</button>
-                </div>
-                <select className="inp" style={{ width: "auto", height: 38, padding: "0 36px 0 12px", fontSize: 14 }}>
-                  <option>&#52572;&#49888;&#49692;</option><option>&#44552;&#50529; &#45230;&#51008;&#49692;</option><option>&#50976;&#49324;&#46020;&#49692;</option></select>
+    <section className="page on" id="p-cases" data-react>
+      <div className="phead"><div className="phead__in">
+        <div className="crumb"><a data-go="home">홈</a><span>›</span><a data-go="diag3">진단 결과</a><span>›</span><b>유사 시공 사례</b></div>
+        <h1>같은 집, 같은 증상은 어떻게 고쳤을까요</h1>
+        <p className="sub">판례를 찾아보듯 조건이 같은 실제 시공을 확인하세요. 모두 플랫폼 결제·검증을 거친 사례입니다.</p>
+      </div></div>
+
+      <div className="flow">
+        <div>
+          <div className="panel" style={{ marginBottom: 16, padding: '16px 20px' }}>
+            <div className="row between gap12" style={{ flexWrap: 'wrap' }}>
+              <div className="row gap6" style={{ flexWrap: 'wrap' }}>
+                {FILTERS.map(f => (
+                  <button key={f.id} className="chip sm" aria-pressed={active.has(f.id)}
+                    onClick={() => toggle(f.id)}>{f.label}</button>
+                ))}
               </div>
-            </div>
-      
-            <div className="row between" style={{ margin: "0 4px 12px" }}>
-              <span className="t-b14 c-sec">&#52509; <b className="c-brand num">12</b>&#44148;</span>
-              <span className="t-b14 c-sec">&#54217;&#44512; <b className="num">41.2&#47564;&#50896;</b> · &#54217;&#44512; &#49548;&#50836; <b className="num">4&#49884;&#44036;</b></span>
-            </div>
-      
-            <div className="col gap12">
-              <div className="card" style={{ padding: 18, display: "flex", gap: 18, cursor: "pointer" }} data-go="case-detail">
-                <div className="ph wet" style={{ width: 150, height: 112, flex: "0 0 150px", borderRadius: 10 }} />
-                <div style={{ flex: "1", minWidth: "0" }}>
-                  <div className="row gap4" style={{ marginBottom: 6 }}>
-                    <span className="badge b-brand">&#44057;&#51008; &#50500;&#54028;&#53944;</span><span className="badge b-gline">1999&#45380;</span>
-                    <span className="badge b-gline">12&#52789;</span><span className="badge b-gline">&#51473;&#50521;&#45212;&#48169;</span></div>
-                  <div className="t-h18">&#48176;&#44288; &#51060;&#51020;&#48512; &#48372;&#49688; + &#52380;&#51109; &#47560;&#44048; &#48373;&#44396;</div>
-                  <div className="t-b14 c-sec" style={{ margin: "4px 0 10px" }}>&#45572;&#49688; &#53456;&#51648; → &#51060;&#51020;&#48512; &#49892;&#47553; → &#49437;&#44256; &#48372;&#49688; → &#46020;&#48176; · &#52509; 4&#49884;&#44036;</div>
-                  <div className="row between">
-                    <span className="t-b14 c-sec">&#44648;&#45143;&#54620;&#51665;&#49444;&#48708; · ★ 4.9 (126)</span>
-                    <span className="t-h20 num">380,000&#50896;</span></div>
-                </div>
-              </div>
-              <div className="card" style={{ padding: 18, display: "flex", gap: 18, cursor: "pointer" }} data-go="case-detail">
-                <div className="ph pipe" style={{ width: 150, height: 112, flex: "0 0 150px", borderRadius: 10 }} />
-                <div style={{ flex: "1", minWidth: "0" }}>
-                  <div className="row gap4" style={{ marginBottom: 6 }}>
-                    <span className="badge b-gline">&#44060;&#54252;&#45720;&#54392;&#47480;</span><span className="badge b-gline">2001&#45380;</span>
-                    <span className="badge b-orange">&#50556;&#44036;&#51089;&#50629;</span></div>
-                  <div className="t-h18">&#45572;&#49688; &#53456;&#51648; + &#51060;&#51020;&#48512; &#51204;&#52404; &#44368;&#52404;</div>
-                  <div className="t-b14 c-sec" style={{ margin: "4px 0 10px" }}>&#47588;&#47549;&#44288; &#46041;&#44288; · &#50556;&#44036; &#52628;&#44032;&#44552; 40,000&#50896; &#54252;&#54632; · &#52509; 6&#49884;&#44036;</div>
-                  <div className="row between">
-                    <span className="t-b14 c-sec">&#54620;&#48731;&#48176;&#44288; · ★ 4.8 (89)</span>
-                    <span className="t-h20 num">450,000&#50896;</span></div>
-                </div>
-              </div>
-              <div className="card" style={{ padding: 18, display: "flex", gap: 18, cursor: "pointer" }} data-go="case-detail">
-                <div className="ph clean" style={{ width: 150, height: 112, flex: "0 0 150px", borderRadius: 10 }} />
-                <div style={{ flex: "1", minWidth: "0" }}>
-                  <div className="row gap4" style={{ marginBottom: 6 }}>
-                    <span className="badge b-gline">&#50669;&#49340;&#52397;&#49556;</span><span className="badge b-gline">1997&#45380;</span>
-                    <span className="badge b-green">&#48372;&#54744; &#51204;&#50529; &#52376;&#47532;</span></div>
-                  <div className="t-h18">&#51060;&#51020;&#48512; &#48372;&#49688; (&#47560;&#44048; &#48373;&#44396; &#50630;&#51020;)</div>
-                  <div className="t-b14 c-sec" style={{ margin: "4px 0 10px" }}>&#50967;&#51665; &#51068;&#49345;&#49373;&#54876;&#48176;&#49345;&#52293;&#51076;&#48372;&#54744;&#51004;&#47196; &#51204;&#50529; &#52376;&#47532; · &#52509; 3&#49884;&#44036;</div>
-                  <div className="row between">
-                    <span className="t-b14 c-sec">&#50864;&#49457;&#49444;&#48708; · ★ 4.7 (52)</span>
-                    <span className="t-h20 num">330,000&#50896;</span></div>
-                </div>
-              </div>
+              <select className="inp" value={sort} onChange={e => setSort(e.target.value as SortKey)}
+                style={{ width: 'auto', height: 38, padding: '0 36px 0 12px', fontSize: 14 }}>
+                <option value="similarity">유사도순</option>
+                <option value="priceAsc">금액 낮은순</option>
+                <option value="latest">최신순</option>
+              </select>
             </div>
           </div>
-      
-          <aside className="side">
-            <div className="panel">
-              <h3 className="panel__t">12&#44148; &#50836;&#50557;</h3>
-              <div className="range" style={{ paddingTop: 30 }}>
-                <div className="range__bar">
-                  <div className="range__fair" style={{ left: "22%", right: "22%" }} />
-                  <div className="range__mark" style={{ left: "50%" }} />
-                  <div className="range__cap" style={{ left: "50%" }}>&#51473;&#50521;&#44050; 41&#47564;</div>
+
+          <div className="row between" style={{ margin: '0 4px 12px' }}>
+            <span className="t-b14 c-sec">총 <b className="c-brand num">{list.length}</b>건</span>
+            <span className="t-b14 c-sec">평균 <b className="num">{avgMan}만원</b> · 평균 소요 <b className="num">4시간</b></span>
+          </div>
+
+          <div className="col gap12">
+            {list.map(c => (
+              <div key={c.id} className="card" data-go="case-detail"
+                style={{ padding: 18, display: 'flex', gap: 18, cursor: 'pointer' }}>
+                <div className={'ph ' + c.tone} style={{ width: 150, height: 112, flex: '0 0 150px', borderRadius: 10 }} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div className="row gap4" style={{ marginBottom: 6, flexWrap: 'wrap' }}>
+                    {c.badges.map(b => <span key={b.label} className={'badge b-' + b.tone}>{b.label}</span>)}
+                  </div>
+                  <div className="t-h18">{c.title}</div>
+                  <div className="t-b14 c-sec" style={{ margin: '4px 0 10px' }}>{c.process}</div>
+                  <div className="row between">
+                    <span className="t-b14 c-sec">{c.proName} · {c.proMeta}</span>
+                    <span className="t-h20 num">{c.priceWon.toLocaleString()}원</span></div>
                 </div>
-                <div className="range__lbl"><span className="num">32&#47564;</span><span className="num">58&#47564;</span></div>
               </div>
-              <hr className="hair" style={{ margin: "18px 0" }} />
-              <div className="col gap8">
-                <div className="row between"><span className="t-b14 c-sec">&#52380;&#51109; &#48373;&#44396; &#54252;&#54632;</span><span className="t-b14 fw6">9&#44148;</span></div>
-                <div className="row between"><span className="t-b14 c-sec">&#48372;&#54744; &#52376;&#47532;</span><span className="t-b14 fw6">5&#44148;</span></div>
-                <div className="row between"><span className="t-b14 c-sec">&#51116;&#49884;&#44277; &#48156;&#49373;</span><span className="t-b14 fw6 c-suc">0&#44148;</span></div>
+            ))}
+            {!list.length && (
+              <div className="panel" style={{ textAlign: 'center', padding: 40 }}>
+                <div className="t-b16 fw6" style={{ marginBottom: 6 }}>조건에 맞는 사례가 없습니다</div>
+                <p className="t-b14 c-sec" style={{ margin: 0 }}>필터를 줄여서 다시 시도해보세요.</p>
               </div>
-              <button className="btn large primary block" data-go="quotes" style={{ marginTop: 18 }}>&#51060; &#51312;&#44148;&#51004;&#47196; &#44204;&#51201; &#48155;&#44592;</button>
+            )}
+          </div>
+        </div>
+
+        <aside className="side">
+          <div className="panel">
+            <h3 className="panel__t">{list.length}건 요약</h3>
+            <div className="range" style={{ paddingTop: 30 }}>
+              <div className="range__bar">
+                <div className="range__fair" style={{ left: '22%', right: '22%' }} />
+                <div className="range__mark" style={{ left: '50%' }} />
+                <div className="range__cap" style={{ left: '50%' }}>중앙값 {D.priceMid}만</div>
+              </div>
+              <div className="range__lbl"><span className="num">{D.priceMin}만</span><span className="num">{D.priceMax}만</span></div>
             </div>
-          </aside>
-        </div></>
+            <hr className="hair" style={{ margin: '18px 0' }} />
+            <div className="col gap8">
+              <div className="row between"><span className="t-b14 c-sec">천장 복구 포함</span><span className="t-b14 fw6">{nRestore}건</span></div>
+              <div className="row between"><span className="t-b14 c-sec">보험 처리</span><span className="t-b14 fw6">{nInsurance}건</span></div>
+              <div className="row between"><span className="t-b14 c-sec">재시공 발생</span><span className="t-b14 fw6 c-suc">0건</span></div>
+            </div>
+            <button className="btn large primary block" data-go="quotes" style={{ marginTop: 18 }}>이 조건으로 견적 받기</button>
+          </div>
+        </aside>
+      </div>
     </section>
   );
 }

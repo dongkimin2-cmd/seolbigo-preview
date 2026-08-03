@@ -79,6 +79,7 @@ export interface Quote {
   responseTime: string;
   priceWon: number;           // 원 단위
   badges: { label: string; tone: 'gline' | 'green' | 'blue' | 'orange' }[];
+  lineItems: { name: string; won: number }[];   // 결제 금액 구성
   recommended?: boolean;      // 기준가 적합 · 추천
   warning?: string;           // 적정 구간 이탈 사유
 }
@@ -88,6 +89,10 @@ export const DEMO_QUOTES: Quote[] = [
     id: 'q1', proId: '1', proName: '김남한집설비', initial: '김',
     rating: 4.9, reviews: 126, filmCount: 84, redoRate: 1.2, responseTime: '28분',
     priceWon: 410_000, recommended: true,
+    lineItems: [
+      { name: '배관 이음부 보수', won: 310_000 },
+      { name: '천장 마감 복구', won: 100_000 },
+    ],
     badges: [
       { label: '누수탐지 포함', tone: 'gline' },
       { label: '천장복구 포함', tone: 'gline' },
@@ -100,6 +105,10 @@ export const DEMO_QUOTES: Quote[] = [
     id: 'q2', proId: '2', proName: '한빛배관', initial: '한',
     rating: 4.8, reviews: 89, filmCount: 51, redoRate: 2.0, responseTime: '1시간',
     priceWon: 360_000,
+    lineItems: [
+      { name: '배관 이음부 보수', won: 310_000 },
+      { name: '누수 탐지', won: 50_000 },
+    ],
     badges: [
       { label: '누수탐지 포함', tone: 'gline' },
       { label: '천장복구 별도', tone: 'orange' },
@@ -111,6 +120,10 @@ export const DEMO_QUOTES: Quote[] = [
     id: 'q3', proId: '3', proName: '대성설비', initial: '대',
     rating: 4.6, reviews: 34, filmCount: 12, redoRate: 4.1, responseTime: '3시간',
     priceWon: 520_000,
+    lineItems: [
+      { name: '배관 전체 교체 (견적)', won: 470_000 },
+      { name: '누수 탐지', won: 50_000 },
+    ],
     warning:
       '적정 구간을 벗어났습니다. 사업자가 밝힌 사유는 "배관 전체 교체 필요 판단"입니다. ' +
       '현장 확인 전 판단이므로 방문 후 재견적을 요청하는 것을 권합니다.',
@@ -139,4 +152,70 @@ export const DEMO_CASES: CaseItem[] = [
   { id: '4', title: '화장실 바닥 누수', work: '방수 재시공', price: 96, tone: 'wet' },
   { id: '5', title: '세면대 하부 누수', work: '배수 트랩 교체', price: 9, tone: 'pipe' },
   { id: '6', title: '난방 온도 편차', work: '분배기 점검', price: 15, tone: 'clean' },
+];
+
+/* ---------- 예약 ---------- */
+
+export const BOOKING_DAYS = ['11/18 (화)', '11/19 (수)', '11/20 (목)', '11/21 (금)', '11/22 (토)'];
+export const BOOKING_TIMES: { t: string; soldOut?: boolean }[] = [
+  { t: '09:00' }, { t: '11:00' }, { t: '14:00' }, { t: '16:00' }, { t: '18:00', soldOut: true },
+];
+
+/* ---------- 유사 시공 사례 (사례 목록 화면) ---------- */
+
+export interface SimilarCase {
+  id: string;
+  tone: 'wet' | 'pipe' | 'clean';
+  badges: { label: string; tone: 'brand' | 'gline' | 'green' | 'orange' }[];
+  title: string;
+  process: string;            // 공정 요약 · 소요
+  proName: string;
+  proMeta: string;            // ★ 평점 (리뷰)
+  priceWon: number;
+  sameApt: boolean;           // 같은 아파트(청솔)
+  year: number;               // 준공연도
+  floorBand: boolean;         // 같은 층수대 (10~14층)
+  sameSymptom: boolean;
+  insurance: boolean;         // 보험 처리 건
+  restore: boolean;           // 천장/마감 복구 포함
+  similarity: number;         // 유사도 (정렬용)
+}
+
+export const DEMO_SIMILAR_CASES: SimilarCase[] = [
+  { id: 's1', tone: 'wet',
+    badges: [{ label: '같은 아파트', tone: 'brand' }, { label: '1999년', tone: 'gline' }, { label: '12층', tone: 'gline' }, { label: '중앙난방', tone: 'gline' }],
+    title: '배관 이음부 보수 + 천장 마감 복구',
+    process: '누수 탐지 → 이음부 실링 → 석고 보수 → 도배 · 총 4시간',
+    proName: '김남한집설비', proMeta: '★ 4.9 (126)', priceWon: 380_000,
+    sameApt: true, year: 1999, floorBand: true, sameSymptom: true, insurance: false, restore: true, similarity: 98 },
+  { id: 's2', tone: 'wet',
+    badges: [{ label: '같은 아파트', tone: 'brand' }, { label: '1999년', tone: 'gline' }, { label: '9층', tone: 'gline' }],
+    title: '이음부 보수 + 부분 도배',
+    process: '탐지 생략(노출 배관) → 실링 → 부분 도배 · 총 3.5시간',
+    proName: '김남한집설비', proMeta: '★ 4.9 (126)', priceWon: 350_000,
+    sameApt: true, year: 1999, floorBand: false, sameSymptom: true, insurance: true, restore: true, similarity: 95 },
+  { id: 's3', tone: 'pipe',
+    badges: [{ label: '개포늘푸른', tone: 'gline' }, { label: '2001년', tone: 'gline' }, { label: '야간작업', tone: 'orange' }],
+    title: '누수 탐지 + 이음부 전체 교체',
+    process: '매립관 동관 · 야간 추가금 40,000원 포함 · 총 6시간',
+    proName: '한빛배관', proMeta: '★ 4.8 (89)', priceWon: 450_000,
+    sameApt: false, year: 2001, floorBand: false, sameSymptom: true, insurance: false, restore: false, similarity: 91 },
+  { id: 's4', tone: 'clean',
+    badges: [{ label: '역삼청솔', tone: 'gline' }, { label: '1997년', tone: 'gline' }, { label: '보험 전액 처리', tone: 'green' }],
+    title: '이음부 보수 (마감 복구 없음)',
+    process: '윗집 일상생활배상책임보험으로 전액 처리 · 총 3시간',
+    proName: '우성설비', proMeta: '★ 4.7 (52)', priceWon: 330_000,
+    sameApt: false, year: 1997, floorBand: false, sameSymptom: true, insurance: true, restore: false, similarity: 89 },
+  { id: 's5', tone: 'pipe',
+    badges: [{ label: '잠실동백', tone: 'gline' }, { label: '2003년', tone: 'gline' }, { label: '11층', tone: 'gline' }],
+    title: '슬래브 관통부 방수 + 이음부 보수',
+    process: '방수층 보강 포함 · 총 7시간',
+    proName: '대성설비', proMeta: '★ 4.6 (34)', priceWon: 520_000,
+    sameApt: false, year: 2003, floorBand: true, sameSymptom: false, insurance: false, restore: true, similarity: 84 },
+  { id: 's6', tone: 'clean',
+    badges: [{ label: '신도림한내', tone: 'gline' }, { label: '1996년', tone: 'gline' }, { label: '3층', tone: 'gline' }],
+    title: '이음부 보수',
+    process: '단순 실링 · 총 2.5시간',
+    proName: '우성설비', proMeta: '★ 4.7 (52)', priceWon: 310_000,
+    sameApt: false, year: 1996, floorBand: false, sameSymptom: true, insurance: true, restore: false, similarity: 82 },
 ];

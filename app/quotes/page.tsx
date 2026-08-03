@@ -1,6 +1,7 @@
 // p-quotes — 데이터 기반으로 전환 완료: lib/mock-data 의 Quote[] 를 렌더
 // (서버 컴포넌트 — 백엔드 연결 시 여기서 fetch('/api/quotes') 또는 DB 조회로 교체)
 import { DEMO_DIAGNOSIS, DEMO_QUOTES, type Quote } from '../../lib/mock-data';
+import SelectQuoteButton from '../../components/SelectQuoteButton';
 
 const D = DEMO_DIAGNOSIS;
 const span = D.priceMax - D.priceMin;
@@ -49,8 +50,7 @@ function QuoteCard({ q }: { q: Quote }) {
       </div>
       <div className="row gap8" style={{ justifyContent: 'flex-end' }}>
         <button className="btn medium outlined" data-go="pro">필모그래피 {q.filmCount}건 보기</button>
-        <button className={'btn medium ' + (q.recommended ? 'primary' : 'solid')} data-go="booking"
-          style={{ minWidth: 150 }}>이 견적 선택</button>
+        <SelectQuoteButton quoteId={q.id} primary={q.recommended} />
       </div>
     </div>
   );
