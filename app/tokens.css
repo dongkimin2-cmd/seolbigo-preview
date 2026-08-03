@@ -1,0 +1,168 @@
+@font-face{font-family:"Pretendard";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/Pretendard-Regular.subset.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-style:normal;font-weight:500;font-display:swap;src:url("/fonts/Pretendard-Medium.subset.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-style:normal;font-weight:600;font-display:swap;src:url("/fonts/Pretendard-SemiBold.subset.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-style:normal;font-weight:700;font-display:swap;src:url("/fonts/Pretendard-Bold.subset.woff2") format("woff2")}
+/* Pretendard (SIL OFL 1.1) — 한글 실용 서브셋 임베드 */
+
+
+
+
+
+/* ============================================================
+   설비고 플랫폼 — Design Tokens
+   숨고 Prisma 디자인 시스템(2026-07 추출)을 그대로 상속합니다.
+   컬러·스페이싱·라운드·타입 스케일·그림자·버튼 규격 전부 숨고 프로덕션 값.
+   설비고 도메인 전용 토큰(긴급도·역할 액센트)만 추가했습니다.
+   ============================================================ */
+
+:root {
+  /* ---------- Brand (숨고 Prisma 그대로) ---------- */
+  --sg-brand-primary:        #693BF2;
+  --sg-brand-primary-hover:  #6302FB;
+  --sg-brand-primary-active: #5400D7;
+  --sg-brand-primary-light:  #C5B6FF;
+  --sg-brand-primary-subtle: #F1EEFF;
+  --sg-brand-secondary:      #0087FF;
+  --sg-brand-secondary-light:#3DA3FF;
+
+  /* ---------- Gray 11단계 ---------- */
+  --sg-gray-0:   #FFFFFF;
+  --sg-gray-50:  #F6F7F9;
+  --sg-gray-100: #EFF1F5;
+  --sg-gray-200: #E0E5EB;
+  --sg-gray-300: #C7CED6;
+  --sg-gray-400: #AAB4BF;
+  --sg-gray-500: #8F9AAB;
+  --sg-gray-600: #6A7685;
+  --sg-gray-700: #465162;
+  --sg-gray-800: #293341;
+  --sg-gray-900: #1C242F;
+
+  /* ---------- Text ---------- */
+  --sg-text-primary:     #1C242F;
+  --sg-text-secondary:   #6A7685;
+  --sg-text-tertiary:    #8F9AAB;
+  --sg-text-disabled:    #AAB4BF;
+  --sg-text-placeholder: #C7CED6;
+  --sg-text-inverse:     #FFFFFF;
+  --sg-text-brand:       #693BF2;
+  --sg-text-info:        #0087FF;
+  --sg-text-success:     #00A163;
+  --sg-text-warning:     #FF7C11;
+  --sg-text-danger:      #FF3541;
+
+  /* ---------- Background ---------- */
+  --sg-bg-base:      #FFFFFF;
+  --sg-bg-subtle:    #F6F7F9;
+  --sg-bg-muted:     #EFF1F5;
+  --sg-bg-emphasis:  #E0E5EB;
+  --sg-bg-inverse:   #293341;
+  --sg-bg-brand:           #693BF2;
+  --sg-bg-brand-hover:     #6302FB;
+  --sg-bg-brand-active:    #5400D7;
+  --sg-bg-brand-subtle:    #F1EEFF;
+  --sg-bg-danger:          #FF3541;
+  --sg-bg-danger-hover:    #EA1623;
+  --sg-bg-danger-subtle:   #FDEBEC;
+  --sg-bg-info:            #0087FF;
+  --sg-bg-info-subtle:     #E7F4FF;
+  --sg-bg-success:         #00A163;
+  --sg-bg-success-subtle:  #E7FCEF;
+  --sg-bg-warning:         #FF7C11;
+  --sg-bg-warning-subtle:  #FFF7F0;
+  --sg-bg-yellow-subtle:   #FFFCDE;
+
+  --sg-accent-amber:   #FFC300;
+
+  /* ---------- Border ---------- */
+  --sg-border-subtle:  #EFF1F5;
+  --sg-border-default: #E0E5EB;
+  --sg-border-strong:  #C7CED6;
+  --sg-border-inverse: #1C242F;
+  --sg-border-brand:   #693BF2;
+  --sg-border-danger:  #FF3541;
+  --sg-border-hairline: rgba(0, 0, 0, 0.05);
+
+  /* ---------- Alpha ---------- */
+  --sg-black-90:  rgba(0, 0, 0, 0.9);
+  --sg-black-80:  rgba(0, 0, 0, 0.8);
+  --sg-black-50:  rgba(0, 0, 0, 0.5);
+  --sg-black-30:  rgba(0, 0, 0, 0.3);
+  --sg-black-05:  rgba(0, 0, 0, 0.05);
+
+  /* ---------- Spacing ---------- */
+  --sg-space-1: 2px;   --sg-space-2: 4px;   --sg-space-3: 6px;   --sg-space-4: 8px;
+  --sg-space-5: 12px;  --sg-space-6: 16px;  --sg-space-7: 20px;  --sg-space-8: 24px;
+  --sg-space-9: 28px;  --sg-space-10: 32px; --sg-space-11: 40px; --sg-space-12: 48px;
+  --sg-space-13: 56px; --sg-space-14: 64px; --sg-space-15: 80px; --sg-space-16: 120px;
+
+  /* ---------- Radius ---------- */
+  --sg-radius-xs: 4px;  --sg-radius-sm: 6px;  --sg-radius-md: 8px;  --sg-radius-lg: 10px;
+  --sg-radius-xl: 12px; --sg-radius-2xl: 16px; --sg-radius-3xl: 20px; --sg-radius-full: 999px;
+
+  /* ---------- Elevation ---------- */
+  --sg-shadow-up-1: 0 2px 8px 0 rgba(41,51,65,.04);
+  --sg-shadow-up-2: 0 4px 12px 0 rgba(41,51,65,.08), 0 0 2px 0 rgba(41,51,65,.06);
+  --sg-shadow-up-3: 0 8px 24px 0 rgba(41,51,65,.1),  0 2px 8px 0 rgba(41,51,65,.08);
+  --sg-shadow-up-4: 0 16px 48px 0 rgba(41,51,65,.12),0 4px 16px 0 rgba(41,51,65,.1);
+  --sg-shadow-down-4: 0 -16px 48px 0 rgba(41,51,65,.12),0 -4px 16px 0 rgba(41,51,65,.1);
+  --sg-shadow-dialog: 0 4px 40px -4px rgba(0,0,0,.15), 0 3px 6px -2px rgba(0,0,0,.08);
+
+  /* ---------- Typography (Prisma) ---------- */
+  --sg-font-family: "Pretendard", -apple-system, BlinkMacSystemFont,
+                    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --sg-weight-regular: 400;  --sg-weight-medium: 500;
+  --sg-weight-semibold: 600; --sg-weight-bold: 700;
+
+  --sg-display52-size: 52px; --sg-display52-line: 72px;
+  --sg-display36-size: 36px; --sg-display36-line: 46px;
+  --sg-display34-size: 34px; --sg-display34-line: 44px;
+  --sg-display28-size: 28px; --sg-display28-line: 38px;
+  --sg-headline24-size: 24px; --sg-headline24-line: 32px;
+  --sg-headline20-size: 20px; --sg-headline20-line: 28px;
+  --sg-headline18-size: 18px; --sg-headline18-line: 26px;
+  --sg-headline16-size: 16px; --sg-headline16-line: 24px;
+  --sg-body18-size: 18px; --sg-body18-line: 26px;
+  --sg-body16-size: 16px; --sg-body16-line: 24px;
+  --sg-body14-size: 14px; --sg-body14-line: 22px;
+  --sg-body12-size: 12px; --sg-body12-line: 20px;
+  --sg-badge11-size: 11px; --sg-badge11-line: 18px;
+  --sg-badge12-size: 12px; --sg-badge12-line: 20px;
+  --sg-navigation-size: 10px; --sg-navigation-line: 14px;
+
+  /* ---------- Layout ---------- */
+  --sg-container-sm:  644px;
+  --sg-container-md:  828px;
+  --sg-container-lg: 1196px;
+  --sg-gutter-mobile: 12px;  --sg-gutter-desktop: 20px;
+  --sg-margin-mobile: 16px;  --sg-margin-desktop: 56px;
+
+  /* ---------- Motion ---------- */
+  --sg-duration-fast: 0.2s;
+  --sg-ease-out: ease-out;
+  --sg-transition-bg: background-color 0.2s ease-in-out;
+
+  /* ============================================================
+     설비고 도메인 토큰
+     ============================================================ */
+  /* 진단 긴급도 4단계 */
+  --sb-urgency-normal:  #00A163;
+  --sb-urgency-watch:   #0087FF;
+  --sb-urgency-caution: #FF7C11;
+  --sb-urgency-urgent:  #FF3541;
+  --sb-urgency-normal-bg:  #E7FCEF;
+  --sb-urgency-watch-bg:   #E7F4FF;
+  --sb-urgency-caution-bg: #FFF7F0;
+  --sb-urgency-urgent-bg:  #FDEBEC;
+
+  /* 4개 주체 역할 액센트 */
+  --sb-role-consumer: #693BF2;
+  --sb-role-manager:  #00A163;
+  --sb-role-pro:      #FF7C11;
+  --sb-role-insurer:  #0087FF;
+
+  /* 기준가 분포 게이지 */
+  --sb-range-track: #EFF1F5;
+  --sb-range-fair:  #E7FCEF;
+  --sb-range-mark:  #693BF2;
+}
