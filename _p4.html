@@ -221,7 +221,8 @@
         <div class="row between" style="margin-bottom:16px">
           <span class="t-h16">합계</span><span class="t-h20 num c-brand">410,000원</span></div>
         <button class="btn large primary block" data-go="booking">이 사업자로 예약</button>
-        <button class="btn medium ghost block" style="margin-top:8px">문의하기</button>
+        <button class="btn medium ghost block" style="margin-top:8px"
+          data-toast="안심번호로 연결됩니다 · 데모에서는 통화가 생략됩니다">문의하기</button>
       </div>
       <div class="panel" style="background:var(--sg-bg-brand-subtle);box-shadow:none">
         <div class="t-b14 fw7" style="margin-bottom:6px">광고비 0원으로 수주하는 사업자</div>
@@ -245,14 +246,14 @@
       <div class="block">
         <h2 class="block__t">방문 일정</h2>
         <p class="block__d">깨끗한집설비의 예약 가능 시간입니다.</p>
-        <div class="row gap8" style="margin-bottom:16px;flex-wrap:wrap">
+        <div class="row gap8" id="bookDays" data-single style="margin-bottom:16px;flex-wrap:wrap">
           <button class="chip">11/18 (화)</button>
           <button class="chip" aria-pressed="true">11/19 (수)</button>
           <button class="chip">11/20 (목)</button>
           <button class="chip">11/21 (금)</button>
           <button class="chip">11/22 (토)</button>
         </div>
-        <div class="row gap8" style="flex-wrap:wrap">
+        <div class="row gap8" id="bookTimes" data-single style="flex-wrap:wrap">
           <button class="chip sm">09:00</button><button class="chip sm">11:00</button>
           <button class="chip sm" aria-pressed="true">14:00</button><button class="chip sm">16:00</button>
           <button class="chip sm" disabled style="opacity:.4">18:00 (마감)</button>
@@ -300,7 +301,7 @@
         <div class="row gap12" style="margin-bottom:16px">
           <div class="avatar sq" style="width:44px;height:44px">깨</div>
           <div style="flex:1"><div class="t-b16 fw7">깨끗한집설비</div>
-            <div class="t-b12 c-sec">11.19 (수) 14:00 방문</div></div>
+            <div class="t-b12 c-sec" id="bookWhen">11.19 (수) 14:00 방문</div></div>
         </div>
         <hr class="hair" style="margin:0 0 14px">
         <h3 class="panel__t">결제 금액</h3>
@@ -312,7 +313,8 @@
         <hr class="hair" style="margin:14px 0">
         <div class="row between" style="margin-bottom:16px">
           <span class="t-h16">지금 결제</span><span class="t-h24 num c-brand">410,000원</span></div>
-        <button class="btn large primary block" data-go="variation">결제하고 예약 확정</button>
+        <button class="btn large primary block" data-go="variation" data-validate="booking"
+          data-toast="410,000원 결제 완료 · 예약이 확정되었습니다">결제하고 예약 확정</button>
       </div>
       <div class="panel" style="background:var(--sg-bg-info-subtle);box-shadow:none">
         <div class="t-b14 fw7" style="margin-bottom:6px">🔒 에스크로로 보관됩니다</div>
@@ -409,8 +411,10 @@
           <p class="t-b12 c-sec" style="margin:0">기준가 범위 <b class="num">32~58만원</b> 안에 있습니다
             <span class="badge b-green" style="margin-left:4px">적정</span></p>
         </div>
-        <button class="btn large primary block" data-go="tracking">80,000원 추가 승인</button>
-        <button class="btn medium solid block" style="margin-top:8px">거절하고 협의</button>
+        <button class="btn large primary block" data-go="tracking"
+          data-toast="추가금 80,000원이 승인되었습니다 · 시공이 계속 진행됩니다">80,000원 추가 승인</button>
+        <button class="btn medium solid block" style="margin-top:8px"
+          data-toast="거절 시 기존 견적 범위 내 시공 또는 위약금 없는 전액 환불이 가능합니다">거절하고 협의</button>
       </div>
     </aside>
   </div>
@@ -490,7 +494,8 @@
           <span class="t-h16">최종 금액</span><span class="t-h20 num">490,000원</span></div>
         <div class="t-b12 c-sec" style="margin-bottom:16px">에스크로 보관중 · 완료 승인 시 지급</div>
         <button class="btn large primary block" data-go="warranty">시공 완료 확인 (데모)</button>
-        <button class="btn medium ghost block" style="margin-top:8px">문의하기</button>
+        <button class="btn medium ghost block" style="margin-top:8px"
+          data-toast="안심번호로 연결됩니다 · 데모에서는 통화가 생략됩니다">문의하기</button>
       </div>
     </aside>
   </div>

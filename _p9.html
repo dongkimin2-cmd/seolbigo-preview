@@ -21,15 +21,93 @@
       var el = document.getElementById(id); if(el) el.textContent = name;
     });
   }
+  /* ---------- 토스트 ---------- */
+  var twrap = document.createElement('div'); twrap.className = 'toast-wrap';
+  document.body.appendChild(twrap);
+  function toast(msg, type){
+    var el = document.createElement('div');
+    el.className = 'toast ' + (type || 'ok');
+    el.setAttribute('role','status'); el.textContent = msg;
+    twrap.appendChild(el);
+    requestAnimationFrame(function(){ el.classList.add('on'); });
+    setTimeout(function(){ el.classList.remove('on');
+      setTimeout(function(){ el.remove(); }, 300); }, 2600);
+  }
+
+  /* ---------- 폼 검증 ---------- */
+  var validators = {
+    diag1: function(){
+      var n = document.querySelectorAll('#diagSymChips .chip[aria-pressed="true"]').length;
+      if(!n) return '증상을 1개 이상 선택해주세요.';
+      var a = document.getElementById('diagAddr');
+      if(a && !a.value.trim()){ a.classList.add('err'); a.focus(); return '아파트 · 주소를 입력해주세요.'; }
+      return null;
+    },
+    booking: function(){
+      if(!document.querySelector('#bookDays .chip[aria-pressed="true"]')) return '방문 날짜를 선택해주세요.';
+      if(!document.querySelector('#bookTimes .chip[aria-pressed="true"]')) return '방문 시간을 선택해주세요.';
+      return null;
+    }
+  };
+
+  /* ---------- 요약 패널 동기화 ---------- */
+  function syncCounts(){
+    var sc = document.getElementById('diagSymCount');
+    if(sc) sc.textContent = document.querySelectorAll('#diagSymChips .chip[aria-pressed="true"]').length + '개 선택';
+    var bw = document.getElementById('bookWhen');
+    if(bw){
+      var d = document.querySelector('#bookDays .chip[aria-pressed="true"]');
+      var t = document.querySelector('#bookTimes .chip[aria-pressed="true"]');
+      bw.textContent = (d && t) ? d.textContent.replace('/','.') + ' ' + t.textContent + ' 방문'
+        : '방문 일정을 선택해주세요';
+    }
+  }
+
   document.addEventListener('click', function(e){
-    var t = e.target.closest('[data-go]');
-    if(t){ e.preventDefault(); setSvc(t.getAttribute('data-svc')); go(t.getAttribute('data-go')); return; }
+    var t = e.target.closest('[data-go],[data-toast]');
+    if(t){
+      e.preventDefault();
+      var v = t.getAttribute('data-validate');
+      if(v && validators[v]){
+        var err = validators[v]();
+        if(err){ toast(err, 'warn'); return; }
+      }
+      var msg = t.getAttribute('data-toast');
+      if(msg) toast(msg);
+      var done = t.getAttribute('data-done');
+      if(done){
+        function mark(b){ b.textContent = done; b.classList.add('done'); b.disabled = true; }
+        mark(t);
+        if(t.closest('#mcta')){ /* 모바일 CTA 클릭 시 원본 버튼도 동기화 */
+          var orig = document.querySelector('.page.on .side .btn.primary');
+          if(orig) mark(orig);
+        }
+        if(window.__syncCta) window.__syncCta();
+      }
+      setSvc(t.getAttribute('data-svc'));
+      if(t.getAttribute('data-go')) go(t.getAttribute('data-go'));
+      return;
+    }
     var o = e.target.closest('.opt');
     if(o){ var box = o.parentElement;
       box.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('on'); });
       o.classList.add('on'); return; }
     var c = e.target.closest('.chip');
-    if(c && !c.disabled){ c.setAttribute('aria-pressed', c.getAttribute('aria-pressed')==='true' ? 'false':'true'); }
+    if(c && !c.disabled){
+      var single = c.closest('[data-single]');
+      if(single){
+        single.querySelectorAll('.chip').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+        c.setAttribute('aria-pressed','true');
+      } else {
+        c.setAttribute('aria-pressed', c.getAttribute('aria-pressed')==='true' ? 'false':'true');
+      }
+      syncCounts();
+    }
+  });
+
+  /* 입력 시 오류 표시 해제 */
+  document.addEventListener('input', function(e){
+    if(e.target.classList && e.target.classList.contains('err')) e.target.classList.remove('err');
   });
 
   /* AI 분석 진행 연출 */

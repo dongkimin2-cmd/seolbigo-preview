@@ -110,7 +110,8 @@
             <div class="row between" style="margin-bottom:8px">
               <span class="t-b12 c-sec">105동 참여</span><span class="t-b14 fw7 num">18 / 24세대</span></div>
             <div class="gauge" style="margin-bottom:12px"><i style="width:75%"></i></div>
-            <button class="btn small outlined block">관리사무소 공지 발송</button>
+            <button class="btn small outlined block" data-done="✓ 발송 완료"
+              data-toast="105동 게시판·앱 알림으로 공지가 발송되었습니다">관리사무소 공지 발송</button>
           </div>
         </div>
       </div>
@@ -145,7 +146,7 @@
         <div class="row gap8">
           <select class="inp" style="width:auto;height:38px;padding:0 34px 0 12px;font-size:14px">
             <option>103동</option><option>105동</option><option>107동</option></select>
-          <button class="btn medium outlined">PDF 내려받기</button></div>
+          <button class="btn medium outlined" data-toast="데모에서는 PDF 다운로드가 생략됩니다">PDF 내려받기</button></div>
       </div>
 
       <div style="display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start">
@@ -460,19 +461,19 @@
                 <div style="flex:1"><div class="t-b14 fw7">입찰 사양서 (표준안)</div>
                   <div class="t-b12 c-sec">세정 범위·공법·검수 기준·하자보증 조건 — 12페이지</div></div>
                 <span class="verified">✓ 생성 완료</span>
-                <button class="btn small outlined">내려받기</button></div>
+                <button class="btn small outlined" data-toast="데모에서는 다운로드가 생략됩니다">내려받기</button></div>
               <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
                 <span style="font-size:20px">📊</span>
                 <div style="flex:1"><div class="t-b14 fw7">예정가격 산출 근거</div>
                   <div class="t-b12 c-sec">동일 규모 단지 42건의 실제 계약금액 분포 · 표준 공정 DB 단가</div></div>
                 <span class="verified">✓ 생성 완료</span>
-                <button class="btn small outlined">내려받기</button></div>
+                <button class="btn small outlined" data-toast="데모에서는 다운로드가 생략됩니다">내려받기</button></div>
               <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
                 <span style="font-size:20px">📋</span>
                 <div style="flex:1"><div class="t-b14 fw7">적격심사 평가표</div>
                   <div class="t-b12 c-sec">지침 별표 기준 · 배점표 자동 반영</div></div>
                 <span class="verified">✓ 생성 완료</span>
-                <button class="btn small outlined">내려받기</button></div>
+                <button class="btn small outlined" data-toast="데모에서는 다운로드가 생략됩니다">내려받기</button></div>
               <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
                 <span style="font-size:20px">🗂</span>
                 <div style="flex:1"><div class="t-b14 fw7">현장설명회 자료</div>
@@ -544,7 +545,8 @@
             <div class="callout" style="padding:12px">
               <p class="t-b12 c-sec" style="margin:0">세정은 자본적 지출이 아닌 <b>청소 용역</b>으로 분류되어
                 관리비(수선유지비) 집행이 가능합니다. 지자체 질의회신 자료가 첨부됩니다.</p></div>
-            <button class="btn medium outlined block" style="margin-top:12px">질의회신 자료 보기</button>
+            <button class="btn medium outlined block" style="margin-top:12px"
+              data-toast="데모에서는 질의회신 자료 열람이 생략됩니다">질의회신 자료 보기</button>
           </div>
         </div>
       </div>
@@ -577,8 +579,9 @@
         <div><h1 class="t-h24" style="margin:0">입주자대표회의 보고자료</h1>
           <p class="t-b14 c-sec" style="margin:4px 0 0">“왜 이 업체를, 이 금액에” — 설명해야 하는 것을 데이터로 대신합니다.</p></div>
         <div class="row gap8">
-          <button class="btn medium outlined">PDF 내려받기</button>
-          <button class="btn medium primary">회의 자료로 제출</button></div>
+          <button class="btn medium outlined" data-toast="데모에서는 PDF 다운로드가 생략됩니다">PDF 내려받기</button>
+          <button class="btn medium primary" data-done="✓ 제출 완료"
+            data-toast="11월 정기 입주자대표회의 안건으로 제출되었습니다">회의 자료로 제출</button></div>
       </div>
 
       <div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start">

@@ -186,6 +186,22 @@ main{flex:1;background:var(--sg-bg-subtle)}
 .scroller{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
 .scroller::-webkit-scrollbar{display:none}
 
+/* 토스트 */
+.toast-wrap{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:300;
+  display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:calc(100vw - 32px)}
+.toast{background:var(--sg-bg-inverse);color:#fff;padding:12px 20px;border-radius:10px;
+  font-size:14px;font-weight:500;line-height:20px;box-shadow:var(--sg-shadow-dialog,0 8px 24px rgba(0,0,0,.24));
+  opacity:0;transform:translateY(8px);transition:opacity .25s ease,transform .25s ease;max-width:100%}
+.toast.on{opacity:1;transform:none}
+.toast.warn{background:var(--sg-bg-danger)}
+.toast.ok::before{content:"✓";margin-right:8px;color:#5CE29A}
+
+/* 폼 오류 · 완료 상태 */
+.inp.err{border-color:var(--sg-border-danger);background:var(--sg-bg-danger-subtle)}
+.btn.done{background:var(--sg-bg-success-subtle);color:var(--sg-bg-success);border:none;pointer-events:none}
+
+@media (max-width:767px){ .toast-wrap{bottom:92px} }
+
 @media (max-width:1080px){
   .flow{grid-template-columns:minmax(0,1fr)}
   .side{position:static}

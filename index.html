@@ -186,6 +186,22 @@ main{flex:1;background:var(--sg-bg-subtle)}
 .scroller{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
 .scroller::-webkit-scrollbar{display:none}
 
+/* 토스트 */
+.toast-wrap{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:300;
+  display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:calc(100vw - 32px)}
+.toast{background:var(--sg-bg-inverse);color:#fff;padding:12px 20px;border-radius:10px;
+  font-size:14px;font-weight:500;line-height:20px;box-shadow:var(--sg-shadow-dialog,0 8px 24px rgba(0,0,0,.24));
+  opacity:0;transform:translateY(8px);transition:opacity .25s ease,transform .25s ease;max-width:100%}
+.toast.on{opacity:1;transform:none}
+.toast.warn{background:var(--sg-bg-danger)}
+.toast.ok::before{content:"✓";margin-right:8px;color:#5CE29A}
+
+/* 폼 오류 · 완료 상태 */
+.inp.err{border-color:var(--sg-border-danger);background:var(--sg-bg-danger-subtle)}
+.btn.done{background:var(--sg-bg-success-subtle);color:var(--sg-bg-success);border:none;pointer-events:none}
+
+@media (max-width:767px){ .toast-wrap{bottom:92px} }
+
 @media (max-width:1080px){
   .flow{grid-template-columns:minmax(0,1fr)}
   .side{position:static}
@@ -741,7 +757,7 @@ main{flex:1;background:var(--sg-bg-subtle)}
       <div class="block">
         <h2 class="block__t">어떤 증상인가요? <span class="c-dan">*</span></h2>
         <p class="block__d">해당하는 항목을 모두 선택하세요. 선택할수록 유사 사례 매칭이 정확해집니다.</p>
-        <div class="row gap6" style="flex-wrap:wrap">
+        <div class="row gap6" id="diagSymChips" style="flex-wrap:wrap">
           <button class="chip sm" aria-pressed="true">천장에서 물이 떨어져요</button>
           <button class="chip sm" aria-pressed="true">벽지가 젖었어요</button>
           <button class="chip sm">물이 잘 안 내려가요</button>
@@ -758,7 +774,7 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <p class="block__d">같은 연식·같은 배관 재질의 사례만 골라 비교하기 위해 필요합니다.</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div class="field" style="grid-column:1/-1"><span class="lb">아파트 · 주소 <span class="rq">*</span></span>
-            <input class="inp" value="서울 강남구 래미안아파트 103동 1204호"></div>
+            <input class="inp" id="diagAddr" value="서울 강남구 래미안아파트 103동 1204호"></div>
           <div class="field"><span class="lb">준공연도</span>
             <select class="inp"><option>1999년 (27년차)</option><option>2005년</option><option>2015년</option></select></div>
           <div class="field"><span class="lb">난방 방식</span>
@@ -776,12 +792,12 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <h3 class="panel__t">진단 요약</h3>
         <div class="col gap10" style="gap:10px">
           <div class="row between"><span class="t-b14 c-sec">첨부</span><span class="t-b14 fw6">사진 2장</span></div>
-          <div class="row between"><span class="t-b14 c-sec">증상</span><span class="t-b14 fw6">2개 선택</span></div>
+          <div class="row between"><span class="t-b14 c-sec">증상</span><span class="t-b14 fw6" id="diagSymCount">2개 선택</span></div>
           <div class="row between"><span class="t-b14 c-sec">건물</span><span class="t-b14 fw6">1999년 · 중앙난방</span></div>
         </div>
         <hr class="hair" style="margin:16px 0">
         <div class="row between"><span class="t-b14 c-sec">비교 대상 사례</span><span class="t-b16 fw7 num c-brand">4,182건</span></div>
-        <button class="btn large primary block" data-go="diag2" style="margin-top:16px">AI 진단 시작하기</button>
+        <button class="btn large primary block" data-go="diag2" data-validate="diag1" style="margin-top:16px">AI 진단 시작하기</button>
         <div class="t-b12 c-ter" style="margin-top:10px;text-align:center">무료 · 약 20초 소요</div>
       </div>
       <div class="panel" style="background:var(--sg-bg-brand-subtle);box-shadow:none">
@@ -933,7 +949,7 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <div class="col gap8">
           <button class="btn large primary block" data-go="quotes">견적 3곳 받기</button>
           <button class="btn medium outlined block" data-go="cases">유사 사례 12건 보기</button>
-          <button class="btn medium ghost block">진단서 PDF 내려받기</button>
+          <button class="btn medium ghost block" data-toast="데모에서는 PDF 다운로드가 생략됩니다">진단서 PDF 내려받기</button>
         </div>
         <hr class="hair" style="margin:16px 0">
         <div class="col gap8">
@@ -1359,7 +1375,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <div class="row between" style="margin-bottom:16px">
           <span class="t-h16">합계</span><span class="t-h20 num c-brand">410,000원</span></div>
         <button class="btn large primary block" data-go="booking">이 사업자로 예약</button>
-        <button class="btn medium ghost block" style="margin-top:8px">문의하기</button>
+        <button class="btn medium ghost block" style="margin-top:8px"
+          data-toast="안심번호로 연결됩니다 · 데모에서는 통화가 생략됩니다">문의하기</button>
       </div>
       <div class="panel" style="background:var(--sg-bg-brand-subtle);box-shadow:none">
         <div class="t-b14 fw7" style="margin-bottom:6px">광고비 0원으로 수주하는 사업자</div>
@@ -1383,14 +1400,14 @@ main{flex:1;background:var(--sg-bg-subtle)}
       <div class="block">
         <h2 class="block__t">방문 일정</h2>
         <p class="block__d">깨끗한집설비의 예약 가능 시간입니다.</p>
-        <div class="row gap8" style="margin-bottom:16px;flex-wrap:wrap">
+        <div class="row gap8" id="bookDays" data-single style="margin-bottom:16px;flex-wrap:wrap">
           <button class="chip">11/18 (화)</button>
           <button class="chip" aria-pressed="true">11/19 (수)</button>
           <button class="chip">11/20 (목)</button>
           <button class="chip">11/21 (금)</button>
           <button class="chip">11/22 (토)</button>
         </div>
-        <div class="row gap8" style="flex-wrap:wrap">
+        <div class="row gap8" id="bookTimes" data-single style="flex-wrap:wrap">
           <button class="chip sm">09:00</button><button class="chip sm">11:00</button>
           <button class="chip sm" aria-pressed="true">14:00</button><button class="chip sm">16:00</button>
           <button class="chip sm" disabled style="opacity:.4">18:00 (마감)</button>
@@ -1438,7 +1455,7 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <div class="row gap12" style="margin-bottom:16px">
           <div class="avatar sq" style="width:44px;height:44px">깨</div>
           <div style="flex:1"><div class="t-b16 fw7">깨끗한집설비</div>
-            <div class="t-b12 c-sec">11.19 (수) 14:00 방문</div></div>
+            <div class="t-b12 c-sec" id="bookWhen">11.19 (수) 14:00 방문</div></div>
         </div>
         <hr class="hair" style="margin:0 0 14px">
         <h3 class="panel__t">결제 금액</h3>
@@ -1450,7 +1467,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <hr class="hair" style="margin:14px 0">
         <div class="row between" style="margin-bottom:16px">
           <span class="t-h16">지금 결제</span><span class="t-h24 num c-brand">410,000원</span></div>
-        <button class="btn large primary block" data-go="variation">결제하고 예약 확정</button>
+        <button class="btn large primary block" data-go="variation" data-validate="booking"
+          data-toast="410,000원 결제 완료 · 예약이 확정되었습니다">결제하고 예약 확정</button>
       </div>
       <div class="panel" style="background:var(--sg-bg-info-subtle);box-shadow:none">
         <div class="t-b14 fw7" style="margin-bottom:6px">🔒 에스크로로 보관됩니다</div>
@@ -1547,8 +1565,10 @@ main{flex:1;background:var(--sg-bg-subtle)}
           <p class="t-b12 c-sec" style="margin:0">기준가 범위 <b class="num">32~58만원</b> 안에 있습니다
             <span class="badge b-green" style="margin-left:4px">적정</span></p>
         </div>
-        <button class="btn large primary block" data-go="tracking">80,000원 추가 승인</button>
-        <button class="btn medium solid block" style="margin-top:8px">거절하고 협의</button>
+        <button class="btn large primary block" data-go="tracking"
+          data-toast="추가금 80,000원이 승인되었습니다 · 시공이 계속 진행됩니다">80,000원 추가 승인</button>
+        <button class="btn medium solid block" style="margin-top:8px"
+          data-toast="거절 시 기존 견적 범위 내 시공 또는 위약금 없는 전액 환불이 가능합니다">거절하고 협의</button>
       </div>
     </aside>
   </div>
@@ -1628,7 +1648,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
           <span class="t-h16">최종 금액</span><span class="t-h20 num">490,000원</span></div>
         <div class="t-b12 c-sec" style="margin-bottom:16px">에스크로 보관중 · 완료 승인 시 지급</div>
         <button class="btn large primary block" data-go="warranty">시공 완료 확인 (데모)</button>
-        <button class="btn medium ghost block" style="margin-top:8px">문의하기</button>
+        <button class="btn medium ghost block" style="margin-top:8px"
+          data-toast="안심번호로 연결됩니다 · 데모에서는 통화가 생략됩니다">문의하기</button>
       </div>
     </aside>
   </div>
@@ -1724,15 +1745,17 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <h3 class="panel__t">완료 승인</h3>
         <p class="t-b14 c-sec" style="margin:0 0 14px">승인하시면 에스크로에 보관된 490,000원이
           사업자에게 지급되고, 1년 보증이 시작됩니다.</p>
-        <button class="btn large primary block">시공 완료 승인</button>
-        <button class="btn medium solid block" style="margin-top:8px">재시공 요청</button>
+        <button class="btn large primary block" data-done="✓ 승인 완료"
+          data-toast="시공 완료를 승인했습니다 · 에스크로 대금이 사업자에게 지급됩니다">시공 완료 승인</button>
+        <button class="btn medium solid block" style="margin-top:8px"
+          data-toast="재시공 요청 시 1년 보증 범위에서 무상 처리됩니다 · 데모에서는 접수가 생략됩니다">재시공 요청</button>
       </div>
       <div class="panel">
         <h3 class="panel__t">이어서 할 수 있는 일</h3>
         <div class="col gap8">
           <button class="btn medium outlined block" data-go="insurance">보험금 청구하기</button>
           <button class="btn medium outlined block" data-go="history">우리집 이력에 저장</button>
-          <button class="btn medium ghost block">내역서 PDF 내려받기</button>
+          <button class="btn medium ghost block" data-toast="데모에서는 PDF 다운로드가 생략됩니다">내역서 PDF 내려받기</button>
         </div>
       </div>
     </aside>
@@ -1842,8 +1865,10 @@ main{flex:1;background:var(--sg-bg-subtle)}
           <span class="t-b14 c-sec">청구 금액</span><span class="t-b14 num">490,000원</span></div>
         <div class="row between" style="margin-bottom:16px">
           <span class="t-h16">예상 수령액</span><span class="t-h20 num c-brand">290,000원</span></div>
-        <button class="btn large primary block">보험사에 제출</button>
-        <button class="btn medium ghost block" style="margin-top:8px">리포트 PDF 내려받기</button>
+        <button class="btn large primary block" data-done="✓ 제출 완료"
+          data-toast="사실자료 패키지가 보험사에 제출되었습니다 · 심사 결과는 알림으로 안내됩니다">보험사에 제출</button>
+        <button class="btn medium ghost block" style="margin-top:8px"
+          data-toast="데모에서는 PDF 다운로드가 생략됩니다">리포트 PDF 내려받기</button>
       </div>
       <div class="panel" style="background:var(--sg-bg-success-subtle);box-shadow:none">
         <div class="t-b14 fw7" style="margin-bottom:6px">왜 빠른가요?</div>
@@ -2042,7 +2067,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <hr class="hair" style="margin:14px 0">
         <div class="row between" style="margin-bottom:16px">
           <span class="t-h16">지금 결제</span><span class="t-h24 num c-brand">262,000원</span></div>
-        <button class="btn large primary block">공동구매 참여</button>
+        <button class="btn large primary block" data-done="✓ 참여 접수됨"
+          data-toast="공동구매 참여가 접수되었습니다 · 최소 세대가 모이면 확정 안내를 드립니다">공동구매 참여</button>
         <div class="t-b12 c-ter" style="margin-top:10px;text-align:center">
           더 많은 세대가 모이면 차액은 자동 환불됩니다</div>
       </div>
@@ -2246,7 +2272,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <div class="field" style="margin-bottom:12px"><span class="lb">희망 방문일</span>
           <select class="inp" style="height:44px;font-size:15px"><option>11/20 (목) 오전</option>
             <option>11/20 (목) 오후</option><option>11/21 (금) 오전</option></select></div>
-        <button class="btn large primary block">무료 실측 예약</button>
+        <button class="btn large primary block" data-done="✓ 예약 접수됨"
+          data-toast="실측 예약이 접수되었습니다 · 방문 전날 알림을 드립니다">무료 실측 예약</button>
         <div class="t-b12 c-ter" style="margin-top:10px;text-align:center">예약 후에도 위약금 없이 취소할 수 있어요</div>
       </div>
 
@@ -2367,7 +2394,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <div class="field" style="margin-bottom:12px"><span class="lb">희망 조사일</span>
           <select class="inp" style="height:44px;font-size:15px"><option>11/21 (금) 오전</option>
             <option>11/22 (토) 오전</option><option>11/25 (화) 오후</option></select></div>
-        <button class="btn large primary block">관로 조사 예약</button>
+        <button class="btn large primary block" data-done="✓ 예약 접수됨"
+          data-toast="관로 조사 예약이 접수되었습니다 · 조사 당일 리포트가 발급됩니다">관로 조사 예약</button>
       </div>
       <div class="panel" style="background:var(--sg-bg-success-subtle);box-shadow:none">
         <div class="t-b14 fw7" style="margin-bottom:6px">정기 계약으로 전환하면</div>
@@ -2474,7 +2502,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <hr class="hair" style="margin:14px 0">
         <div class="row between" style="margin-bottom:14px">
           <span class="t-h16">결제 금액</span><span class="t-h24 num c-brand">180,000원</span></div>
-        <button class="btn large primary block">바로 예약하기</button>
+        <button class="btn large primary block" data-done="✓ 예약 확정됨"
+          data-toast="예약이 확정되었습니다 · 확정가라 현장 추가금이 없습니다">바로 예약하기</button>
         <div class="t-b12 c-ter" style="margin-top:10px;text-align:center">현장 추가금 없는 확정가</div>
       </div>
 
@@ -2739,7 +2768,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
                   <span class="badge b-brand">즉시 견적</span><span class="badge b-gline">34평</span></div>
                   <div class="t-b14 fw7">수도배관 클리닝 — 확정가 상품</div>
                   <div class="t-b12 c-sec">180,000원 · 수락만 하면 배정됩니다</div></div>
-                <button class="btn small outlined">수락</button></div>
+                <button class="btn small outlined" data-done="✓ 수락됨"
+                  data-toast="요청을 수락했습니다 · 일정이 배정되었습니다">수락</button></div>
             </div>
           </div>
         </div>
@@ -2860,7 +2890,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
               <div class="t-b12 c-sec">확정 금액</div>
               <div class="t-h20 num" style="margin-bottom:2px">180,000원</div>
               <div class="t-b12 c-sec" style="margin-bottom:12px">수수료 차감 후 165,600원</div>
-              <button class="btn medium primary block">수락하기</button>
+              <button class="btn medium primary block" data-done="✓ 수락됨"
+                data-toast="요청을 수락했습니다 · 11/22 (토) 13:00 일정이 확정되었습니다">수락하기</button>
             </div>
           </div>
         </div>
@@ -2882,7 +2913,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
               <div class="t-b12 c-sec">유사 단지 실적</div>
               <div class="t-h20 num" style="margin-bottom:2px">180~420만원</div>
               <div class="t-b12 c-sec" style="margin-bottom:12px">실측 후 확정</div>
-              <button class="btn medium primary block">실측 방문 신청</button>
+              <button class="btn medium primary block" data-done="✓ 신청 완료"
+                data-toast="실측 방문을 신청했습니다 · 고객 확인 후 일정이 확정됩니다">실측 방문 신청</button>
             </div>
           </div>
         </div>
@@ -2928,7 +2960,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                 <input placeholder="공정명 검색 (예: 누수 탐지)" style="height:44px">
               </div>
-              <button class="btn medium outlined" style="flex:0 0 auto">＋ 항목 추가</button>
+              <button class="btn medium outlined" style="flex:0 0 auto"
+                data-toast="데모에서는 항목 추가가 생략됩니다">＋ 항목 추가</button>
             </div>
 
             <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -3021,8 +3054,10 @@ main{flex:1;background:var(--sg-bg-subtle)}
             <hr class="hair" style="margin:0 0 14px">
             <div class="row between" style="margin-bottom:16px">
               <span class="t-h16">예상 수령액</span><span class="t-h20 num c-brand">377,200원</span></div>
-            <button class="btn large primary block">견적 보내기</button>
-            <button class="btn medium ghost block" style="margin-top:8px">임시 저장</button>
+            <button class="btn large primary block" data-go="pro-inbox"
+              data-toast="견적을 보냈습니다 · 고객이 열람하면 알림이 옵니다">견적 보내기</button>
+            <button class="btn medium ghost block" style="margin-top:8px"
+              data-toast="임시 저장되었습니다">임시 저장</button>
           </div>
 
           <div class="panel">
@@ -3066,7 +3101,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
         <div><h1 class="t-h24" style="margin:0">필모그래피</h1>
           <p class="t-b14 c-sec" style="margin:4px 0 0">사진만 올리면 포트폴리오와 후기 페이지가 자동으로 만들어집니다. 따로 관리할 게 없습니다.</p></div>
-        <button class="btn medium primary">＋ 시공 사진 등록</button>
+        <button class="btn medium primary"
+          data-toast="사진을 올리면 메타데이터 검증 후 자동 공개됩니다 · 데모에서는 업로드가 생략됩니다">＋ 시공 사진 등록</button>
       </div>
 
       <div class="panel" style="background:var(--sg-bg-brand-subtle);box-shadow:none;margin-bottom:16px">
@@ -3533,7 +3569,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
             <div class="row between" style="margin-bottom:8px">
               <span class="t-b12 c-sec">105동 참여</span><span class="t-b14 fw7 num">18 / 24세대</span></div>
             <div class="gauge" style="margin-bottom:12px"><i style="width:75%"></i></div>
-            <button class="btn small outlined block">관리사무소 공지 발송</button>
+            <button class="btn small outlined block" data-done="✓ 발송 완료"
+              data-toast="105동 게시판·앱 알림으로 공지가 발송되었습니다">관리사무소 공지 발송</button>
           </div>
         </div>
       </div>
@@ -3568,7 +3605,7 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <div class="row gap8">
           <select class="inp" style="width:auto;height:38px;padding:0 34px 0 12px;font-size:14px">
             <option>103동</option><option>105동</option><option>107동</option></select>
-          <button class="btn medium outlined">PDF 내려받기</button></div>
+          <button class="btn medium outlined" data-toast="데모에서는 PDF 다운로드가 생략됩니다">PDF 내려받기</button></div>
       </div>
 
       <div style="display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start">
@@ -3883,19 +3920,19 @@ main{flex:1;background:var(--sg-bg-subtle)}
                 <div style="flex:1"><div class="t-b14 fw7">입찰 사양서 (표준안)</div>
                   <div class="t-b12 c-sec">세정 범위·공법·검수 기준·하자보증 조건 — 12페이지</div></div>
                 <span class="verified">✓ 생성 완료</span>
-                <button class="btn small outlined">내려받기</button></div>
+                <button class="btn small outlined" data-toast="데모에서는 다운로드가 생략됩니다">내려받기</button></div>
               <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
                 <span style="font-size:20px">📊</span>
                 <div style="flex:1"><div class="t-b14 fw7">예정가격 산출 근거</div>
                   <div class="t-b12 c-sec">동일 규모 단지 42건의 실제 계약금액 분포 · 표준 공정 DB 단가</div></div>
                 <span class="verified">✓ 생성 완료</span>
-                <button class="btn small outlined">내려받기</button></div>
+                <button class="btn small outlined" data-toast="데모에서는 다운로드가 생략됩니다">내려받기</button></div>
               <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
                 <span style="font-size:20px">📋</span>
                 <div style="flex:1"><div class="t-b14 fw7">적격심사 평가표</div>
                   <div class="t-b12 c-sec">지침 별표 기준 · 배점표 자동 반영</div></div>
                 <span class="verified">✓ 생성 완료</span>
-                <button class="btn small outlined">내려받기</button></div>
+                <button class="btn small outlined" data-toast="데모에서는 다운로드가 생략됩니다">내려받기</button></div>
               <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
                 <span style="font-size:20px">🗂</span>
                 <div style="flex:1"><div class="t-b14 fw7">현장설명회 자료</div>
@@ -3967,7 +4004,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
             <div class="callout" style="padding:12px">
               <p class="t-b12 c-sec" style="margin:0">세정은 자본적 지출이 아닌 <b>청소 용역</b>으로 분류되어
                 관리비(수선유지비) 집행이 가능합니다. 지자체 질의회신 자료가 첨부됩니다.</p></div>
-            <button class="btn medium outlined block" style="margin-top:12px">질의회신 자료 보기</button>
+            <button class="btn medium outlined block" style="margin-top:12px"
+              data-toast="데모에서는 질의회신 자료 열람이 생략됩니다">질의회신 자료 보기</button>
           </div>
         </div>
       </div>
@@ -4000,8 +4038,9 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <div><h1 class="t-h24" style="margin:0">입주자대표회의 보고자료</h1>
           <p class="t-b14 c-sec" style="margin:4px 0 0">“왜 이 업체를, 이 금액에” — 설명해야 하는 것을 데이터로 대신합니다.</p></div>
         <div class="row gap8">
-          <button class="btn medium outlined">PDF 내려받기</button>
-          <button class="btn medium primary">회의 자료로 제출</button></div>
+          <button class="btn medium outlined" data-toast="데모에서는 PDF 다운로드가 생략됩니다">PDF 내려받기</button>
+          <button class="btn medium primary" data-done="✓ 제출 완료"
+            data-toast="11월 정기 입주자대표회의 안건으로 제출되었습니다">회의 자료로 제출</button></div>
       </div>
 
       <div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start">
@@ -4122,7 +4161,7 @@ main{flex:1;background:var(--sg-bg-subtle)}
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
         <div><h1 class="t-h24" style="margin:0">누수 청구 심사</h1>
           <p class="t-b14 c-sec" style="margin:4px 0 0">설비고 연계 건은 표준 공정 DB 대조 결과가 함께 들어옵니다. 판단은 손해사정이 합니다.</p></div>
-        <button class="btn medium outlined">엑셀 내려받기</button>
+        <button class="btn medium outlined" data-toast="데모에서는 다운로드가 생략됩니다">엑셀 내려받기</button>
       </div>
 
       <div class="grid g4" style="gap:12px;margin-bottom:16px">
@@ -4334,9 +4373,12 @@ main{flex:1;background:var(--sg-bg-subtle)}
             <hr class="hair" style="margin:0 0 14px">
             <div class="row between" style="margin-bottom:16px">
               <span class="t-h16">지급 예정액</span><span class="t-h24 num c-brand">290,000원</span></div>
-            <button class="btn large primary block">현장조사 없이 승인</button>
-            <button class="btn medium outlined block" style="margin-top:8px">손해사정 배정</button>
-            <button class="btn medium ghost block" style="margin-top:4px">추가 자료 요청</button>
+            <button class="btn large primary block" data-done="✓ 승인 완료"
+              data-toast="지급 승인 처리되었습니다 · 290,000원이 지급 예정입니다">현장조사 없이 승인</button>
+            <button class="btn medium outlined block" style="margin-top:8px"
+              data-toast="등록 손해사정법인에 배정되었습니다 · 데모 연출입니다">손해사정 배정</button>
+            <button class="btn medium ghost block" style="margin-top:4px"
+              data-toast="추가 자료 요청이 접수되었습니다 · 데모 연출입니다">추가 자료 요청</button>
           </div>
 
           <div class="panel" style="background:var(--sg-bg-success-subtle);box-shadow:none">
@@ -4504,7 +4546,8 @@ main{flex:1;background:var(--sg-bg-subtle)}
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
         <div><h1 class="t-h24" style="margin:0">예방 쿠폰 캠페인</h1>
           <p class="t-b14 c-sec" style="margin:4px 0 0">사고가 나기 전에 막는 것이 가장 싼 보상입니다. 고위험 가입자에게 점검·클리닝 쿠폰을 배포합니다.</p></div>
-        <button class="btn medium primary">＋ 캠페인 만들기</button>
+        <button class="btn medium primary"
+          data-toast="데모에서는 캠페인 생성이 생략됩니다">＋ 캠페인 만들기</button>
       </div>
 
       <div class="grid g4" style="gap:12px;margin-bottom:16px">
@@ -4655,15 +4698,93 @@ main{flex:1;background:var(--sg-bg-subtle)}
       var el = document.getElementById(id); if(el) el.textContent = name;
     });
   }
+  /* ---------- 토스트 ---------- */
+  var twrap = document.createElement('div'); twrap.className = 'toast-wrap';
+  document.body.appendChild(twrap);
+  function toast(msg, type){
+    var el = document.createElement('div');
+    el.className = 'toast ' + (type || 'ok');
+    el.setAttribute('role','status'); el.textContent = msg;
+    twrap.appendChild(el);
+    requestAnimationFrame(function(){ el.classList.add('on'); });
+    setTimeout(function(){ el.classList.remove('on');
+      setTimeout(function(){ el.remove(); }, 300); }, 2600);
+  }
+
+  /* ---------- 폼 검증 ---------- */
+  var validators = {
+    diag1: function(){
+      var n = document.querySelectorAll('#diagSymChips .chip[aria-pressed="true"]').length;
+      if(!n) return '증상을 1개 이상 선택해주세요.';
+      var a = document.getElementById('diagAddr');
+      if(a && !a.value.trim()){ a.classList.add('err'); a.focus(); return '아파트 · 주소를 입력해주세요.'; }
+      return null;
+    },
+    booking: function(){
+      if(!document.querySelector('#bookDays .chip[aria-pressed="true"]')) return '방문 날짜를 선택해주세요.';
+      if(!document.querySelector('#bookTimes .chip[aria-pressed="true"]')) return '방문 시간을 선택해주세요.';
+      return null;
+    }
+  };
+
+  /* ---------- 요약 패널 동기화 ---------- */
+  function syncCounts(){
+    var sc = document.getElementById('diagSymCount');
+    if(sc) sc.textContent = document.querySelectorAll('#diagSymChips .chip[aria-pressed="true"]').length + '개 선택';
+    var bw = document.getElementById('bookWhen');
+    if(bw){
+      var d = document.querySelector('#bookDays .chip[aria-pressed="true"]');
+      var t = document.querySelector('#bookTimes .chip[aria-pressed="true"]');
+      bw.textContent = (d && t) ? d.textContent.replace('/','.') + ' ' + t.textContent + ' 방문'
+        : '방문 일정을 선택해주세요';
+    }
+  }
+
   document.addEventListener('click', function(e){
-    var t = e.target.closest('[data-go]');
-    if(t){ e.preventDefault(); setSvc(t.getAttribute('data-svc')); go(t.getAttribute('data-go')); return; }
+    var t = e.target.closest('[data-go],[data-toast]');
+    if(t){
+      e.preventDefault();
+      var v = t.getAttribute('data-validate');
+      if(v && validators[v]){
+        var err = validators[v]();
+        if(err){ toast(err, 'warn'); return; }
+      }
+      var msg = t.getAttribute('data-toast');
+      if(msg) toast(msg);
+      var done = t.getAttribute('data-done');
+      if(done){
+        function mark(b){ b.textContent = done; b.classList.add('done'); b.disabled = true; }
+        mark(t);
+        if(t.closest('#mcta')){ /* 모바일 CTA 클릭 시 원본 버튼도 동기화 */
+          var orig = document.querySelector('.page.on .side .btn.primary');
+          if(orig) mark(orig);
+        }
+        if(window.__syncCta) window.__syncCta();
+      }
+      setSvc(t.getAttribute('data-svc'));
+      if(t.getAttribute('data-go')) go(t.getAttribute('data-go'));
+      return;
+    }
     var o = e.target.closest('.opt');
     if(o){ var box = o.parentElement;
       box.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('on'); });
       o.classList.add('on'); return; }
     var c = e.target.closest('.chip');
-    if(c && !c.disabled){ c.setAttribute('aria-pressed', c.getAttribute('aria-pressed')==='true' ? 'false':'true'); }
+    if(c && !c.disabled){
+      var single = c.closest('[data-single]');
+      if(single){
+        single.querySelectorAll('.chip').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+        c.setAttribute('aria-pressed','true');
+      } else {
+        c.setAttribute('aria-pressed', c.getAttribute('aria-pressed')==='true' ? 'false':'true');
+      }
+      syncCounts();
+    }
+  });
+
+  /* 입력 시 오류 표시 해제 */
+  document.addEventListener('input', function(e){
+    if(e.target.classList && e.target.classList.contains('err')) e.target.classList.remove('err');
   });
 
   /* AI 분석 진행 연출 */

@@ -27,7 +27,7 @@
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
         <div><h1 class="t-h24" style="margin:0">누수 청구 심사</h1>
           <p class="t-b14 c-sec" style="margin:4px 0 0">설비고 연계 건은 표준 공정 DB 대조 결과가 함께 들어옵니다. 판단은 손해사정이 합니다.</p></div>
-        <button class="btn medium outlined">엑셀 내려받기</button>
+        <button class="btn medium outlined" data-toast="데모에서는 다운로드가 생략됩니다">엑셀 내려받기</button>
       </div>
 
       <div class="grid g4" style="gap:12px;margin-bottom:16px">
@@ -239,9 +239,12 @@
             <hr class="hair" style="margin:0 0 14px">
             <div class="row between" style="margin-bottom:16px">
               <span class="t-h16">지급 예정액</span><span class="t-h24 num c-brand">290,000원</span></div>
-            <button class="btn large primary block">현장조사 없이 승인</button>
-            <button class="btn medium outlined block" style="margin-top:8px">손해사정 배정</button>
-            <button class="btn medium ghost block" style="margin-top:4px">추가 자료 요청</button>
+            <button class="btn large primary block" data-done="✓ 승인 완료"
+              data-toast="지급 승인 처리되었습니다 · 290,000원이 지급 예정입니다">현장조사 없이 승인</button>
+            <button class="btn medium outlined block" style="margin-top:8px"
+              data-toast="등록 손해사정법인에 배정되었습니다 · 데모 연출입니다">손해사정 배정</button>
+            <button class="btn medium ghost block" style="margin-top:4px"
+              data-toast="추가 자료 요청이 접수되었습니다 · 데모 연출입니다">추가 자료 요청</button>
           </div>
 
           <div class="panel" style="background:var(--sg-bg-success-subtle);box-shadow:none">
@@ -409,7 +412,8 @@
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
         <div><h1 class="t-h24" style="margin:0">예방 쿠폰 캠페인</h1>
           <p class="t-b14 c-sec" style="margin:4px 0 0">사고가 나기 전에 막는 것이 가장 싼 보상입니다. 고위험 가입자에게 점검·클리닝 쿠폰을 배포합니다.</p></div>
-        <button class="btn medium primary">＋ 캠페인 만들기</button>
+        <button class="btn medium primary"
+          data-toast="데모에서는 캠페인 생성이 생략됩니다">＋ 캠페인 만들기</button>
       </div>
 
       <div class="grid g4" style="gap:12px;margin-bottom:16px">
