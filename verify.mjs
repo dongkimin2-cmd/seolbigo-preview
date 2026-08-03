@@ -80,7 +80,7 @@ ok('보험 승인 done 상태', await page.$eval('#p-ins-case .btn.done', el => 
 await page.setViewportSize({ width: 390, height: 844 });
 await page.click('.page.on [data-go="home"]');
 await page.waitForTimeout(300);
-const pagesToCheck = ['home','diag1','quotes','booking','groupbuy','services','instant'];
+const pagesToCheck = ['home','diag1','quotes','booking','groupbuy','services','instant','drone'];
 for (const id of pagesToCheck) {
   await page.evaluate(pid => {
     document.querySelectorAll('.page').forEach(p => p.classList.toggle('on', p.id === 'p-' + pid));

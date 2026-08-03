@@ -325,7 +325,7 @@ main{flex:1;background:var(--sg-bg-subtle)}
 .searchbar input:focus{outline:2px solid var(--sg-brand-primary);outline-offset:-2px;background:#fff}
 .searchbar svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--sg-text-tertiary)}
 
-.cats{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:34px auto 0;max-width:880px}
+.cats{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin:34px auto 0;max-width:1000px}
 .cat{display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 4px;border:0;
   background:none;cursor:pointer;border-radius:12px;transition:var(--sg-transition-bg)}
 .cat:hover{background:var(--sg-bg-subtle)}
@@ -596,6 +596,9 @@ main{flex:1;background:var(--sg-bg-subtle)}
         <button class="cat" data-go="instant" data-svc="난방배관 클리닝">
           <i style="background:#FFFCDE">♨️</i><span>난방배관<br>클리닝</span>
           <em class="cat__how how-d">즉시 견적</em></button>
+        <button class="cat" data-go="drone" data-svc="드론 외벽 점검">
+          <i style="background:#EFF4FF">🛸</i><span>드론<br>외벽 점검</span>
+          <em class="cat__how how-c">드론 점검</em></button>
       </div>
       <div class="t-b12 c-ter" style="margin-top:14px">
         서비스마다 시작하는 방법이 다릅니다 · <span class="more" data-go="services" style="font-size:12px">진입 경로 전체 보기 ›</span>
@@ -2170,6 +2173,23 @@ main{flex:1;background:var(--sg-bg-subtle)}
         </div>
       </div>
 
+      <!-- C-2 -->
+      <div class="block">
+        <div class="row between" style="margin-bottom:4px">
+          <h2 class="block__t" style="margin:0">🛸 높은 곳은 드론으로 봅니다</h2>
+          <span class="badge b-green b12">드론 점검 · 균열 리포트</span>
+        </div>
+        <p class="block__d">로프나 곤돌라 없이 외벽 전면을 고해상·열화상으로 촬영합니다.
+          AI가 균열·박리·백화를 검출해 좌표 단위 리포트로 만들고, 보수가 필요하면 방수·도장 견적으로 바로 이어집니다.</p>
+        <div class="grid g3" style="gap:12px">
+          <button class="svc" data-go="drone" data-svc="드론 외벽 점검">
+            <i style="background:#EFF4FF">🛸</i>
+            <div><div class="t-b16 fw7">드론 외벽 점검</div>
+              <div class="t-b12 c-sec">외벽 균열·박리·백화 검출, 창호 주변 누수 추적</div></div>
+            <span class="svc__go">›</span></button>
+        </div>
+      </div>
+
       <!-- D -->
       <div class="block" style="margin-bottom:0">
         <div class="row between" style="margin-bottom:4px">
@@ -2406,6 +2426,132 @@ main{flex:1;background:var(--sg-bg-subtle)}
           <div class="row between"><span class="t-b12 c-sec">노후 단지</span><span class="t-b12 fw6">1년</span></div>
           <div class="row between"><span class="t-b12 c-sec">일반 단지</span><span class="t-b12 fw6">2년</span></div>
         </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================ 드론 외벽 점검 ============================ -->
+<section class="page" id="p-drone">
+  <div class="phead"><div class="phead__in">
+    <div class="crumb"><a data-go="home">홈</a><span>›</span><a data-go="services">전체 서비스</a><span>›</span><b>드론 외벽 점검</b></div>
+    <h1>드론으로 외벽을 훑고, 균열 리포트를 드립니다</h1>
+    <p class="sub">로프·곤돌라 없이 고해상 촬영과 열화상으로 균열·박리·백화를 검출합니다.
+      결과는 좌표 단위 리포트로 남고, 보수가 필요하면 방수·도장 견적으로 이어집니다.</p>
+  </div></div>
+
+  <div class="flow">
+    <div>
+      <div class="steps">
+        <div class="on">1. 대상 · 현황</div><div>2. 드론 촬영</div><div>3. 균열 리포트</div>
+      </div>
+
+      <div class="block">
+        <h2 class="block__t">점검 대상</h2>
+        <p class="block__d">어느 부위를 점검할까요?</p>
+        <div class="grid g2" style="gap:12px">
+          <button class="opt on"><span class="opt__k">외벽 전면 (동 단위)</span>
+            <span class="opt__d">4개 면 전체 · 균열·박리 검출</span></button>
+          <button class="opt"><span class="opt__k">옥상 · 지붕</span>
+            <span class="opt__d">방수층 상태 · 배수구 막힘</span></button>
+          <button class="opt"><span class="opt__k">창호 · 코킹 라인</span>
+            <span class="opt__d">실리콘 노후 · 누수 경로 추적</span></button>
+          <button class="opt"><span class="opt__k">균열 의심 구간</span>
+            <span class="opt__d">이미 발견한 부위 정밀 촬영</span></button>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2 class="block__t">건물 현황</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px">
+          <div class="field" style="grid-column:1/-1"><span class="lb">건물 · 주소 <span class="rq">*</span></span>
+            <input class="inp" value="서울 강남구 청솔아파트 103동"></div>
+          <div class="field"><span class="lb">층수</span>
+            <select class="inp"><option>20층</option><option>15층</option><option>25층 이상</option></select></div>
+          <div class="field"><span class="lb">외벽 마감</span>
+            <select class="inp"><option>수성페인트</option><option>타일</option><option>석재</option><option>모름</option></select></div>
+          <div class="field"><span class="lb">준공연도</span>
+            <select class="inp"><option>1999년 (27년차)</option><option>2005년</option></select></div>
+          <div class="field"><span class="lb">최근 외벽 보수 시점</span>
+            <select class="inp"><option>기억나지 않음 / 기록 없음</option><option>3년 이내</option><option>5년 이상</option></select></div>
+        </div>
+        <hr class="hair" style="margin:20px 0 16px">
+        <div class="t-b14 fw6" style="margin-bottom:10px">최근 증상 <span class="t-b12 c-ter fw5">(해당 없으면 정기 점검으로 진행됩니다)</span></div>
+        <div class="row gap6" style="flex-wrap:wrap">
+          <button class="chip sm" aria-pressed="true">외벽 균열 목격</button>
+          <button class="chip sm">백화 · 얼룩</button>
+          <button class="chip sm">창호 주변 누수</button>
+          <button class="chip sm">타일 들뜸 · 탈락</button>
+          <button class="chip sm">해당 없음 · 정기 점검</button>
+        </div>
+      </div>
+
+      <div class="block" style="margin-bottom:0">
+        <h2 class="block__t">점검 결과로 무엇을 받게 되나요</h2>
+        <p class="block__d">촬영 후 이런 리포트가 나옵니다. 입주자대표회의 보고와 장기수선계획 근거 자료로 그대로 쓸 수 있습니다.</p>
+        <div class="panel" style="background:var(--sg-bg-subtle);box-shadow:none;margin-top:14px">
+          <div class="row gap24" style="gap:24px;align-items:center;flex-wrap:wrap">
+            <div class="ring">
+              <svg width="96" height="96"><circle cx="48" cy="48" r="40" fill="none" stroke="#E0E5EB" stroke-width="12"/>
+                <circle cx="48" cy="48" r="40" fill="none" stroke="#FF7C11" stroke-width="12" stroke-linecap="round"
+                  stroke-dasharray="251" stroke-dashoffset="95"/></svg>
+              <div class="ring__t"><div class="t-h20 num">62</div><div class="t-b11 c-sec">외벽 상태</div></div>
+            </div>
+            <div style="flex:1;min-width:260px">
+              <div class="row gap6" style="margin-bottom:8px">
+                <span class="urg caution"><i></i>주의 — 보수 계획 권장</span></div>
+              <div class="t-b14 c-sec" style="margin-bottom:12px">폭 0.3mm 이상 균열 <b>12개소</b>,
+                열화상 박리 의심 <b>3개소</b>가 검출된 예시입니다. 균열마다 좌표·폭·길이가 기록됩니다.</div>
+              <div class="tier on"><div><div class="t-b14 fw7">우선 보수 권장 구간</div>
+                <div class="t-b12 c-sec">남측면 9~12층 창호 라인</div></div>
+                <span class="t-b16 fw7 c-brand">3개소</span></div>
+            </div>
+          </div>
+          <div class="grid g4" style="gap:8px;margin-top:16px">
+            <div class="ph wet" style="aspect-ratio:4/3;border-radius:8px"></div>
+            <div class="ph pipe" style="aspect-ratio:4/3;border-radius:8px"></div>
+            <div class="ph wet" style="aspect-ratio:4/3;border-radius:8px"></div>
+            <div class="ph clean" style="aspect-ratio:4/3;border-radius:8px"></div>
+          </div>
+          <div class="t-b12 c-ter" style="margin-top:8px">※ 예시 화면입니다. 실제 리포트는 촬영 후 생성됩니다.</div>
+        </div>
+        <div class="callout" style="margin-top:16px">
+          <span class="c-ter" style="flex:0 0 20px">⚖️</span>
+          <p class="t-b12 c-sec" style="margin:0">본 점검은 <b>참고용 상태 조사</b>이며, 시설물안전법상
+            정밀안전점검·정밀안전진단을 대체하지 않습니다. 드론 비행 승인·항공촬영 신고는 설비고가 일괄 대행합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="side">
+      <div class="panel">
+        <h3 class="panel__t">드론 점검 예약</h3>
+        <div class="col gap10" style="gap:10px;margin-bottom:14px">
+          <div class="row between"><span class="t-b14 c-sec">점검 비용 (1개동)</span>
+            <span class="t-b14 fw6">350,000원</span></div>
+          <div class="row between"><span class="t-b14 c-sec">보수 계약 시</span>
+            <span class="t-b14 fw7 c-suc">50% 차감</span></div>
+          <div class="row between"><span class="t-b14 c-sec">촬영 소요</span><span class="t-b14 fw6">약 2시간</span></div>
+          <div class="row between"><span class="t-b14 c-sec">리포트</span><span class="t-b14 fw6">3일 내 발급</span></div>
+        </div>
+        <hr class="hair" style="margin:0 0 14px">
+        <div class="field" style="margin-bottom:12px"><span class="lb">희망 점검일</span>
+          <select class="inp" style="height:44px;font-size:15px"><option>11/24 (월) 오전</option>
+            <option>11/25 (화) 오전</option><option>11/27 (목) 오후</option></select></div>
+        <button class="btn large primary block" data-done="✓ 예약 접수됨"
+          data-toast="드론 점검 예약이 접수되었습니다 · 기상 조건에 따라 일정이 조정될 수 있습니다">드론 점검 예약</button>
+        <div class="t-b12 c-ter" style="margin-top:10px;text-align:center">우천·강풍 시 무료로 일정이 변경됩니다</div>
+      </div>
+      <div class="panel" style="background:var(--sg-bg-info-subtle);box-shadow:none">
+        <div class="t-b14 fw7" style="margin-bottom:6px">보수까지 한 번에</div>
+        <p class="t-b12 c-sec" style="margin:0 0 12px">리포트의 균열 좌표와 면적이 그대로 방수·도장 견적의
+          물량 산출에 들어갑니다. 다시 잴 필요가 없습니다.</p>
+        <button class="btn small outlined block" data-go="area">방수·도장 기준가 보기</button>
+      </div>
+      <div class="panel">
+        <h3 class="panel__t">관리사무소라면</h3>
+        <p class="t-b12 c-sec" style="margin:0">점검 결과가 단지 <b>디지털 이력 지도</b>에 자동 저장되어
+          입주자대표회의 보고자료와 장기수선계획 근거로 쓸 수 있습니다.</p>
       </div>
     </aside>
   </div>

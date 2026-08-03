@@ -109,7 +109,7 @@
 .searchbar input:focus{outline:2px solid var(--sg-brand-primary);outline-offset:-2px;background:#fff}
 .searchbar svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--sg-text-tertiary)}
 
-.cats{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:34px auto 0;max-width:880px}
+.cats{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin:34px auto 0;max-width:1000px}
 .cat{display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 4px;border:0;
   background:none;cursor:pointer;border-radius:12px;transition:var(--sg-transition-bg)}
 .cat:hover{background:var(--sg-bg-subtle)}
@@ -380,6 +380,9 @@
         <button class="cat" data-go="instant" data-svc="난방배관 클리닝">
           <i style="background:#FFFCDE">♨️</i><span>난방배관<br>클리닝</span>
           <em class="cat__how how-d">즉시 견적</em></button>
+        <button class="cat" data-go="drone" data-svc="드론 외벽 점검">
+          <i style="background:#EFF4FF">🛸</i><span>드론<br>외벽 점검</span>
+          <em class="cat__how how-c">드론 점검</em></button>
       </div>
       <div class="t-b12 c-ter" style="margin-top:14px">
         서비스마다 시작하는 방법이 다릅니다 · <span class="more" data-go="services" style="font-size:12px">진입 경로 전체 보기 ›</span>
