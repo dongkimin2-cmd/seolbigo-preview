@@ -219,3 +219,28 @@ export const DEMO_SIMILAR_CASES: SimilarCase[] = [
     proName: '우성설비', proMeta: '★ 4.7 (52)', priceWon: 310_000,
     sameApt: false, year: 1996, floorBand: false, sameSymptom: true, insurance: true, restore: false, similarity: 82 },
 ];
+
+/* ---------- 현장 변수 추가금 (변경 승인 화면) ---------- */
+
+export interface VariationItem {
+  id: string;
+  name: string;
+  won: number;                // 추가금 (원)
+  reason: string;             // 근거 설명
+  standardRange?: string;     // 플랫폼 표준 단가
+  applicable: boolean;        // false = 이번 현장 해당 없음
+  note?: string;              // 해당 없음 사유
+}
+
+export const DEMO_VARIATIONS: VariationItem[] = [
+  { id: 'v1', name: '준공 25년 초과 노후 배관', won: 30_000, applicable: true,
+    reason: '관 재질이 삭아 인접 구간까지 함께 보강해야 합니다.',
+    standardRange: '25,000~35,000원' },
+  { id: 'v2', name: '매립관 (동관) 절개 필요', won: 50_000, applicable: true,
+    reason: '노출 배관이 아니라 벽체 절개·복구 공정이 추가됩니다.',
+    standardRange: '40,000~60,000원' },
+  { id: 'v3', name: '야간 작업 (18시 이후)', won: 40_000, applicable: false,
+    reason: '', note: '해당 없음 — 주간 시공' },
+  { id: 'v4', name: '접근성 제약 (고층 · 협소)', won: 20_000, applicable: false,
+    reason: '', note: '해당 없음' },
+];

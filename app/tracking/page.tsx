@@ -1,85 +1,106 @@
+'use client';
+// p-tracking — 데이터 기반으로 전환 완료: 선택 견적 + 승인된 추가금이 타임라인·주문 요약에 반영됩니다.
+import { useEffect, useState } from 'react';
+import { DEMO_QUOTES, DEMO_VARIATIONS, type Quote } from '../../lib/mock-data';
+import { loadSelectedQuote } from '../../lib/quote-store';
+import { loadVariation } from '../../lib/variation-store';
 
-// 자동 이식된 목업 화면 p-tracking — 원본: seolbigo-preview/index.html
-// 인터랙션(토스트·검증·칩 등)은 components/MockupBridge 가 위임 처리합니다.
 export default function Page() {
-  
+  const [quote, setQuote] = useState<Quote>(DEMO_QUOTES[0]);
+  const [extra, setExtra] = useState(80_000);
+  const [nItems, setNItems] = useState(2);
+
+  useEffect(() => {
+    setQuote(loadSelectedQuote());
+    const v = loadVariation();
+    if (v) { setExtra(v.extraWon); setNItems(v.approvedIds.length); }
+  }, []);
+
+  const total = quote.priceWon + extra;
+  const workTitle = quote.lineItems.map(li => li.name).join(' + ');
+
   return (
-    <section className="page on" id="p-tracking">
-      <><div className="phead"><div className="phead__in">
-          <div className="crumb"><a data-go="home">&#54856;</a><span>›</span><b>&#49884;&#44277; &#51652;&#54665; &#49345;&#54889;</b></div>
-          <div className="row between" style={{ alignItems: "flex-start" }}>
-            <div>
-              <h1>&#48176;&#44288; &#51060;&#51020;&#48512; &#48372;&#49688; + &#52380;&#51109; &#47560;&#44048; &#48373;&#44396;</h1>
-              <p className="sub">&#44648;&#45143;&#54620;&#51665;&#49444;&#48708; · 2026.11.19 14:00 · &#51452;&#47928;&#48264;&#54840; SB-2611-0417</p>
-            </div>
-            <span className="badge b-brands b12" style={{ height: 30, padding: "0 14px", borderRadius: 999 }}>&#49884;&#44277; &#51652;&#54665;&#51473;</span>
-          </div>
-        </div></div>
-      
-        <div className="flow">
+    <section className="page on" id="p-tracking" data-react>
+      <div className="phead"><div className="phead__in">
+        <div className="crumb"><a data-go="home">홈</a><span>›</span><b>시공 진행 상황</b></div>
+        <div className="row between" style={{ alignItems: 'flex-start' }}>
           <div>
-            <div className="block">
-              <h2 className="block__t">&#51652;&#54665; &#45800;&#44228;</h2>
-              <div className="tl" style={{ marginTop: 20 }}>
-                <div className="tl__i done">
-                  <div className="t-b16 fw7">&#50696;&#50557; &#51217;&#49688;</div>
-                  <div className="t-b14 c-sec">11.17 21:04 · &#50640;&#49828;&#53356;&#47196; 410,000&#50896; &#50696;&#52824; &#50756;&#47308;</div>
-                </div>
-                <div className="tl__i done">
-                  <div className="t-b16 fw7">&#48169;&#47928; · &#54788;&#51109; &#54869;&#51064;</div>
-                  <div className="t-b14 c-sec">11.19 14:02 · &#44592;&#49324; &#46020;&#52265; &#50508;&#47548; &#48156;&#49569;</div>
-                </div>
-                <div className="tl__i done">
-                  <div className="t-b16 fw7">&#52628;&#44032;&#44552; &#49849;&#51064;</div>
-                  <div className="t-b14 c-sec">11.19 14:31 · 2&#44060; &#54637;&#47785; 80,000&#50896; &#49849;&#51064;
-                    <span className="more" data-go="variation" style={{ marginLeft: 6 }}>&#45236;&#50669; &#48372;&#44592; ›</span></div>
-                </div>
-                <div className="tl__i now">
-                  <div className="row gap6"><span className="t-b16 fw7">&#49884;&#44277; &#51652;&#54665;&#51473;</span><span className="badge b-brand">&#54788;&#51116;</span></div>
-                  <div className="t-b14 c-sec" style={{ margin: "2px 0 12px" }}>11.19 14:40 ~ · &#50696;&#49345; &#50756;&#47308; 18:00</div>
-                  <div className="row gap8">
-                    <div className="ph pipe" style={{ width: 104, height: 78, borderRadius: 10 }} />
-                    <div className="ph wet" style={{ width: 104, height: 78, borderRadius: 10 }} />
-                    <div className="ph" style={{ width: 104, height: 78, borderRadius: 10, backgroundImage: "none", background: "var(--sg-bg-subtle)", color: "var(--sg-text-tertiary)", fontSize: 12 }}>&#51089;&#50629;&#51473;</div>
-                  </div>
-                </div>
-                <div className="tl__i">
-                  <div className="t-b16 fw7 c-ter">&#50756;&#47308; · &#44208;&#44284; &#54869;&#51064;</div>
-                  <div className="t-b14 c-ter">Before/After&#47484; &#54869;&#51064;&#54616;&#44256; &#49849;&#51064;&#54616;&#47732; &#45824;&#44552;&#51060; &#51648;&#44553;&#46121;&#45768;&#45796;</div>
-                </div>
-                <div className="tl__i">
-                  <div className="t-b16 fw7 c-ter">&#46356;&#51648;&#53560; &#48372;&#51613;&#49436; &#48156;&#44553;</div>
-                  <div className="t-b14 c-ter">1&#45380; &#47924;&#49345; A/S &#48372;&#51613; · &#54540;&#47019;&#54268; &#44277;&#49885; &#45236;&#50669;&#49436;</div>
+            <h1>{workTitle}</h1>
+            <p className="sub">{quote.proName} · 2026.11.19 14:00 · 주문번호 SB-2611-0417</p>
+          </div>
+          <span className="badge b-brands b12" style={{ height: 30, padding: '0 14px', borderRadius: 999 }}>시공 진행중</span>
+        </div>
+      </div></div>
+
+      <div className="flow">
+        <div>
+          <div className="block">
+            <h2 className="block__t">진행 단계</h2>
+            <div className="tl" style={{ marginTop: 20 }}>
+              <div className="tl__i done">
+                <div className="t-b16 fw7">예약 접수</div>
+                <div className="t-b14 c-sec">11.17 21:04 · 에스크로 {quote.priceWon.toLocaleString()}원 예치 완료</div>
+              </div>
+              <div className="tl__i done">
+                <div className="t-b16 fw7">방문 · 현장 확인</div>
+                <div className="t-b14 c-sec">11.19 14:02 · 기사 도착 알림 발송</div>
+              </div>
+              <div className="tl__i done">
+                <div className="t-b16 fw7">추가금 승인</div>
+                <div className="t-b14 c-sec">11.19 14:31 · {extra > 0
+                  ? <>{nItems}개 항목 {extra.toLocaleString()}원 승인</>
+                  : '추가금 없음 — 기존 견적으로 진행'}
+                  <span className="more" data-go="variation" style={{ marginLeft: 6 }}>내역 보기 ›</span></div>
+              </div>
+              <div className="tl__i now">
+                <div className="row gap6"><span className="t-b16 fw7">시공 진행중</span><span className="badge b-brand">현재</span></div>
+                <div className="t-b14 c-sec" style={{ margin: '2px 0 12px' }}>11.19 14:40 ~ · 예상 완료 18:00</div>
+                <div className="row gap8">
+                  <div className="ph pipe" style={{ width: 104, height: 78, borderRadius: 10 }} />
+                  <div className="ph wet" style={{ width: 104, height: 78, borderRadius: 10 }} />
+                  <div className="ph" style={{ width: 104, height: 78, borderRadius: 10, backgroundImage: 'none', background: 'var(--sg-bg-subtle)', color: 'var(--sg-text-tertiary)', fontSize: 12 }}>작업중</div>
                 </div>
               </div>
-            </div>
-      
-            <div className="block" style={{ marginBottom: "0" }}>
-              <h2 className="block__t">&#44592;&#49324;&#45784;&#44284; &#50672;&#46973;</h2>
-              <div className="callout info" style={{ marginTop: 12 }}>
-                <span className="c-inf" style={{ flex: "0 0 20px" }}>☎</span>
-                <p className="t-b14 c-sec" style={{ margin: "0" }}>&#50504;&#49900;&#48264;&#54840;&#47196; &#53685;&#54868;&#54624; &#49688; &#51080;&#49845;&#45768;&#45796;. &#50577;&#51901;&#51032; &#49892;&#51228; &#48264;&#54840;&#45716; &#44277;&#44060;&#46104;&#51648; &#50506;&#51004;&#47728;,
-                  &#53685;&#54868; &#45236;&#50669;&#51008; &#48516;&#51137; &#48156;&#49373; &#49884; &#51613;&#48729;&#51004;&#47196; &#49324;&#50857;&#46121;&#45768;&#45796;.</p>
+              <div className="tl__i">
+                <div className="t-b16 fw7 c-ter">완료 · 결과 확인</div>
+                <div className="t-b14 c-ter">Before/After를 확인하고 승인하면 대금이 지급됩니다</div>
+              </div>
+              <div className="tl__i">
+                <div className="t-b16 fw7 c-ter">디지털 보증서 발급</div>
+                <div className="t-b14 c-ter">1년 무상 A/S 보증 · 플랫폼 공식 내역서</div>
               </div>
             </div>
           </div>
-      
-          <aside className="side">
-            <div className="panel">
-              <h3 className="panel__t">&#51452;&#47928; &#50836;&#50557;</h3>
-              <div className="col gap8">
-                <div className="row between"><span className="t-b14 c-sec">&#49884;&#44277; &#44204;&#51201;</span><span className="t-b14 num">410,000</span></div>
-                <div className="row between"><span className="t-b14 c-sec">&#49849;&#51064;&#46108; &#52628;&#44032;&#44552;</span><span className="t-b14 num">80,000</span></div>
-              </div>
-              <hr className="hair" style={{ margin: "14px 0" }} />
-              <div className="row between" style={{ marginBottom: 6 }}>
-                <span className="t-h16">&#52572;&#51333; &#44552;&#50529;</span><span className="t-h20 num">490,000&#50896;</span></div>
-              <div className="t-b12 c-sec" style={{ marginBottom: 16 }}>&#50640;&#49828;&#53356;&#47196; &#48372;&#44288;&#51473; · &#50756;&#47308; &#49849;&#51064; &#49884; &#51648;&#44553;</div>
-              <button className="btn large primary block" data-go="warranty">&#49884;&#44277; &#50756;&#47308; &#54869;&#51064; (&#45936;&#47784;)</button>
-              <button className="btn medium ghost block" style={{ marginTop: 8 }} data-toast="안심번호로 연결됩니다 \xB7 데모에서는 통화가 생략됩니다">&#47928;&#51032;&#54616;&#44592;</button>
+
+          <div className="block" style={{ marginBottom: 0 }}>
+            <h2 className="block__t">기사님과 연락</h2>
+            <div className="callout info" style={{ marginTop: 12 }}>
+              <span className="c-inf" style={{ flex: '0 0 20px' }}>☎</span>
+              <p className="t-b14 c-sec" style={{ margin: 0 }}>안심번호로 통화할 수 있습니다. 양쪽의 실제 번호는 공개되지 않으며,
+                통화 내역은 분쟁 발생 시 증빙으로 사용됩니다.</p>
             </div>
-          </aside>
-        </div></>
+          </div>
+        </div>
+
+        <aside className="side">
+          <div className="panel">
+            <h3 className="panel__t">주문 요약</h3>
+            <div className="col gap8">
+              <div className="row between"><span className="t-b14 c-sec">시공 견적 ({quote.proName})</span>
+                <span className="t-b14 num">{quote.priceWon.toLocaleString()}</span></div>
+              <div className="row between"><span className="t-b14 c-sec">승인된 추가금</span>
+                <span className="t-b14 num">{extra.toLocaleString()}</span></div>
+            </div>
+            <hr className="hair" style={{ margin: '14px 0' }} />
+            <div className="row between" style={{ marginBottom: 6 }}>
+              <span className="t-h16">최종 금액</span><span className="t-h20 num">{total.toLocaleString()}원</span></div>
+            <div className="t-b12 c-sec" style={{ marginBottom: 16 }}>에스크로 보관중 · 완료 승인 시 지급</div>
+            <button className="btn large primary block" data-go="warranty">시공 완료 확인 (데모)</button>
+            <button className="btn medium ghost block" style={{ marginTop: 8 }}
+              data-toast="안심번호로 연결됩니다 · 데모에서는 통화가 생략됩니다">문의하기</button>
+          </div>
+        </aside>
+      </div>
     </section>
   );
 }
