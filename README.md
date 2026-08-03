@@ -38,3 +38,23 @@ npm run build  # 프로덕션 빌드
 
 - 정적 목업: https://dongkimin2-cmd.github.io/seolbigo-preview/ (`main` 브랜치)
 - 이 스켈레톤: `next-skeleton` 브랜치
+
+## Supabase · Solapi 연동 (선택)
+
+키가 없으면 전 화면이 mock 데이터로 동작합니다(현재 상태). 실DB/실발송으로 전환하려면:
+
+1. **Supabase** — 프로젝트 생성 후 SQL Editor 에 `supabase/migrations/0001_init.sql` → `supabase/seed.sql` 순서로 실행
+2. `.env.local` 작성:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://<project>.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=...        # 서버 전용 — 절대 클라이언트 노출 금지
+SOLAPI_API_KEY=...                   # 선택 — 없으면 알림은 콘솔 로그
+SOLAPI_API_SECRET=...
+SOLAPI_SENDER=01012345678            # Solapi 에 등록된 발신번호
+```
+
+3. `npm run dev` — `lib/db.ts` / `lib/notify.ts` 가 키 유무를 감지해 자동 전환합니다.
+
+주의: Solapi 는 발신번호 등록·알림톡 템플릿 심사가 선행 필요. 드라이버는 SMS 스텁이며 실사용 전 공식 문서로 검증하세요.
+Auth(로그인) 연동 전까지 DB 쓰기는 service role 로 수행됩니다 — RLS 정책은 마이그레이션에 포함되어 있어 Auth 도입 시 그대로 적용됩니다.
