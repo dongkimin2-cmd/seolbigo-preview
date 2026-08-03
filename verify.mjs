@@ -26,7 +26,7 @@ await page.fill('#diagAddr', '');
 await page.click('[data-validate="diag1"]');
 await page.waitForTimeout(300);
 ok('diag1 주소 비움 시 err 표시', await page.$eval('#diagAddr', el => el.classList.contains('err')));
-await page.fill('#diagAddr', '서울 강남구 래미안아파트 103동 1204호');
+await page.fill('#diagAddr', '서울 강남구 청솔아파트 103동 1204호');
 await page.click('[data-validate="diag1"]');
 await page.waitForTimeout(300);
 ok('diag1 통과 시 diag2 이동', await page.$eval('#p-diag2', el => el.classList.contains('on')));
