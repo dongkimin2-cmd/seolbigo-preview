@@ -244,3 +244,129 @@ export const DEMO_VARIATIONS: VariationItem[] = [
   { id: 'v4', name: '접근성 제약 (고층 · 협소)', won: 20_000, applicable: false,
     reason: '', note: '해당 없음' },
 ];
+
+/* ---------- 보험 청구 (표준 분포 대조) ---------- */
+
+// 공정명 → 표준 단가 분포 (사실자료 리포트 3번 표)
+export const STANDARD_RANGES: Record<string, string> = {
+  '누수 탐지': '80,000~120,000',
+  '배관 이음부 보수': '150,000~280,000',
+  '천장 마감 복구': '90,000~180,000',
+  '배관 전체 교체 (견적)': '380,000~520,000',
+  '현장 변수 (고객 승인)': '65,000~95,000',
+};
+export const CLAIM_TOTAL_RANGE = '320,000~580,000';
+export const INSURANCE_DEDUCTIBLE = 200_000;   // 자기부담금 (데모)
+
+/* ---------- 공동구매 ---------- */
+
+export interface GroupBuyTier {
+  from: number; to: number | null; label: string; won: number;
+}
+
+export const GROUPBUY = {
+  service: '수도·난방배관 클리닝',
+  complex: '청솔아파트 103동',
+  current: 18,
+  goal: 24,
+  deadlineDays: 3,
+  indivWon: 340_000,
+  tiers: [
+    { from: 1, to: 9, label: '개별 시공', won: 340_000 },
+    { from: 10, to: 17, label: '반나절 일괄', won: 290_000 },
+    { from: 18, to: 23, label: '', won: 262_000 },
+    { from: 24, to: null, label: '하루 한 동 일괄', won: 238_000 },
+  ] as GroupBuyTier[],
+  floors: [
+    { band: '1~5층', n: 4 }, { band: '6~10층', n: 6 },
+    { band: '11~15층', n: 5, mine: true }, { band: '16~20층', n: 3 },
+  ],
+};
+
+export function tierFor(n: number): GroupBuyTier {
+  return GROUPBUY.tiers.find(t => n >= t.from && (t.to === null || n <= t.to)) ?? GROUPBUY.tiers[0];
+}
+
+/* ---------- 우리집 이력 ---------- */
+
+export interface HistoryItem {
+  title: string; won: number; date: string; pro: string;
+  warranty?: string;          // 보증 유효 기한
+  badges: { label: string; tone: 'green' | 'gline' | 'brand' }[];
+}
+
+export const HISTORY_OLD: HistoryItem[] = [
+  { title: '주방 배수관 고압세정', won: 180_000, date: '2025.04.02', pro: '한빛배관',
+    badges: [{ label: '주방', tone: 'gline' }] },
+  { title: '세면대 배수 트랩 교체', won: 90_000, date: '2023.08.17', pro: '우성설비', badges: [] },
+];
+
+/* ---------- 서비스 카탈로그 (홈 카테고리 + 전체 서비스 화면의 단일 소스) ---------- */
+
+export interface ServiceEntry {
+  id: string;
+  name: string;
+  nameLines: [string, string];  // 홈 카테고리 2줄 표기
+  desc: string;                 // 카드 설명
+  icon: string;
+  iconBg: string;
+  go: string;                   // data-go 라우트 키
+  how: string;                  // 진입 경로 라벨
+  howTone: '' | 'b' | 'c' | 'd' | 'e';
+}
+
+export const SERVICES: ServiceEntry[] = [
+  { id: 'leak-repair', name: '누수피해복구', nameLines: ['누수피해', '복구'],
+    desc: '천장·벽 누수와 젖은 마감재 복구까지', icon: '💧', iconBg: '#FDEBEC',
+    go: 'diag1', how: '사진 진단', howTone: '' },
+  { id: 'pipe-replace', name: '배관 설계·교체', nameLines: ['배관 설계', '· 교체'],
+    desc: '세대 전체 교체, 공용 입상관 교체, 신설 배관 설계', icon: '🔧', iconBg: '#F1EEFF',
+    go: 'survey', how: '현장 실측', howTone: 'b' },
+  { id: 'leak-detect', name: '누수 탐지·공사', nameLines: ['누수 탐지', '· 공사'],
+    desc: '어디서 새는지 모를 때, 청음·열화상 탐지부터', icon: '🔍', iconBg: '#E7F4FF',
+    go: 'diag1', how: '사진 진단', howTone: '' },
+  { id: 'jetting', name: '고압세정·준설', nameLines: ['고압세정', '· 준설'],
+    desc: '공용 입상관·오수관, 상가 그리스트랩, 저층 역류 예방', icon: '🌀', iconBg: '#FFF7F0',
+    go: 'scope', how: '관로 조사', howTone: 'c' },
+  { id: 'waterproof', name: '방수·도장', nameLines: ['방수', '· 도장'],
+    desc: '옥상·베란다·욕실·외벽 방수층 재시공', icon: '🧱', iconBg: '#E7FCEF',
+    go: 'area', how: '사진+면적', howTone: 'e' },
+  { id: 'water-clean', name: '수도배관 클리닝', nameLines: ['수도배관', '클리닝'],
+    desc: '녹물·침전물 제거, 수압 회복', icon: '🚿', iconBg: '#E7F4FF',
+    go: 'instant', how: '즉시 견적', howTone: 'd' },
+  { id: 'heat-clean', name: '난방배관 클리닝', nameLines: ['난방배관', '클리닝'],
+    desc: '스케일 제거, 난방효율·온도 편차 개선', icon: '♨️', iconBg: '#FFFCDE',
+    go: 'instant', how: '즉시 견적', howTone: 'd' },
+  { id: 'drone', name: '드론 외벽 점검', nameLines: ['드론', '외벽 점검'],
+    desc: '외벽 균열·박리·백화 검출, 창호 주변 누수 추적', icon: '🛸', iconBg: '#EFF4FF',
+    go: 'drone', how: '드론 점검', howTone: 'c' },
+];
+
+export interface ServiceGroup {
+  title: string;
+  badge: string;
+  badgeTone: 'brand' | 'blue' | 'green' | 'brands';
+  desc: string;
+  ids: string[];                // SERVICES.id 참조
+}
+
+export const SERVICE_GROUPS: ServiceGroup[] = [
+  { title: '📷 사진으로 진단합니다', badge: 'AI 사진 진단 · 무료 · 약 20초', badgeTone: 'brand',
+    desc: '겉으로 증상이 드러나는 하자입니다. 사진의 얼룩 형태와 번진 방향만으로도 원인을 상당 부분 좁힐 수 있어, 방문 전에 기준가 범위를 먼저 확인할 수 있습니다.',
+    ids: ['leak-repair', 'leak-detect'] },
+  { title: '📷📐 사진과 면적을 함께 받습니다', badge: '하이브리드 · 즉시 산출', badgeTone: 'blue',
+    desc: '누수는 원인 하나를 찾으면 되지만, 방수는 면적 전체에 재료를 바르는 일입니다. 같은 들뜸 사진이어도 20㎡와 120㎡의 금액은 여섯 배 차이납니다. 그래서 상태(사진)와 물량(면적)을 함께 받습니다.',
+    ids: ['waterproof'] },
+  { title: '📐 현장을 재야 합니다', badge: '무료 실측 방문 · 약 40분', badgeTone: 'blue',
+    desc: '관로 길이와 세대 수에 따라 금액이 열 배까지 벌어지는 공사입니다. 사진으로 견적을 내는 것 자체가 부정확하므로, 무료 실측 후 도면 기반 설계 견적을 드립니다.',
+    ids: ['pipe-replace'] },
+  { title: '🎥 관 속을 봐야 합니다', badge: '내시경 관로 조사 · 오염도 리포트', badgeTone: 'green',
+    desc: '관 내부 상태는 밖에서 보이지 않습니다. 내시경으로 촬영한 오염도를 수치화해 지금 세정이 필요한지, 다음은 언제인지를 그 건물의 데이터로 산출합니다.',
+    ids: ['jetting'] },
+  { title: '🛸 높은 곳은 드론으로 봅니다', badge: '드론 점검 · 균열 리포트', badgeTone: 'green',
+    desc: '로프나 곤돌라 없이 외벽 전면을 고해상·열화상으로 촬영합니다. AI가 균열·박리·백화를 검출해 좌표 단위 리포트로 만들고, 보수가 필요하면 방수·도장 견적으로 바로 이어집니다.',
+    ids: ['drone'] },
+  { title: '⚡ 규격이 정해져 있습니다', badge: '즉시 확정가 · 진단 불필요', badgeTone: 'brands',
+    desc: '평형과 난방 방식만 고르면 가격이 바로 확정됩니다. 같은 동 세대를 모으는 공동구매로 참여하면 단가가 더 내려갑니다.',
+    ids: ['water-clean', 'heat-clean'] },
+];

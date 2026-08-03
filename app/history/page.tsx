@@ -1,97 +1,120 @@
+'use client';
+// p-history — 데이터 기반으로 전환 완료: 이력 목록이 HistoryItem[] + 이번 세션의 시공(선택 견적·추가금)으로 구성됩니다.
+import { useEffect, useState } from 'react';
+import { DEMO_QUOTES, HISTORY_OLD, type HistoryItem, type Quote } from '../../lib/mock-data';
+import { loadSelectedQuote } from '../../lib/quote-store';
+import { loadVariation } from '../../lib/variation-store';
 
-// 자동 이식된 목업 화면 p-history — 원본: seolbigo-preview/index.html
-// 인터랙션(토스트·검증·칩 등)은 components/MockupBridge 가 위임 처리합니다.
 export default function Page() {
-  
+  const [quote, setQuote] = useState<Quote>(DEMO_QUOTES[0]);
+  const [extra, setExtra] = useState(80_000);
+
+  useEffect(() => {
+    setQuote(loadSelectedQuote());
+    const v = loadVariation();
+    if (v) setExtra(v.extraWon);
+  }, []);
+
+  const latest: HistoryItem = {
+    title: quote.lineItems.map(li => li.name).join(' + '),
+    won: quote.priceWon + extra,
+    date: '2026.11.19',
+    pro: quote.proName,
+    warranty: '2027.11.18',
+    badges: [
+      { label: '보험 처리', tone: 'green' },
+      { label: '안방 천장', tone: 'gline' },
+      { label: '보증중', tone: 'brand' },
+    ],
+  };
+  const items = [latest, ...HISTORY_OLD];
+
   return (
-    <section className="page on" id="p-history">
-      <><div className="phead"><div className="phead__in">
-          <div className="crumb"><a data-go="home">&#54856;</a><span>›</span><b>&#50864;&#47532;&#51665; &#48176;&#44288; &#51060;&#47141;</b></div>
-          <h1>&#52397;&#49556;&#50500;&#54028;&#53944; 103&#46041; 1204&#54840;</h1>
-          <p className="sub">&#51456;&#44277; 1999&#45380; · 27&#45380;&#52264; · &#51473;&#50521;&#45212;&#48169; · &#48176;&#44288; &#51116;&#51656; &#44053;&#44288;(&#48177;&#44288;) &#52628;&#51221;</p>
-        </div></div>
-      
-        <div className="flow">
-          <div>
-            <div className="block">
-              <h2 className="block__t">&#48176;&#44288; &#49345;&#53468; &#51652;&#45800;</h2>
-              <p className="block__d">&#49884;&#44277; &#51060;&#47141;&#44284; &#51204;&#44397; &#46041;&#51068; &#50672;&#49885; &#45800;&#51648; &#45936;&#51060;&#53552;&#47484; &#45824;&#51312;&#54620; &#44208;&#44284;&#51077;&#45768;&#45796;.</p>
-              <div className="row gap24" style={{ gap: 24, alignItems: "center", marginTop: 18, flexWrap: "wrap" }}>
-                <div className="ring">
-                  <svg width="96" height="96"><circle cx="48" cy="48" r="40" fill="none" stroke="#EFF1F5" strokeWidth={12} />
-                    <circle cx="48" cy="48" r="40" fill="none" stroke="#FF7C11" strokeWidth={12} strokeLinecap="round" strokeDasharray="251" strokeDashoffset={88} /></svg>
-                  <div className="ring__t"><div className="t-h20 num">65</div><div className="t-b11 c-sec">&#51452;&#51032;</div></div>
-                </div>
-                <div style={{ flex: "1", minWidth: 260 }}>
-                  <div className="col gap12">
-                    <div><div className="row between t-b14"><span>&#48176;&#44288; &#45432;&#54980;&#46020;</span><span className="fw6" style={{ color: "var(--sg-text-warning)" }}>27&#45380;&#52264; · &#49345;&#50948; 32%</span></div>
-                      <div className="posbar" style={{ marginTop: 6 }}><i style={{ position: "absolute", left: "0", top: "0", bottom: "0", width: "72%", borderRadius: 999, background: "var(--sg-text-warning)" }} /></div></div>
-                    <div><div className="row between t-b14"><span>&#52572;&#44540; &#54616;&#51088; &#48156;&#49373;</span><span className="fw6">&#52572;&#44540; 12&#44060;&#50900; 1&#44148;</span></div>
-                      <div className="posbar" style={{ marginTop: 6 }}><i style={{ position: "absolute", left: "0", top: "0", bottom: "0", width: "35%", borderRadius: 999, background: "var(--sg-brand-secondary)" }} /></div></div>
-                    <div><div className="row between t-b14"><span>&#49828;&#52992;&#51068; &#52629;&#51201; &#52628;&#51221;</span><span className="fw6" style={{ color: "var(--sg-text-warning)" }}>&#51473;&#44036;</span></div>
-                      <div className="posbar" style={{ marginTop: 6 }}><i style={{ position: "absolute", left: "0", top: "0", bottom: "0", width: "58%", borderRadius: 999, background: "var(--sg-text-warning)" }} /></div></div>
-                  </div>
-                </div>
+    <section className="page on" id="p-history" data-react>
+      <div className="phead"><div className="phead__in">
+        <div className="crumb"><a data-go="home">홈</a><span>›</span><b>우리집 배관 이력</b></div>
+        <h1>청솔아파트 103동 1204호</h1>
+        <p className="sub">준공 1999년 · 27년차 · 중앙난방 · 배관 재질 강관(백관) 추정</p>
+      </div></div>
+
+      <div className="flow">
+        <div>
+          <div className="block">
+            <h2 className="block__t">배관 상태 진단</h2>
+            <p className="block__d">시공 이력과 전국 동일 연식 단지 데이터를 대조한 결과입니다.</p>
+            <div className="row gap24" style={{ gap: 24, alignItems: 'center', marginTop: 18, flexWrap: 'wrap' }}>
+              <div className="ring">
+                <svg width="96" height="96"><circle cx="48" cy="48" r="40" fill="none" stroke="#EFF1F5" strokeWidth={12} />
+                  <circle cx="48" cy="48" r="40" fill="none" stroke="#FF7C11" strokeWidth={12} strokeLinecap="round" strokeDasharray="251" strokeDashoffset={88} /></svg>
+                <div className="ring__t"><div className="t-h20 num">65</div><div className="t-b11 c-sec">주의</div></div>
               </div>
-              <div className="callout" style={{ marginTop: 20, background: "var(--sg-bg-warning-subtle)" }}>
-                <span style={{ flex: "0 0 20px", color: "var(--sg-text-warning)" }}>&#9888;</span>
-                <div><p className="t-b14 fw6" style={{ margin: "0 0 2px" }}>&#49688;&#46020;·&#45212;&#48169;&#48176;&#44288; &#53364;&#47532;&#45789;&#51012; &#44428;&#51109;&#54633;&#45768;&#45796;</p>
-                  <p className="t-b12 c-sec" style={{ margin: "0" }}>&#51456;&#44277; 25&#45380;&#51012; &#45336;&#44596; &#51473;&#50521;&#45212;&#48169; &#49464;&#45824;&#45716; &#49828;&#52992;&#51068; 1mm&#47564; &#49939;&#50668;&#46020; &#50557; 2%&#51032; &#50640;&#45320;&#51648;&#44032; &#49552;&#49892;&#46121;&#45768;&#45796;.
-                    &#44057;&#51008; &#51312;&#44148; &#49464;&#45824;&#51032; &#49884;&#44277; &#54980; &#45212;&#48169;&#48708;&#45716; &#54217;&#44512; 18% &#51460;&#50632;&#49845;&#45768;&#45796;.</p></div>
+              <div style={{ flex: 1, minWidth: 260 }}>
+                <div className="col gap12">
+                  <div><div className="row between t-b14"><span>배관 노후도</span><span className="fw6" style={{ color: 'var(--sg-text-warning)' }}>27년차 · 상위 32%</span></div>
+                    <div className="posbar" style={{ marginTop: 6 }}><i style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '72%', borderRadius: 999, background: 'var(--sg-text-warning)' }} /></div></div>
+                  <div><div className="row between t-b14"><span>최근 하자 발생</span><span className="fw6">최근 12개월 1건</span></div>
+                    <div className="posbar" style={{ marginTop: 6 }}><i style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '35%', borderRadius: 999, background: 'var(--sg-brand-secondary)' }} /></div></div>
+                  <div><div className="row between t-b14"><span>스케일 축적 추정</span><span className="fw6" style={{ color: 'var(--sg-text-warning)' }}>중간</span></div>
+                    <div className="posbar" style={{ marginTop: 6 }}><i style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '58%', borderRadius: 999, background: 'var(--sg-text-warning)' }} /></div></div>
+                </div>
               </div>
             </div>
-      
-            <div className="block" style={{ marginBottom: "0" }}>
-              <h2 className="block__t">&#49884;&#44277; &#51060;&#47141;</h2>
-              <div className="tl" style={{ marginTop: 20 }}>
-                <div className="tl__i done">
-                  <div className="row between"><div className="t-b16 fw7">&#48176;&#44288; &#51060;&#51020;&#48512; &#48372;&#49688; + &#52380;&#51109; &#48373;&#44396;</div><span className="t-b14 num">490,000&#50896;</span></div>
-                  <div className="t-b14 c-sec">2026.11.19 · &#44648;&#45143;&#54620;&#51665;&#49444;&#48708; · &#48372;&#51613; &#50976;&#54952; (2027.11.18&#44620;&#51648;)</div>
-                  <div className="row gap4" style={{ marginTop: 6 }}><span className="badge b-green">&#48372;&#54744; &#52376;&#47532;</span>
-                    <span className="badge b-gline">&#50504;&#48169; &#52380;&#51109;</span><span className="badge b-brand">&#48372;&#51613;&#51473;</span></div>
-                </div>
-                <div className="tl__i done">
-                  <div className="row between"><div className="t-b16 fw7">&#51452;&#48169; &#48176;&#49688;&#44288; &#44256;&#50517;&#49464;&#51221;</div><span className="t-b14 num">180,000&#50896;</span></div>
-                  <div className="t-b14 c-sec">2025.04.02 · &#54620;&#48731;&#48176;&#44288;</div>
-                  <div className="row gap4" style={{ marginTop: 6 }}><span className="badge b-gline">&#51452;&#48169;</span></div>
-                </div>
-                <div className="tl__i done">
-                  <div className="row between"><div className="t-b16 fw7">&#49464;&#47732;&#45824; &#48176;&#49688; &#53944;&#47017; &#44368;&#52404;</div><span className="t-b14 num">90,000&#50896;</span></div>
-                  <div className="t-b14 c-sec">2023.08.17 · &#50864;&#49457;&#49444;&#48708;</div>
-                </div>
-              </div>
+            <div className="callout" style={{ marginTop: 20, background: 'var(--sg-bg-warning-subtle)' }}>
+              <span style={{ flex: '0 0 20px', color: 'var(--sg-text-warning)' }}>⚠</span>
+              <div><p className="t-b14 fw6" style={{ margin: '0 0 2px' }}>수도·난방배관 클리닝을 권장합니다</p>
+                <p className="t-b12 c-sec" style={{ margin: 0 }}>준공 25년을 넘긴 중앙난방 세대는 스케일 1mm만 쌓여도 약 2%의 에너지가 손실됩니다.
+                  같은 조건 세대의 시공 후 난방비는 평균 18% 줄었습니다.</p></div>
             </div>
           </div>
-      
-          <aside className="side">
-            <div className="panel">
-              <h3 className="panel__t">&#45796;&#51020; &#44428;&#51109; &#49884;&#51216;</h3>
-              <div className="col gap12">
-                <div className="tier on">
-                  <div><div className="t-b14 fw7">&#49688;&#46020;·&#45212;&#48169;&#48176;&#44288; &#53364;&#47532;&#45789;</div>
-                    <div className="t-b12 c-sec">&#51648;&#44552; &#44428;&#51109; · &#47560;&#51648;&#47561; &#49884;&#44277; &#50630;&#51020;</div></div>
-                  <span className="badge b-brands">&#52628;&#52380;</span>
+
+          <div className="block" style={{ marginBottom: 0 }}>
+            <h2 className="block__t">시공 이력 <span className="c-brand num">{items.length}건</span></h2>
+            <div className="tl" style={{ marginTop: 20 }}>
+              {items.map(it => (
+                <div key={it.title + it.date} className="tl__i done">
+                  <div className="row between"><div className="t-b16 fw7">{it.title}</div>
+                    <span className="t-b14 num">{it.won.toLocaleString()}원</span></div>
+                  <div className="t-b14 c-sec">{it.date} · {it.pro}{it.warranty ? ` · 보증 유효 (${it.warranty}까지)` : ''}</div>
+                  {it.badges.length > 0 && (
+                    <div className="row gap4" style={{ marginTop: 6 }}>
+                      {it.badges.map(b => <span key={b.label} className={'badge b-' + b.tone}>{b.label}</span>)}
+                    </div>
+                  )}
                 </div>
-                <div className="tier">
-                  <div><div className="t-b14 fw7">&#51452;&#48169; &#48176;&#49688;&#44288; &#49464;&#51221;</div>
-                    <div className="t-b12 c-sec">2027.04 &#50696;&#51221; · 2&#45380; &#51452;&#44592;</div></div>
-                  <span className="t-b12 c-sec num">D-160</span>
-                </div>
-                <div className="tier">
-                  <div><div className="t-b14 fw7">&#44277;&#50857; &#51077;&#49345;&#44288; &#49464;&#51221;</div>
-                    <div className="t-b12 c-sec">&#45800;&#51648; &#44288;&#47532;&#49324;&#47924;&#49548; &#51068;&#51221;</div></div>
-                  <span className="t-b12 c-sec">&#48120;&#51221;</span>
-                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <aside className="side">
+          <div className="panel">
+            <h3 className="panel__t">다음 권장 시점</h3>
+            <div className="col gap12">
+              <div className="tier on">
+                <div><div className="t-b14 fw7">수도·난방배관 클리닝</div>
+                  <div className="t-b12 c-sec">지금 권장 · 마지막 시공 없음</div></div>
+                <span className="badge b-brands">추천</span>
               </div>
-              <button className="btn large primary block" data-go="groupbuy" style={{ marginTop: 16 }}>&#53364;&#47532;&#45789; &#44277;&#46041;&#44396;&#47588; &#52280;&#50668;</button>
+              <div className="tier">
+                <div><div className="t-b14 fw7">주방 배수관 세정</div>
+                  <div className="t-b12 c-sec">2027.04 예정 · 2년 주기</div></div>
+                <span className="t-b12 c-sec num">D-160</span>
+              </div>
+              <div className="tier">
+                <div><div className="t-b14 fw7">공용 입상관 세정</div>
+                  <div className="t-b12 c-sec">단지 관리사무소 일정</div></div>
+                <span className="t-b12 c-sec">미정</span>
+              </div>
             </div>
-            <div className="panel" style={{ background: "var(--sg-bg-brand-subtle)", boxShadow: "none" }}>
-              <div className="t-b14 fw7" style={{ marginBottom: 6 }}>&#51060;&#49324;&#47484; &#44032;&#46020; &#51060;&#47141;&#51008; &#45224;&#49845;&#45768;&#45796;</div>
-              <p className="t-b12 c-sec" style={{ margin: "0" }}>&#51060; &#51665;&#51032; &#48176;&#44288; &#51060;&#47141;&#51008; &#51452;&#49548; &#45800;&#50948;&#47196; &#48372;&#44288;&#46121;&#45768;&#45796;.
-                &#47588;&#47588;·&#51204;&#49464; &#49884; &#45796;&#51020; &#44144;&#51452;&#51088;&#50640;&#44172; &#51060;&#51204;&#54624; &#49688; &#51080;&#44256;, &#44148;&#47932; &#44288;&#47532;&#49324;&#47924;&#49548;&#51032; &#44277;&#50857;&#48512; &#51060;&#47141;&#44284;&#46020; &#50672;&#44208;&#46121;&#45768;&#45796;.</p>
-            </div>
-          </aside>
-        </div></>
+            <button className="btn large primary block" data-go="groupbuy" style={{ marginTop: 16 }}>클리닝 공동구매 참여</button>
+          </div>
+          <div className="panel" style={{ background: 'var(--sg-bg-brand-subtle)', boxShadow: 'none' }}>
+            <div className="t-b14 fw7" style={{ marginBottom: 6 }}>이사를 가도 이력은 남습니다</div>
+            <p className="t-b12 c-sec" style={{ margin: 0 }}>이 집의 배관 이력은 주소 단위로 보관됩니다.
+              매매·전세 시 다음 거주자에게 이전할 수 있고, 건물 관리사무소의 공용부 이력과도 연결됩니다.</p>
+          </div>
+        </aside>
+      </div>
     </section>
   );
 }

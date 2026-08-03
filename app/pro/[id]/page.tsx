@@ -1,6 +1,6 @@
 
 // 자동 이식된 목업 화면 p-pro — 원본: seolbigo-preview/index.html
-// 인터랙션(토스트·검증·칩 등)은 components/MockupBridge 가 위임 처리합니다.
+// 정적 상세 화면 — 상태 없음. 브리지는 라우팅(data-go)과 Before/After 슬라이더만 담당합니다.
 export default function Page() {
   
   return (
@@ -98,7 +98,7 @@ export default function Page() {
               <div className="row between" style={{ marginBottom: 16 }}>
                 <span className="t-h16">&#54633;&#44228;</span><span className="t-h20 num c-brand">410,000&#50896;</span></div>
               <button className="btn large primary block" data-go="booking">&#51060; &#49324;&#50629;&#51088;&#47196; &#50696;&#50557;</button>
-              <button className="btn medium ghost block" style={{ marginTop: 8 }} data-toast="안심번호로 연결됩니다 \xB7 데모에서는 통화가 생략됩니다">&#47928;&#51032;&#54616;&#44592;</button>
+              <button className="btn medium ghost block" style={{ marginTop: 8 }} data-toast="안심번호로 연결됩니다 · 데모에서는 통화가 생략됩니다">&#47928;&#51032;&#54616;&#44592;</button>
             </div>
             <div className="panel" style={{ background: "var(--sg-bg-brand-subtle)", boxShadow: "none" }}>
               <div className="t-b14 fw7" style={{ marginBottom: 6 }}>&#44305;&#44256;&#48708; 0&#50896;&#51004;&#47196; &#49688;&#51452;&#54616;&#45716; &#49324;&#50629;&#51088;</div>

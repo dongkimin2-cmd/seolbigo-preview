@@ -1,6 +1,6 @@
 
 // 자동 이식된 목업 화면 p-case-detail — 원본: seolbigo-preview/index.html
-// 인터랙션(토스트·검증·칩 등)은 components/MockupBridge 가 위임 처리합니다.
+// 정적 상세 화면 — 상태 없음. 브리지는 라우팅(data-go)과 Before/After 슬라이더만 담당합니다.
 export default function Page() {
   
   return (

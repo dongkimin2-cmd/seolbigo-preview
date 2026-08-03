@@ -1,118 +1,157 @@
+'use client';
+// p-groupbuy — 데이터 기반으로 전환 완료: 모집 현황·구간 단가가 GROUPBUY 데이터에서 계산되고,
+// 참여 시 POST /api/groupbuy → 참여 세대 수가 실제로 올라가며 게이지·구간이 재계산됩니다.
+import { useMemo, useState } from 'react';
+import { GROUPBUY, tierFor } from '../../lib/mock-data';
+import { toast } from '../../lib/toast';
 
-// 자동 이식된 목업 화면 p-groupbuy — 원본: seolbigo-preview/index.html
-// 인터랙션(토스트·검증·칩 등)은 components/MockupBridge 가 위임 처리합니다.
 export default function Page() {
-  
+  const [current, setCurrent] = useState(GROUPBUY.current);
+  const [joined, setJoined] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  const pct = Math.min(100, Math.round(current / GROUPBUY.goal * 100));
+  const nowTier = useMemo(() => tierFor(current), [current]);
+  const finalTier = GROUPBUY.tiers[GROUPBUY.tiers.length - 1];
+  const remain = Math.max(0, GROUPBUY.goal - current);
+
+  async function join() {
+    setBusy(true);
+    try {
+      const res = await fetch('/api/groupbuy', { method: 'POST' });
+      const data = await res.json();
+      if (!data.ok) throw new Error();
+      setCurrent(data.current);
+      setJoined(true);
+      toast('공동구매 참여가 접수되었습니다 · 최소 세대가 모이면 확정 안내를 드립니다');
+    } catch {
+      toast('참여 접수에 실패했어요. 잠시 후 다시 시도해주세요.', 'warn');
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
-    <section className="page on" id="p-groupbuy">
-      <><div className="phead"><div className="phead__in">
-          <div className="crumb"><a data-go="home">&#54856;</a><span>›</span><b>&#49688;&#46020;·&#45212;&#48169;&#48176;&#44288; &#53364;&#47532;&#45789; &#44277;&#46041;&#44396;&#47588;</b></div>
-          <h1>&#44057;&#51008; &#46972;&#51064;&#51012; &#47926;&#51004;&#47732; &#44050;&#51060; &#45236;&#47140;&#44049;&#45768;&#45796;</h1>
-          <p className="sub">&#52397;&#49556;&#50500;&#54028;&#53944; 103&#46041; · &#47784;&#51665; &#47560;&#44048; 3&#51068; &#51204; · &#49884;&#44277; &#50696;&#51221;&#51068; 2026.12.03</p>
-        </div></div>
-      
-        <div className="flow">
-          <div>
-            <div className="block">
-              <h2 className="block__t">&#47784;&#51665; &#54788;&#54889;</h2>
-              <div className="row between" style={{ margin: "16px 0 10px" }}>
-                <span className="t-b16">&#54788;&#51116; <b className="c-brand num">18&#49464;&#45824;</b> &#52280;&#50668; · 24&#49464;&#45824; &#45804;&#49457; &#49884; &#52572;&#51200;&#44032;</span>
-                <span className="t-h20 num">75%</span>
-              </div>
-              <div className="gauge"><i style={{ width: "75%" }} /></div>
-              <div className="row between" style={{ marginTop: 10 }}>
-                <span className="t-b12 c-sec">6&#49464;&#45824;&#47564; &#45908; &#47784;&#51060;&#47732; 1&#49464;&#45824;&#45817; <b className="c-brand num">23.8&#47564;&#50896;</b></span>
-                <span className="t-b12 c-sec">&#47560;&#44048;&#44620;&#51648; <b className="num">3&#51068;</b></span>
-              </div>
-      
-              <hr className="hair" style={{ margin: "24px 0" }} />
-      
-              <h3 className="t-h16" style={{ margin: "0 0 12px" }}>&#52280;&#50668; &#49464;&#45824; &#49688;&#50640; &#46384;&#47480; &#45800;&#44032;</h3>
-              <div className="col gap8">
-                <div className="tier"><div><b className="t-b14">1~9&#49464;&#45824;</b> <span className="t-b12 c-sec">&#44060;&#48324; &#49884;&#44277;</span></div>
-                  <span className="t-b14 num c-sec">340,000&#50896;</span></div>
-                <div className="tier"><div><b className="t-b14">10~17&#49464;&#45824;</b> <span className="t-b12 c-sec">&#48152;&#45208;&#51208; &#51068;&#44292;</span></div>
-                  <span className="t-b14 num c-sec">290,000&#50896;</span></div>
-                <div className="tier on"><div><b className="t-b14">18~23&#49464;&#45824;</b> <span className="badge b-brands" style={{ marginLeft: 4 }}>&#54788;&#51116;</span></div>
-                  <span className="t-b16 num fw7 c-brand">262,000&#50896;</span></div>
-                <div className="tier"><div><b className="t-b14">24&#49464;&#45824; &#51060;&#49345;</b> <span className="t-b12 c-sec">&#54616;&#47336; &#54620; &#46041; &#51068;&#44292;</span></div>
-                  <span className="t-b14 num fw7">238,000&#50896;</span></div>
-              </div>
+    <section className="page on" id="p-groupbuy" data-react>
+      <div className="phead"><div className="phead__in">
+        <div className="crumb"><a data-go="home">홈</a><span>›</span><b>수도·난방배관 클리닝 공동구매</b></div>
+        <h1>같은 라인을 묶으면 값이 내려갑니다</h1>
+        <p className="sub">{GROUPBUY.complex} · 모집 마감 {GROUPBUY.deadlineDays}일 전 · 시공 예정일 2026.12.03</p>
+      </div></div>
+
+      <div className="flow">
+        <div>
+          <div className="block">
+            <h2 className="block__t">모집 현황</h2>
+            <div className="row between" style={{ margin: '16px 0 10px' }}>
+              <span className="t-b16">현재 <b className="c-brand num">{current}세대</b> 참여 · {GROUPBUY.goal}세대 달성 시 최저가</span>
+              <span className="t-h20 num">{pct}%</span>
             </div>
-      
-            <div className="block">
-              <h2 className="block__t">&#48176;&#44288; &#53364;&#47532;&#45789;&#51060;&#46976;</h2>
-              <p className="block__d">&#49464;&#45824; &#45236; &#49688;&#46020;·&#45212;&#48169; &#48176;&#44288;&#50640; &#49939;&#51064; &#49828;&#52992;&#51068;&#44284; &#45433;&#47932; &#52840;&#51204;&#47932;&#51012; &#49692;&#54872; &#50557;&#54408;&#51004;&#47196; &#51228;&#44144;&#54616;&#45716; &#49884;&#44277;&#51077;&#45768;&#45796;.</p>
-              <div className="grid g3" style={{ gap: 16, marginTop: 8 }}>
-                <div className="panel" style={{ boxShadow: "none", background: "var(--sg-bg-subtle)" }}>
-                  <div className="t-h24 num c-brand">&#50557; 2%</div>
-                  <div className="t-b14 fw6" style={{ margin: "2px 0 4px" }}>&#49828;&#52992;&#51068; 1mm&#45817; &#49552;&#49892;</div>
-                  <div className="t-b12 c-sec">&#54620;&#44397;&#50640;&#45320;&#51648;&#44277;&#45800; EG-TIPS</div></div>
-                <div className="panel" style={{ boxShadow: "none", background: "var(--sg-bg-subtle)" }}>
-                  <div className="t-h24 num c-brand">5% ↑</div>
-                  <div className="t-b14 fw6" style={{ margin: "2px 0 4px" }}>&#53364;&#47532;&#45789; &#54980; &#45212;&#48169;&#54952;&#50984; &#44060;&#49440;</div>
-                  <div className="t-b12 c-sec">&#54620;&#44397;&#50640;&#45320;&#51648;&#44277;&#45800; &#51228;&#49884; &#44592;&#51456;</div></div>
-                <div className="panel" style={{ boxShadow: "none", background: "var(--sg-bg-subtle)" }}>
-                  <div className="t-h24 num c-brand">&#52572;&#45824; 25%</div>
-                  <div className="t-b14 fw6" style={{ margin: "2px 0 4px" }}>&#48169;&#52824; &#49884; &#50672;&#47308; &#49548;&#48708; &#51613;&#44032;</div>
-                  <div className="t-b12 c-sec">&#48120;&#44397; &#50640;&#45320;&#51648;&#48512;(DOE) &#49892;&#52769;</div></div>
-              </div>
-              <div className="grid g2" style={{ gap: 16, marginTop: 20 }}>
-                <div><div className="t-b12 c-sec" style={{ marginBottom: 6 }}>&#49884;&#44277; &#51204; — &#44288; &#45236;&#48512; &#49828;&#52992;&#51068;</div>
-                  <div className="ph pipe" style={{ aspectRatio: "4/3", borderRadius: 10 }} /></div>
-                <div><div className="t-b12 c-sec" style={{ marginBottom: 6 }}>&#49884;&#44277; &#54980; — &#49692;&#54872; &#53364;&#47532;&#45789; &#50756;&#47308;</div>
-                  <div className="ph clean" style={{ aspectRatio: "4/3", borderRadius: 10 }} /></div>
-              </div>
+            <div className="gauge"><i style={{ width: pct + '%' }} /></div>
+            <div className="row between" style={{ marginTop: 10 }}>
+              <span className="t-b12 c-sec">{remain > 0
+                ? <>{remain}세대만 더 모이면 1세대당 <b className="c-brand num">{(finalTier.won / 10_000).toFixed(1)}만원</b></>
+                : <>목표 달성! 최저가 <b className="c-brand num">{(finalTier.won / 10_000).toFixed(1)}만원</b> 적용</>}</span>
+              <span className="t-b12 c-sec">마감까지 <b className="num">{GROUPBUY.deadlineDays}일</b></span>
             </div>
-      
-            <div className="block" style={{ marginBottom: "0" }}>
-              <h2 className="block__t">&#51652;&#54665; &#49692;&#49436;</h2>
-              <div className="grid g4" style={{ gap: 16, marginTop: 14 }}>
-                <div><span className="badge b-brand">1</span>
-                  <div className="t-b14 fw7" style={{ margin: "8px 0 2px" }}>&#49888;&#52397; · &#47784;&#51665;</div>
-                  <div className="t-b12 c-sec">&#44288;&#47532;&#49324;&#47924;&#49548; &#44277;&#51648;&#50752; &#50545; &#50508;&#47548;&#51004;&#47196; &#44057;&#51008; &#46041; &#49464;&#45824;&#47484; &#47784;&#51021;&#45768;&#45796;.</div></div>
-                <div><span className="badge b-brand">2</span>
-                  <div className="t-b14 fw7" style={{ margin: "8px 0 2px" }}>&#51068;&#51221; &#54869;&#51221;</div>
-                  <div className="t-b12 c-sec">&#47560;&#44048; &#54980; &#46972;&#51064;&#48324; &#49884;&#44277; &#49692;&#49436;&#50752; &#49884;&#44036;&#45824;&#47484; &#48176;&#51221;&#54633;&#45768;&#45796;.</div></div>
-                <div><span className="badge b-brand">3</span>
-                  <div className="t-b14 fw7" style={{ margin: "8px 0 2px" }}>&#45817;&#51068; &#49884;&#44277;</div>
-                  <div className="t-b12 c-sec">&#49464;&#45824;&#45817; 2~3&#49884;&#44036;. &#44057;&#51008; &#46972;&#51064;&#51012; &#50672;&#49549;&#51004;&#47196; &#52376;&#47532;&#54633;&#45768;&#45796;.</div></div>
-                <div><span className="badge b-brand">4</span>
-                  <div className="t-b14 fw7" style={{ margin: "8px 0 2px" }}>&#44208;&#44284; &#44592;&#47197;</div>
-                  <div className="t-b12 c-sec">&#48176;&#52636;&#49688; &#49345;&#53468; &#52524;&#50689;&#48376;&#51060; &#50864;&#47532;&#51665; &#51060;&#47141;&#50640; &#51088;&#46041; &#51200;&#51109;&#46121;&#45768;&#45796;.</div></div>
-              </div>
+
+            <hr className="hair" style={{ margin: '24px 0' }} />
+
+            <h3 className="t-h16" style={{ margin: '0 0 12px' }}>참여 세대 수에 따른 단가</h3>
+            <div className="col gap8">
+              {GROUPBUY.tiers.map(t => {
+                const isNow = t === nowTier;
+                return (
+                  <div key={t.from} className={'tier' + (isNow ? ' on' : '')}>
+                    <div><b className="t-b14">{t.to === null ? `${t.from}세대 이상` : `${t.from}~${t.to}세대`}</b>{' '}
+                      {isNow
+                        ? <span className="badge b-brands" style={{ marginLeft: 4 }}>현재</span>
+                        : t.label && <span className="t-b12 c-sec">{t.label}</span>}</div>
+                    <span className={isNow ? 't-b16 num fw7 c-brand'
+                      : 't-b14 num ' + (t.to === null ? 'fw7' : 'c-sec')}>{t.won.toLocaleString()}원</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
-      
-          <aside className="side">
-            <div className="panel">
-              <h3 className="panel__t">&#52280;&#50668;&#54616;&#44592;</h3>
-              <div className="col gap8" style={{ marginBottom: 14 }}>
-                <div className="row between"><span className="t-b14 c-sec">&#44060;&#48324; &#49884;&#44277;&#44032;</span>
-                  <span className="t-b14 num c-sec" style={{ textDecoration: "line-through" }}>340,000&#50896;</span></div>
-                <div className="row between"><span className="t-b14 c-sec">&#54788;&#51116; &#44277;&#46041;&#44396;&#47588;&#44032;</span>
-                  <span className="t-b14 num fw6">262,000&#50896;</span></div>
-                <div className="row between"><span className="t-b14 c-sec">24&#49464;&#45824; &#45804;&#49457; &#49884;</span>
-                  <span className="t-b14 num fw7 c-brand">238,000&#50896;</span></div>
-              </div>
-              <hr className="hair" style={{ margin: "14px 0" }} />
-              <div className="row between" style={{ marginBottom: 16 }}>
-                <span className="t-h16">&#51648;&#44552; &#44208;&#51228;</span><span className="t-h24 num c-brand">262,000&#50896;</span></div>
-              <button className="btn large primary block" data-done="✓ 참여 접수됨" data-toast="공동구매 참여가 접수되었습니다 \xB7 최소 세대가 모이면 확정 안내를 드립니다">&#44277;&#46041;&#44396;&#47588; &#52280;&#50668;</button>
-              <div className="t-b12 c-ter" style={{ marginTop: 10, textAlign: "center" }}>
-                &#45908; &#47566;&#51008; &#49464;&#45824;&#44032; &#47784;&#51060;&#47732; &#52264;&#50529;&#51008; &#51088;&#46041; &#54872;&#48520;&#46121;&#45768;&#45796;</div>
+
+          <div className="block">
+            <h2 className="block__t">배관 클리닝이란</h2>
+            <p className="block__d">세대 내 수도·난방 배관에 쌓인 스케일과 녹물 침전물을 순환 약품으로 제거하는 시공입니다.</p>
+            <div className="grid g3" style={{ gap: 16, marginTop: 8 }}>
+              <div className="panel" style={{ boxShadow: 'none', background: 'var(--sg-bg-subtle)' }}>
+                <div className="t-h24 num c-brand">약 2%</div>
+                <div className="t-b14 fw6" style={{ margin: '2px 0 4px' }}>스케일 1mm당 손실</div>
+                <div className="t-b12 c-sec">한국에너지공단 EG-TIPS</div></div>
+              <div className="panel" style={{ boxShadow: 'none', background: 'var(--sg-bg-subtle)' }}>
+                <div className="t-h24 num c-brand">5% ↑</div>
+                <div className="t-b14 fw6" style={{ margin: '2px 0 4px' }}>클리닝 후 난방효율 개선</div>
+                <div className="t-b12 c-sec">한국에너지공단 제시 기준</div></div>
+              <div className="panel" style={{ boxShadow: 'none', background: 'var(--sg-bg-subtle)' }}>
+                <div className="t-h24 num c-brand">최대 25%</div>
+                <div className="t-b14 fw6" style={{ margin: '2px 0 4px' }}>방치 시 연료 소비 증가</div>
+                <div className="t-b12 c-sec">미국 에너지부(DOE) 실측</div></div>
             </div>
-            <div className="panel">
-              <h3 className="panel__t">&#50864;&#47532; &#46041; &#52280;&#50668; &#54788;&#54889;</h3>
-              <div className="col gap8">
-                <div className="row between"><span className="t-b14 c-sec">1~5&#52789;</span><span className="t-b14 fw6">4&#49464;&#45824;</span></div>
-                <div className="row between"><span className="t-b14 c-sec">6~10&#52789;</span><span className="t-b14 fw6">6&#49464;&#45824;</span></div>
-                <div className="row between"><span className="t-b14 c-sec">11~15&#52789;</span><span className="t-b14 fw6 c-brand">5&#49464;&#45824; (&#50864;&#47532; &#52789;)</span></div>
-                <div className="row between"><span className="t-b14 c-sec">16~20&#52789;</span><span className="t-b14 fw6">3&#49464;&#45824;</span></div>
-              </div>
+            <div className="grid g2" style={{ gap: 16, marginTop: 20 }}>
+              <div><div className="t-b12 c-sec" style={{ marginBottom: 6 }}>시공 전 — 관 내부 스케일</div>
+                <div className="ph pipe" style={{ aspectRatio: '4/3', borderRadius: 10 }} /></div>
+              <div><div className="t-b12 c-sec" style={{ marginBottom: 6 }}>시공 후 — 순환 클리닝 완료</div>
+                <div className="ph clean" style={{ aspectRatio: '4/3', borderRadius: 10 }} /></div>
             </div>
-          </aside>
-        </div></>
+          </div>
+
+          <div className="block" style={{ marginBottom: 0 }}>
+            <h2 className="block__t">진행 순서</h2>
+            <div className="grid g4" style={{ gap: 16, marginTop: 14 }}>
+              <div><span className="badge b-brand">1</span>
+                <div className="t-b14 fw7" style={{ margin: '8px 0 2px' }}>신청 · 모집</div>
+                <div className="t-b12 c-sec">관리사무소 공지와 앱 알림으로 같은 동 세대를 모읍니다.</div></div>
+              <div><span className="badge b-brand">2</span>
+                <div className="t-b14 fw7" style={{ margin: '8px 0 2px' }}>일정 확정</div>
+                <div className="t-b12 c-sec">마감 후 라인별 시공 순서와 시간대를 배정합니다.</div></div>
+              <div><span className="badge b-brand">3</span>
+                <div className="t-b14 fw7" style={{ margin: '8px 0 2px' }}>당일 시공</div>
+                <div className="t-b12 c-sec">세대당 2~3시간. 같은 라인을 연속으로 처리합니다.</div></div>
+              <div><span className="badge b-brand">4</span>
+                <div className="t-b14 fw7" style={{ margin: '8px 0 2px' }}>결과 기록</div>
+                <div className="t-b12 c-sec">배출수 상태 촬영본이 우리집 이력에 자동 저장됩니다.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <aside className="side">
+          <div className="panel">
+            <h3 className="panel__t">참여하기</h3>
+            <div className="col gap8" style={{ marginBottom: 14 }}>
+              <div className="row between"><span className="t-b14 c-sec">개별 시공가</span>
+                <span className="t-b14 num c-sec" style={{ textDecoration: 'line-through' }}>{GROUPBUY.indivWon.toLocaleString()}원</span></div>
+              <div className="row between"><span className="t-b14 c-sec">현재 공동구매가</span>
+                <span className="t-b14 num fw6">{nowTier.won.toLocaleString()}원</span></div>
+              <div className="row between"><span className="t-b14 c-sec">{GROUPBUY.goal}세대 달성 시</span>
+                <span className="t-b14 num fw7 c-brand">{finalTier.won.toLocaleString()}원</span></div>
+            </div>
+            <hr className="hair" style={{ margin: '14px 0' }} />
+            <div className="row between" style={{ marginBottom: 16 }}>
+              <span className="t-h16">지금 결제</span><span className="t-h24 num c-brand">{nowTier.won.toLocaleString()}원</span></div>
+            <button className={'btn large primary block' + (joined ? ' done' : '')} disabled={joined || busy}
+              onClick={join}>{joined ? '✓ 참여 접수됨' : busy ? '접수 중…' : '공동구매 참여'}</button>
+            <div className="t-b12 c-ter" style={{ marginTop: 10, textAlign: 'center' }}>
+              더 많은 세대가 모이면 차액은 자동 환불됩니다</div>
+          </div>
+          <div className="panel">
+            <h3 className="panel__t">우리 동 참여 현황</h3>
+            <div className="col gap8">
+              {GROUPBUY.floors.map(f => (
+                <div key={f.band} className="row between">
+                  <span className="t-b14 c-sec">{f.band}</span>
+                  <span className={'t-b14 fw6' + (f.mine ? ' c-brand' : '')}>
+                    {f.n + (f.mine && joined ? 1 : 0)}세대{f.mine ? ' (우리 층)' : ''}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </div>
     </section>
   );
 }
