@@ -8,22 +8,7 @@
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { GO_ROUTES, BACKOFFICE_IDS, MOCKUP_URL } from '../lib/routes';
-
-function toast(msg: string, type?: string) {
-  let wrap = document.querySelector('.toast-wrap');
-  if (!wrap) {
-    wrap = document.createElement('div');
-    wrap.className = 'toast-wrap';
-    document.body.appendChild(wrap);
-  }
-  const el = document.createElement('div');
-  el.className = 'toast ' + (type || 'ok');
-  el.setAttribute('role', 'status');
-  el.textContent = msg;
-  wrap.appendChild(el);
-  requestAnimationFrame(() => el.classList.add('on'));
-  setTimeout(() => { el.classList.remove('on'); setTimeout(() => el.remove(), 300); }, 2600);
-}
+import { toast } from '../lib/toast';
 
 const validators: Record<string, () => string | null> = {
   diag1() {
@@ -41,11 +26,12 @@ const validators: Record<string, () => string | null> = {
 };
 
 function syncCounts() {
+  // [data-react] 화면의 요약 텍스트는 React 가 렌더 — 브리지가 덮어쓰면 React 텍스트 노드가 분리됨
   const sc = document.getElementById('diagSymCount');
-  if (sc) sc.textContent =
+  if (sc && !sc.closest('[data-react]')) sc.textContent =
     document.querySelectorAll('#diagSymChips .chip[aria-pressed="true"]').length + '개 선택';
   const bw = document.getElementById('bookWhen');
-  if (bw) {
+  if (bw && !bw.closest('[data-react]')) {
     const d = document.querySelector('#bookDays .chip[aria-pressed="true"]');
     const t = document.querySelector('#bookTimes .chip[aria-pressed="true"]');
     bw.textContent = d && t
@@ -126,6 +112,11 @@ function syncCta() {
   const c = btn.cloneNode(true) as HTMLElement;
   c.classList.remove('medium', 'small');
   c.classList.add('large', 'block');
+  // React onClick 은 cloneNode 로 복제되지 않으므로 원본 클릭으로 위임
+  // (data-* 브리지 버튼은 문서 위임으로 이미 동작하므로 제외 — 중복 실행 방지)
+  if (!btn.hasAttribute('data-go') && !btn.hasAttribute('data-toast') && !btn.hasAttribute('data-done')) {
+    c.addEventListener('click', () => (btn as HTMLElement).click());
+  }
   mcta.appendChild(c);
 }
 
@@ -172,6 +163,8 @@ export default function MockupBridge() {
         }
         return;
       }
+      // 상태 기반으로 전환된 화면([data-react])의 칩·옵션은 React 가 관리 — 브리지 개입 금지
+      if (target.closest('[data-react]')) return;
       const o = target.closest('.opt');
       if (o) {
         o.parentElement?.querySelectorAll('.opt').forEach(x => x.classList.remove('on'));

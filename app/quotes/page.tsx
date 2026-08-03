@@ -1,133 +1,130 @@
+// p-quotes — 데이터 기반으로 전환 완료: lib/mock-data 의 Quote[] 를 렌더
+// (서버 컴포넌트 — 백엔드 연결 시 여기서 fetch('/api/quotes') 또는 DB 조회로 교체)
+import { DEMO_DIAGNOSIS, DEMO_QUOTES, type Quote } from '../../lib/mock-data';
 
-// 자동 이식된 목업 화면 p-quotes — 원본: seolbigo-preview/index.html
-// 인터랙션(토스트·검증·칩 등)은 components/MockupBridge 가 위임 처리합니다.
+const D = DEMO_DIAGNOSIS;
+const span = D.priceMax - D.priceMin;
+const pctOf = (won: number) => ((won / 10_000 - D.priceMin) / span * 100).toFixed(1) + '%';
+const MARK_COLORS = ['var(--sg-brand-secondary)', 'var(--sg-brand-primary)', 'var(--sg-text-warning)'];
+
+function deltaLabel(q: Quote) {
+  const delta = Math.round((q.priceWon / 10_000 - D.priceMid) / D.priceMid * 100);
+  if (delta === 0) return <div className="t-b12 c-suc fw6">중앙값과 동일</div>;
+  if (delta < 0) return <div className="t-b12 c-sec">중앙값 대비 −{-delta}%</div>;
+  return <div className="t-b12 fw6" style={{ color: 'var(--sg-text-warning)' }}>중앙값 대비 +{delta}%</div>;
+}
+
+function QuoteCard({ q }: { q: Quote }) {
+  const over = q.priceWon / 10_000 > D.fairMax;
+  return (
+    <div className="card" style={{ padding: 22, position: 'relative',
+      ...(q.recommended ? { boxShadow: '0 0 0 2px var(--sg-brand-primary) inset' } : {}) }}>
+      {q.recommended && (
+        <span className="badge b-brands b12" style={{ position: 'absolute', top: -11, left: 22 }}>기준가 적합 · 추천</span>
+      )}
+      <div className="row gap16" style={q.recommended ? { marginTop: 4 } : undefined}>
+        <div className="avatar sq" style={{ width: 60, height: 60, fontSize: 20 }}>{q.initial}</div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="row gap6"><span className="t-h18">{q.proName}</span>
+            {q.recommended && <span className="badge b-brand">설비고 인증</span>}</div>
+          <div className="t-b14 c-sec">★ {q.rating} ({q.reviews}) · 필모그래피 {q.filmCount}건 · 재시공률 {q.redoRate}% · 평균 응답 {q.responseTime}</div>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <div className="t-h24 num">{q.priceWon.toLocaleString()}원</div>
+          {deltaLabel(q)}
+        </div>
+      </div>
+      <div className="posbar" style={{ margin: '18px 0 14px' }}>
+        <span style={{ left: pctOf(q.priceWon),
+          ...(over ? { boxShadow: '0 0 0 3px var(--sg-text-warning) inset,var(--sg-shadow-up-1)' } : {}) }} />
+      </div>
+      {q.warning && (
+        <div className="callout warn" style={{ marginBottom: 16 }}>
+          <span className="c-dan" style={{ flex: '0 0 20px' }}>!</span>
+          <p className="t-b14" style={{ margin: 0 }}>{q.warning}</p>
+        </div>
+      )}
+      <div className="row gap6" style={{ flexWrap: 'wrap', marginBottom: 16 }}>
+        {q.badges.map(b => <span key={b.label} className={'badge b12 b-' + b.tone}>{b.label}</span>)}
+      </div>
+      <div className="row gap8" style={{ justifyContent: 'flex-end' }}>
+        <button className="btn medium outlined" data-go="pro">필모그래피 {q.filmCount}건 보기</button>
+        <button className={'btn medium ' + (q.recommended ? 'primary' : 'solid')} data-go="booking"
+          style={{ minWidth: 150 }}>이 견적 선택</button>
+      </div>
+    </div>
+  );
+}
+
 export default function Page() {
-  
+  const sorted = [...DEMO_QUOTES].sort((a, b) => a.priceWon - b.priceWon);
   return (
     <section className="page on" id="p-quotes">
-      <><div className="phead"><div className="phead__in">
-          <div className="crumb"><a data-go="home">&#54856;</a><span>›</span><a data-go="diag3">&#51652;&#45800; &#44208;&#44284;</a><span>›</span><b>&#44204;&#51201; &#48708;&#44368;</b></div>
-          <h1>3&#44275;&#50640;&#49436; &#44204;&#51201;&#51060; &#46020;&#52265;&#54664;&#49845;&#45768;&#45796;</h1>
-          <p className="sub">&#44592;&#51456;&#44032; &#48516;&#54252; &#50948;&#50640; &#44033; &#44204;&#51201;&#51032; &#50948;&#52824;&#47484; &#54364;&#49884;&#54664;&#49845;&#45768;&#45796;. &#44552;&#50529;&#47564;&#51060; &#50500;&#45768;&#46972; &#54252;&#54632; &#44277;&#51221;&#51012; &#54632;&#44760; &#48372;&#49464;&#50836;.</p>
-        </div></div>
-      
-        <div className="flow">
-          <div>
-            <div className="block">
-              <h2 className="block__t">&#44592;&#51456;&#44032; &#45824;&#48708; &#50948;&#52824;</h2>
-              <p className="block__d">&#44053;&#45224;&#44396; · &#51456;&#44277; 27&#45380;&#52264; · &#48176;&#44288; &#51060;&#51020;&#48512; &#45572;&#49688; 12&#44148; &#48516;&#54252;</p>
-              <div className="range" style={{ paddingTop: 8 }}>
-                <div className="range__bar">
-                  <div className="range__fair" style={{ left: "22%", right: "22%" }} />
-                  <div className="range__mark" style={{ left: "34%", background: "var(--sg-brand-secondary)" }} />
-                  <div className="range__mark" style={{ left: "47%" }} />
-                  <div className="range__mark" style={{ left: "78%", background: "var(--sg-text-warning)" }} />
-                </div>
-                <div className="range__lbl"><span className="num">32&#47564;&#50896;</span><span className="c-suc fw6">&#51201;&#51221; &#44396;&#44036; 35~50&#47564;&#50896;</span><span className="num">58&#47564;&#50896;</span></div>
+      <div className="phead"><div className="phead__in">
+        <div className="crumb"><a data-go="home">홈</a><span>›</span><a data-go="diag3">진단 결과</a><span>›</span><b>견적 비교</b></div>
+        <h1>{DEMO_QUOTES.length}곳에서 견적이 도착했습니다</h1>
+        <p className="sub">기준가 분포 위에 각 견적의 위치를 표시했습니다. 금액만이 아니라 포함 공정을 함께 보세요.</p>
+      </div></div>
+
+      <div className="flow">
+        <div>
+          <div className="block">
+            <h2 className="block__t">기준가 대비 위치</h2>
+            <p className="block__d">강남구 · 준공 27년차 · {D.type} {D.matchedCases}건 분포</p>
+            <div className="range" style={{ paddingTop: 8 }}>
+              <div className="range__bar">
+                <div className="range__fair" style={{
+                  left: ((D.fairMin - D.priceMin) / span * 100).toFixed(1) + '%',
+                  right: ((D.priceMax - D.fairMax) / span * 100).toFixed(1) + '%' }} />
+                {sorted.map((q, i) => (
+                  <div key={q.id} className="range__mark" style={{ left: pctOf(q.priceWon), background: MARK_COLORS[i] }} />
+                ))}
               </div>
-              <div className="row gap16" style={{ marginTop: 16, flexWrap: "wrap" }}>
-                <span className="t-b14 c-sec"><i style={{ display: "inline-block", width: 9, height: 9, borderRadius: 2, background: "var(--sg-brand-secondary)", marginRight: 6 }} />&#54620;&#48731;&#48176;&#44288; 36&#47564;&#50896;</span>
-                <span className="t-b14 c-sec"><i style={{ display: "inline-block", width: 9, height: 9, borderRadius: 2, background: "var(--sg-brand-primary)", marginRight: 6 }} />&#44648;&#45143;&#54620;&#51665;&#49444;&#48708; 41&#47564;&#50896;</span>
-                <span className="t-b14 c-sec"><i style={{ display: "inline-block", width: 9, height: 9, borderRadius: 2, background: "var(--sg-text-warning)", marginRight: 6 }} />&#45824;&#49457;&#49444;&#48708; 52&#47564;&#50896;</span>
+              <div className="range__lbl">
+                <span className="num">{D.priceMin}만원</span>
+                <span className="c-suc fw6">적정 구간 {D.fairMin}~{D.fairMax}만원</span>
+                <span className="num">{D.priceMax}만원</span>
               </div>
             </div>
-      
-            <div className="col gap16">
-              <div className="card" style={{ padding: 22, boxShadow: "0 0 0 2px var(--sg-brand-primary) inset", position: "relative" }}>
-                <span className="badge b-brands b12" style={{ position: "absolute", top: "-11px", left: 22 }}>&#44592;&#51456;&#44032; &#51201;&#54633; · &#52628;&#52380;</span>
-                <div className="row gap16" style={{ marginTop: 4 }}>
-                  <div className="avatar sq" style={{ width: 60, height: 60, fontSize: 20 }}>&#44648;</div>
-                  <div style={{ flex: "1", minWidth: "0" }}>
-                    <div className="row gap6"><span className="t-h18">&#44648;&#45143;&#54620;&#51665;&#49444;&#48708;</span><span className="badge b-brand">&#49444;&#48708;&#44256; &#51064;&#51613;</span></div>
-                    <div className="t-b14 c-sec">★ 4.9 (126) · &#54596;&#47784;&#44536;&#47000;&#54588; 84&#44148; · &#51116;&#49884;&#44277;&#47456; 1.2% · &#54217;&#44512; &#51025;&#45813; 28&#48516;</div>
-                  </div>
-                  <div style={{ textAlign: "right" }}>
-                    <div className="t-h24 num">410,000&#50896;</div>
-                    <div className="t-b12 c-suc fw6">&#51473;&#50521;&#44050;&#44284; &#46041;&#51068;</div></div>
-                </div>
-                <div className="posbar" style={{ margin: "18px 0 14px" }}><span style={{ left: "47%" }} /></div>
-                <div className="row gap6" style={{ flexWrap: "wrap", marginBottom: 16 }}>
-                  <span className="badge b-gline b12">&#45572;&#49688;&#53456;&#51648; &#54252;&#54632;</span><span className="badge b-gline b12">&#52380;&#51109;&#48373;&#44396; &#54252;&#54632;</span>
-                  <span className="badge b-green b12">&#50724;&#45720; &#50724;&#54980; &#48169;&#47928; &#44032;&#45733;</span><span className="badge b-blue b12">&#48372;&#54744; &#49436;&#47448; &#45824;&#54665;</span>
-                  <span className="badge b-gline b12">1&#45380; &#48372;&#51613;</span>
-                </div>
-                <div className="row gap8" style={{ justifyContent: "flex-end" }}>
-                  <button className="btn medium outlined" data-go="pro">&#54596;&#47784;&#44536;&#47000;&#54588; 84&#44148; &#48372;&#44592;</button>
-                  <button className="btn medium primary" data-go="booking" style={{ minWidth: 150 }}>&#51060; &#44204;&#51201; &#49440;&#53469;</button>
-                </div>
-              </div>
-      
-              <div className="card" style={{ padding: 22 }}>
-                <div className="row gap16">
-                  <div className="avatar sq" style={{ width: 60, height: 60, fontSize: 20 }}>&#54620;</div>
-                  <div style={{ flex: "1", minWidth: "0" }}>
-                    <div className="t-h18">&#54620;&#48731;&#48176;&#44288;</div>
-                    <div className="t-b14 c-sec">★ 4.8 (89) · &#54596;&#47784;&#44536;&#47000;&#54588; 51&#44148; · &#51116;&#49884;&#44277;&#47456; 2.0% · &#54217;&#44512; &#51025;&#45813; 1&#49884;&#44036;</div>
-                  </div>
-                  <div style={{ textAlign: "right" }}>
-                    <div className="t-h24 num">360,000&#50896;</div>
-                    <div className="t-b12 c-sec">&#51473;&#50521;&#44050; &#45824;&#48708; −12%</div></div>
-                </div>
-                <div className="posbar" style={{ margin: "18px 0 14px" }}><span style={{ left: "34%", boxShadow: "0 0 0 3px var(--sg-brand-secondary) inset,var(--sg-shadow-up-1)" }} /></div>
-                <div className="row gap6" style={{ flexWrap: "wrap", marginBottom: 16 }}>
-                  <span className="badge b-gline b12">&#45572;&#49688;&#53456;&#51648; &#54252;&#54632;</span><span className="badge b-orange b12">&#52380;&#51109;&#48373;&#44396; &#48324;&#46020;</span>
-                  <span className="badge b-gline b12">&#47784;&#47112; &#48169;&#47928;</span><span className="badge b-gline b12">1&#45380; &#48372;&#51613;</span>
-                </div>
-                <div className="row gap8" style={{ justifyContent: "flex-end" }}>
-                  <button className="btn medium outlined" data-go="pro">&#54596;&#47784;&#44536;&#47000;&#54588; 51&#44148; &#48372;&#44592;</button>
-                  <button className="btn medium solid" data-go="booking" style={{ minWidth: 150 }}>&#51060; &#44204;&#51201; &#49440;&#53469;</button>
-                </div>
-              </div>
-      
-              <div className="card" style={{ padding: 22 }}>
-                <div className="row gap16">
-                  <div className="avatar sq" style={{ width: 60, height: 60, fontSize: 20 }}>&#45824;</div>
-                  <div style={{ flex: "1", minWidth: "0" }}>
-                    <div className="t-h18">&#45824;&#49457;&#49444;&#48708;</div>
-                    <div className="t-b14 c-sec">★ 4.6 (34) · &#54596;&#47784;&#44536;&#47000;&#54588; 12&#44148; · &#51116;&#49884;&#44277;&#47456; 4.1% · &#54217;&#44512; &#51025;&#45813; 3&#49884;&#44036;</div>
-                  </div>
-                  <div style={{ textAlign: "right" }}>
-                    <div className="t-h24 num">520,000&#50896;</div>
-                    <div className="t-b12 fw6" style={{ color: "var(--sg-text-warning)" }}>&#51473;&#50521;&#44050; &#45824;&#48708; +27%</div></div>
-                </div>
-                <div className="posbar" style={{ margin: "18px 0 14px" }}><span style={{ left: "78%", boxShadow: "0 0 0 3px var(--sg-text-warning) inset,var(--sg-shadow-up-1)" }} /></div>
-                <div className="callout warn" style={{ marginBottom: 16 }}>
-                  <span className="c-dan" style={{ flex: "0 0 20px" }}>!</span>
-                  <p className="t-b14" style={{ margin: "0" }}>&#51201;&#51221; &#44396;&#44036;&#51012; &#48279;&#50612;&#45228;&#49845;&#45768;&#45796;. &#49324;&#50629;&#51088;&#44032; &#48157;&#55180; &#49324;&#50976;&#45716;
-                    <b>“&#48176;&#44288; &#51204;&#52404; &#44368;&#52404; &#54596;&#50836; &#54032;&#45800;”</b>&#51077;&#45768;&#45796;. &#54788;&#51109; &#54869;&#51064; &#51204; &#54032;&#45800;&#51060;&#48064;&#47196; &#48169;&#47928; &#54980; &#51116;&#44204;&#51201;&#51012; &#50836;&#52397;&#54616;&#45716; &#44163;&#51012; &#44428;&#54633;&#45768;&#45796;.</p>
-                </div>
-                <div className="row gap8" style={{ justifyContent: "flex-end" }}>
-                  <button className="btn medium outlined" data-go="pro">&#54596;&#47784;&#44536;&#47000;&#54588; 12&#44148; &#48372;&#44592;</button>
-                  <button className="btn medium solid" data-go="booking" style={{ minWidth: 150 }}>&#51060; &#44204;&#51201; &#49440;&#53469;</button>
-                </div>
-              </div>
+            <div className="row gap16" style={{ marginTop: 16, flexWrap: 'wrap' }}>
+              {sorted.map((q, i) => (
+                <span key={q.id} className="t-b14 c-sec">
+                  <i style={{ display: 'inline-block', width: 9, height: 9, borderRadius: 2, background: MARK_COLORS[i], marginRight: 6 }} />
+                  {q.proName} {Math.round(q.priceWon / 10_000)}만원
+                </span>
+              ))}
             </div>
           </div>
-      
-          <aside className="side">
-            <div className="panel">
-              <h3 className="panel__t">&#45236; &#50836;&#52397;</h3>
-              <div className="col gap10" style={{ gap: 10 }}>
-                <div className="row between"><span className="t-b14 c-sec">&#51652;&#45800;</span><span className="t-b14 fw6">&#48176;&#44288; &#51060;&#51020;&#48512; &#45572;&#49688;</span></div>
-                <div className="row between"><span className="t-b14 c-sec">&#44596;&#44553;&#46020;</span><span className="t-b14 fw6" style={{ color: "var(--sg-text-warning)" }}>&#51452;&#51032;</span></div>
-                <div className="row between"><span className="t-b14 c-sec">&#50948;&#52824;</span><span className="t-b14 fw6">&#52397;&#49556; 103&#46041; 1204&#54840;</span></div>
-                <div className="row between"><span className="t-b14 c-sec">&#55148;&#47581; &#51068;&#51221;</span><span className="t-b14 fw6">&#51060;&#48264; &#51452; &#51473;</span></div>
-              </div>
-              <hr className="hair" style={{ margin: "16px 0" }} />
-              <div className="t-b12 c-sec">&#44204;&#51201;&#51008; &#48169;&#47928; &#51204; &#52280;&#44256; &#44552;&#50529;&#51077;&#45768;&#45796;. &#54788;&#51109; &#54869;&#51064; &#54980; &#45804;&#46972;&#51648;&#45716; &#44552;&#50529;&#51008;
-                &#54637;&#47785;&#48324; &#49849;&#51064;&#51012; &#44144;&#52432;&#50556;&#47564; &#52397;&#44396;&#46121;&#45768;&#45796;.</div>
+
+          <div className="col gap16">
+            {DEMO_QUOTES.map(q => <QuoteCard key={q.id} q={q} />)}
+          </div>
+        </div>
+
+        <aside className="side">
+          <div className="panel">
+            <h3 className="panel__t">내 요청</h3>
+            <div className="col gap10" style={{ gap: 10 }}>
+              <div className="row between"><span className="t-b14 c-sec">진단</span><span className="t-b14 fw6">{D.type}</span></div>
+              <div className="row between"><span className="t-b14 c-sec">긴급도</span><span className="t-b14 fw6" style={{ color: 'var(--sg-text-warning)' }}>주의</span></div>
+              <div className="row between"><span className="t-b14 c-sec">위치</span><span className="t-b14 fw6">청솔 103동 1204호</span></div>
+              <div className="row between"><span className="t-b14 c-sec">희망 일정</span><span className="t-b14 fw6">이번 주 중</span></div>
             </div>
-            <div className="panel">
-              <h3 className="panel__t">&#51060;&#47111;&#44172; &#48708;&#44368;&#54616;&#49464;&#50836;</h3>
-              <div className="col gap10" style={{ gap: 10 }}>
-                <div className="row gap8"><span className="c-brand">1</span><span className="t-b14">&#52380;&#51109; &#48373;&#44396;&#44032; &#54252;&#54632;&#51064;&#51648; &#48324;&#46020;&#51064;&#51648;</span></div>
-                <div className="row gap8"><span className="c-brand">2</span><span className="t-b14">&#51116;&#49884;&#44277;&#47456; — &#45230;&#51012;&#49688;&#47197; &#54620; &#48264;&#50640; &#51105;&#49845;&#45768;&#45796;</span></div>
-                <div className="row gap8"><span className="c-brand">3</span><span className="t-b14">&#54596;&#47784;&#44536;&#47000;&#54588; &#44148;&#49688; — &#51060; &#50976;&#54805; &#44221;&#54744;&#52824;</span></div>
-                <div className="row gap8"><span className="c-brand">4</span><span className="t-b14">&#51201;&#51221; &#44396;&#44036;&#51012; &#48279;&#50612;&#45212; &#44204;&#51201;&#51008; &#49324;&#50976; &#54869;&#51064;</span></div>
-              </div>
+            <hr className="hair" style={{ margin: '16px 0' }} />
+            <div className="t-b12 c-sec">견적은 방문 전 참고 금액입니다. 현장 확인 후 달라지는 금액은
+              항목별 승인을 거쳐야만 청구됩니다.</div>
+          </div>
+          <div className="panel">
+            <h3 className="panel__t">이렇게 비교하세요</h3>
+            <div className="col gap10" style={{ gap: 10 }}>
+              <div className="row gap8"><span className="c-brand">1</span><span className="t-b14">천장 복구가 포함인지 별도인지</span></div>
+              <div className="row gap8"><span className="c-brand">2</span><span className="t-b14">재시공률 — 낮을수록 한 번에 잡습니다</span></div>
+              <div className="row gap8"><span className="c-brand">3</span><span className="t-b14">필모그래피 건수 — 이 유형 경험치</span></div>
+              <div className="row gap8"><span className="c-brand">4</span><span className="t-b14">적정 구간을 벗어난 견적은 사유 확인</span></div>
             </div>
-          </aside>
-        </div></>
+          </div>
+        </aside>
+      </div>
     </section>
   );
 }
