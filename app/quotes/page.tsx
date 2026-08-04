@@ -1,7 +1,10 @@
-// p-quotes — 데이터 기반으로 전환 완료: lib/mock-data 의 Quote[] 를 렌더
-// (서버 컴포넌트 — 백엔드 연결 시 여기서 fetch('/api/quotes') 또는 DB 조회로 교체)
-import { DEMO_DIAGNOSIS, DEMO_QUOTES, type Quote } from '../../lib/mock-data';
+// p-quotes — DB 기반으로 전환 완료 (2026-08-04): fetchQuotes() 가 Supabase 조회,
+// 키 없거나 조회 실패 시 mock-data 폴백 (lib/db.ts 어댑터). 요청 시점 조회를 위해 dynamic.
+import { DEMO_DIAGNOSIS, type Quote } from '../../lib/mock-data';
+import { fetchQuotes } from '../../lib/db';
 import SelectQuoteButton from '../../components/SelectQuoteButton';
+
+export const dynamic = 'force-dynamic';
 
 const D = DEMO_DIAGNOSIS;
 const span = D.priceMax - D.priceMin;
@@ -50,19 +53,20 @@ function QuoteCard({ q }: { q: Quote }) {
       </div>
       <div className="row gap8" style={{ justifyContent: 'flex-end' }}>
         <button className="btn medium outlined" data-go="pro">필모그래피 {q.filmCount}건 보기</button>
-        <SelectQuoteButton quoteId={q.id} primary={q.recommended} />
+        <SelectQuoteButton quote={q} primary={q.recommended} />
       </div>
     </div>
   );
 }
 
-export default function Page() {
-  const sorted = [...DEMO_QUOTES].sort((a, b) => a.priceWon - b.priceWon);
+export default async function Page() {
+  const quotes = await fetchQuotes();
+  const sorted = [...quotes].sort((a, b) => a.priceWon - b.priceWon);
   return (
     <section className="page on" id="p-quotes">
       <div className="phead"><div className="phead__in">
         <div className="crumb"><a data-go="home">홈</a><span>›</span><a data-go="diag3">진단 결과</a><span>›</span><b>견적 비교</b></div>
-        <h1>{DEMO_QUOTES.length}곳에서 견적이 도착했습니다</h1>
+        <h1>{quotes.length}곳에서 견적이 도착했습니다</h1>
         <p className="sub">기준가 분포 위에 각 견적의 위치를 표시했습니다. 금액만이 아니라 포함 공정을 함께 보세요.</p>
       </div></div>
 
@@ -97,7 +101,7 @@ export default function Page() {
           </div>
 
           <div className="col gap16">
-            {DEMO_QUOTES.map(q => <QuoteCard key={q.id} q={q} />)}
+            {quotes.map(q => <QuoteCard key={q.id} q={q} />)}
           </div>
         </div>
 

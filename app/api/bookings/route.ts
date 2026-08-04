@@ -2,13 +2,14 @@
 // DB 모드: bookings 행 생성 / 알림: notify 계층 (Solapi 키 있으면 실발송)
 // 실제 구현 시: PG 결제창 → 에스크로 예치 → 예약 확정 · 사업자 알림.
 import { NextResponse } from 'next/server';
-import { DEMO_QUOTES } from '../../../lib/mock-data';
-import { insertBooking } from '../../../lib/db';
+import { fetchQuotes, insertBooking } from '../../../lib/db';
 import { notify } from '../../../lib/notify';
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
-  const quote = DEMO_QUOTES.find(q => q.id === body.quoteId);
+  // DB 모드면 실제 견적 목록(uuid id), 아니면 mock 폴백 — 화면과 같은 소스로 검증
+  const quotes = await fetchQuotes();
+  const quote = quotes.find(q => q.id === body.quoteId);
   if (!quote || !body.day || !body.time) {
     return NextResponse.json({ ok: false, error: 'quoteId · day · time 은 필수입니다.' }, { status: 400 });
   }

@@ -87,21 +87,11 @@ export async function insertRequest(input: { symptoms: string[]; address: string
   } catch { return { id: 'mock-request' }; }
 }
 
-// 데모 견적 id(q1~q3) → seed.sql 의 고정 uuid 매핑.
-// /quotes 화면이 mock 단일 소스(DEMO_QUOTES)로 렌더되는 동안, 'q2' 같은 문자열이
-// uuid 컬럼(bookings.quote_id)에 들어가며 조용히 실패하는 것을 막는 다리.
-// 견적 화면을 fetchQuotes() 기반으로 전환하면 이 매핑은 제거.
-const SEED_QUOTE_IDS: Record<string, string> = {
-  q1: '20000000-0000-0000-0000-000000000001',
-  q2: '20000000-0000-0000-0000-000000000002',
-  q3: '20000000-0000-0000-0000-000000000003',
-};
-
 export async function insertBooking(b: { quoteId: string; day: string; time: string; method: string; amountWon: number }) {
   if (!hasSupabase) return { id: 'B-2611-0342' };
   try {
     const { data } = await supabase().from('bookings')
-      .insert({ quote_id: SEED_QUOTE_IDS[b.quoteId] ?? b.quoteId, visit_day: b.day, visit_time: b.time, method: b.method, amount_won: b.amountWon })
+      .insert({ quote_id: b.quoteId, visit_day: b.day, visit_time: b.time, method: b.method, amount_won: b.amountWon })
       .select('id').single();
     return data ?? { id: 'B-2611-0342' };
   } catch { return { id: 'B-2611-0342' }; }
