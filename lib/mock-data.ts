@@ -283,8 +283,8 @@ export const GROUPBUY = {
   ],
 };
 
-export function tierFor(n: number): GroupBuyTier {
-  return GROUPBUY.tiers.find(t => n >= t.from && (t.to === null || n <= t.to)) ?? GROUPBUY.tiers[0];
+export function tierFor(n: number, tiers: GroupBuyTier[] = GROUPBUY.tiers): GroupBuyTier {
+  return tiers.find(t => n >= t.from && (t.to === null || n <= t.to)) ?? tiers[0];
 }
 
 /* ---------- 우리집 이력 ---------- */

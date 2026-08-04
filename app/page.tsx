@@ -1,6 +1,9 @@
-// p-home — 데이터 기반으로 전환 완료: 카테고리(SERVICES)·시공 사례(DEMO_CASES)·공동구매(GROUPBUY)가
-// 다른 화면과 같은 단일 소스에서 렌더됩니다. (서버 컴포넌트)
-import { DEMO_CASES, GROUPBUY, SERVICES, tierFor } from '../lib/mock-data';
+// p-home — 데이터 기반으로 전환 완료. 공동구매 현황은 DB(fetchGroupbuy) 조회 (2026-08-04).
+// 카테고리(SERVICES)·시공 사례(DEMO_CASES)는 코드 단일 소스. (서버 컴포넌트)
+import { DEMO_CASES, SERVICES, tierFor } from '../lib/mock-data';
+import { fetchGroupbuy } from '../lib/db';
+
+export const dynamic = 'force-dynamic';
 
 const STATS = [
   { v: '4,182', unit: '', label: '누적 시공 케이스', brand: true },
@@ -9,10 +12,11 @@ const STATS = [
   { v: '평균 2.4일', unit: '', label: '보험금 정산 소요' },
 ];
 
-export default function Page() {
-  const gbPct = Math.min(100, Math.round(GROUPBUY.current / GROUPBUY.goal * 100));
-  const nowWon = tierFor(GROUPBUY.current).won;
-  const finalWon = GROUPBUY.tiers[GROUPBUY.tiers.length - 1].won;
+export default async function Page() {
+  const gb = await fetchGroupbuy();
+  const gbPct = Math.min(100, Math.round(gb.current / gb.goal * 100));
+  const nowWon = tierFor(gb.current, gb.tiers).won;
+  const finalWon = gb.tiers[gb.tiers.length - 1].won;
 
   return (
     <section className="page on" id="p-home">
@@ -115,14 +119,14 @@ export default function Page() {
           <div className="card pad" style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
             <div style={{ flex: 1, minWidth: 280 }}>
               <div className="row between" style={{ marginBottom: 8 }}>
-                <span className="t-b14 fw6">현재 <span className="c-brand">{GROUPBUY.current}세대</span> 참여 · {GROUPBUY.goal}세대 달성 시 최저가</span>
+                <span className="t-b14 fw6">현재 <span className="c-brand">{gb.current}세대</span> 참여 · {gb.goal}세대 달성 시 최저가</span>
                 <span className="t-b14 fw7 num">{gbPct}%</span>
               </div>
               <div className="gauge"><i style={{ width: gbPct + '%' }} /></div>
-              <div className="t-b12 c-sec" style={{ marginTop: 8 }}>모집 마감까지 {GROUPBUY.deadlineDays}일 남음 · 같은 라인을 묶어 시공해 단가가 내려갑니다</div>
+              <div className="t-b12 c-sec" style={{ marginTop: 8 }}>모집 마감까지 {gb.deadlineDays}일 남음 · 같은 라인을 묶어 시공해 단가가 내려갑니다</div>
             </div>
             <div style={{ textAlign: 'right' }}>
-              <div className="t-b12 c-sec" style={{ textDecoration: 'line-through' }}>1세대 {Math.round(GROUPBUY.indivWon / 10_000)}만원</div>
+              <div className="t-b12 c-sec" style={{ textDecoration: 'line-through' }}>1세대 {Math.round(gb.indivWon / 10_000)}만원</div>
               <div className="t-h24 c-brand num">{(finalWon / 10_000).toFixed(1)}만원</div>
               <button className="btn medium primary" data-go="groupbuy" style={{ marginTop: 8 }}>공동구매 참여</button>
             </div>

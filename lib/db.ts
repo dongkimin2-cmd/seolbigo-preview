@@ -53,7 +53,7 @@ export async function fetchQuotes(): Promise<Quote[]> {
 export async function fetchSimilarCases(): Promise<SimilarCase[]> {
   if (!hasSupabase) return DEMO_SIMILAR_CASES;
   try {
-    const { data, error } = await supabase().from('similar_cases').select('*');
+    const { data, error } = await supabase().from('similar_cases').select('*, pros(name, rating, review_count)');
     if (error || !data?.length) return DEMO_SIMILAR_CASES;
     // 화면 필터 속성으로 변환 (기준: 청솔 1999년 12층 사용자 — 실서비스에서는 요청 컨텍스트 기준)
     return data.map((c: Record<string, unknown>, i: number) => ({
@@ -64,7 +64,9 @@ export async function fetchSimilarCases(): Promise<SimilarCase[]> {
         { label: `${c.built_year}년`, tone: 'gline' },
       ] as SimilarCase['badges'],
       title: String(c.title), process: String(c.process_summary ?? ''),
-      proName: '', proMeta: '', priceWon: Number(c.price_won),
+      proName: String(((c.pros ?? {}) as Record<string, unknown>).name ?? ''),
+      proMeta: `★ ${((c.pros ?? {}) as Record<string, unknown>).rating ?? '-'} (${((c.pros ?? {}) as Record<string, unknown>).review_count ?? 0})`,
+      priceWon: Number(c.price_won),
       sameApt: c.complex_name === '청솔아파트',
       year: Number(c.built_year ?? 0),
       floorBand: Number(c.floor ?? 0) >= 10 && Number(c.floor ?? 0) <= 14,
@@ -95,6 +97,36 @@ export async function insertBooking(b: { quoteId: string; day: string; time: str
       .select('id').single();
     return data ?? { id: 'B-2611-0342' };
   } catch { return { id: 'B-2611-0342' }; }
+}
+
+export type GroupbuyInfo = typeof GROUPBUY;
+
+// 공동구매 현황 조회 — open 캠페인 1건 + 참여 수. current = 데모 베이스(18) + 실참여 (joinGroupbuy 와 동일 규약)
+export async function fetchGroupbuy(): Promise<GroupbuyInfo> {
+  if (!hasSupabase) return GROUPBUY;
+  try {
+    const sb = supabase();
+    const { data: camp } = await sb.from('groupbuy_campaigns')
+      .select('id, complex_name, goal_households, indiv_price_won, tiers, deadline')
+      .eq('status', 'open').limit(1).single();
+    if (!camp) return GROUPBUY;
+    const { count } = await sb.from('groupbuy_participants')
+      .select('id', { count: 'exact', head: true }).eq('campaign_id', camp.id);
+    const deadlineMs = new Date(String(camp.deadline)).getTime();
+    const deadlineDays = Number.isFinite(deadlineMs)
+      ? Math.max(0, Math.ceil((deadlineMs - Date.now()) / 86_400_000))
+      : GROUPBUY.deadlineDays;
+    const tiers = (typeof camp.tiers === 'string' ? JSON.parse(camp.tiers) : camp.tiers) as GroupbuyInfo['tiers'];
+    return {
+      ...GROUPBUY,
+      complex: String(camp.complex_name ?? GROUPBUY.complex),
+      goal: Number(camp.goal_households ?? GROUPBUY.goal),
+      indivWon: Number(camp.indiv_price_won ?? GROUPBUY.indivWon),
+      tiers: Array.isArray(tiers) && tiers.length ? tiers : GROUPBUY.tiers,
+      current: GROUPBUY.current + (count ?? 0),
+      deadlineDays,
+    };
+  } catch { return GROUPBUY; }
 }
 
 export async function joinGroupbuy(): Promise<number> {
