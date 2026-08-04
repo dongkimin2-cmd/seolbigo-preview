@@ -1,8 +1,9 @@
 'use client';
 // GNB — 목업 마크업을 유지하되 실제 <Link> 라우팅 사용
+// 백오피스 라우트(/pro-center /manager /insurer)에서는 자체 상단바(prognb)가 있으므로 렌더하지 않음
 import { useState } from 'react';
 import Link from 'next/link';
-import { MOCKUP_URL } from '../lib/routes';
+import { usePathname } from 'next/navigation';
 
 const NAV = [
   { href: '/services', label: '전체 서비스' },
@@ -12,8 +13,13 @@ const NAV = [
   { href: '/insurance', label: '보험 청구' },
 ];
 
+const BACKOFFICE_PREFIXES = ['/pro-center', '/manager', '/insurer'];
+
 export default function Gnb() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  if (BACKOFFICE_PREFIXES.some(p => pathname.startsWith(p))) return null;
+
   return (
     <header className="gnb">
       <div className="gnb__in">
@@ -23,10 +29,10 @@ export default function Gnb() {
         </nav>
         <div className="gnb__sp" />
         <div className="gnb__right">
-          <a className="lk" href={MOCKUP_URL} target="_blank" rel="noreferrer">관리사무소</a>
-          <a className="lk" href={MOCKUP_URL} target="_blank" rel="noreferrer">보험사</a>
+          <Link className="lk" href="/manager">관리사무소</Link>
+          <Link className="lk" href="/insurer">보험사</Link>
           <span className="lk">로그인 / 회원가입</span>
-          <a className="btn small primary" href={MOCKUP_URL} target="_blank" rel="noreferrer">사업자 센터</a>
+          <Link className="btn small primary" href="/pro-center" style={{ textDecoration: 'none' }}>사업자 센터</Link>
         </div>
         <button className="mbtn" aria-label="메뉴" onClick={() => setOpen(v => !v)}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -37,9 +43,9 @@ export default function Gnb() {
       <div className={'mnav' + (open ? ' open' : '')} onClick={() => setOpen(false)}>
         {NAV.map(n => <Link key={n.href} href={n.href}>{n.label}</Link>)}
         <hr className="hair" style={{ margin: '8px 0' }} />
-        <a href={MOCKUP_URL} target="_blank" rel="noreferrer">사업자 센터</a>
-        <a href={MOCKUP_URL} target="_blank" rel="noreferrer">관리사무소</a>
-        <a href={MOCKUP_URL} target="_blank" rel="noreferrer">보험사</a>
+        <Link href="/pro-center">사업자 센터</Link>
+        <Link href="/manager">관리사무소</Link>
+        <Link href="/insurer">보험사</Link>
       </div>
     </header>
   );

@@ -1,0 +1,10 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const pg = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await pg.goto('http://localhost:3100/manager/map');
+await pg.waitForTimeout(600);
+await pg.screenshot({ path: 'back_map.png' });
+await pg.goto('http://localhost:3100/pro-center');
+await pg.waitForTimeout(600);
+await pg.screenshot({ path: 'back_pro.png' });
+await b.close();

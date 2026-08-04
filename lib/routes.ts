@@ -22,12 +22,24 @@ export const GO_ROUTES: Record<string, string> = {
   area: '/services/area',
   drone: '/services/drone',
   instant: '/services/instant',
+  'pro-home': '/pro-center',
+  'pro-inbox': '/pro-center/inbox',
+  'pro-quote': '/pro-center/quote',
+  'pro-film': '/pro-center/film',
+  'pro-grade': '/pro-center/grade',
+  'pro-store': '/pro-center/store',
+  'pro-settle': '/pro-center/settle',
+  'mgr-home': '/manager',
+  'mgr-map': '/manager/map',
+  'mgr-report': '/manager/report',
+  'mgr-contract': '/manager/contract',
+  'mgr-bid': '/manager/bid',
+  'mgr-brief': '/manager/brief',
+  'ins-home': '/insurer',
+  'ins-case': '/insurer/case',
+  'ins-analytics': '/insurer/analytics',
+  'ins-campaign': '/insurer/campaign',
 };
 
-// 백오피스(사업자·관리사무소·보험사)는 이번 스켈레톤 범위 밖 — 정적 목업으로 연결
+// 원본 정적 목업 (참고용 링크)
 export const MOCKUP_URL = 'https://dongkimin2-cmd.github.io/seolbigo-preview/';
-export const BACKOFFICE_IDS = new Set([
-  'pro-home', 'pro-inbox', 'pro-quote', 'pro-film', 'pro-grade', 'pro-store', 'pro-settle',
-  'mgr-home', 'mgr-map', 'mgr-report', 'mgr-contract', 'mgr-bid', 'mgr-brief',
-  'ins-home', 'ins-case', 'ins-analytics', 'ins-campaign',
-]);

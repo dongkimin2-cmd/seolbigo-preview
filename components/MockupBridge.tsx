@@ -7,7 +7,7 @@
 // 이 브리지의 역할이 줄어들다가 최종적으로 제거됩니다.
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { GO_ROUTES, BACKOFFICE_IDS, MOCKUP_URL } from '../lib/routes';
+import { GO_ROUTES } from '../lib/routes';
 import { toast } from '../lib/toast';
 
 const validators: Record<string, () => string | null> = {
@@ -154,13 +154,7 @@ export default function MockupBridge() {
         const svc = t.getAttribute('data-svc');
         if (svc) sessionStorage.setItem('svc', svc);
         const go = t.getAttribute('data-go');
-        if (go) {
-          if (GO_ROUTES[go]) router.push(GO_ROUTES[go]);
-          else if (BACKOFFICE_IDS.has(go)) {
-            toast('백오피스 화면은 목업에서 확인할 수 있어요.');
-            window.open(MOCKUP_URL, '_blank');
-          }
-        }
+        if (go && GO_ROUTES[go]) router.push(GO_ROUTES[go]);
         return;
       }
       // 상태 기반으로 전환된 화면([data-react])의 칩·옵션은 React 가 관리 — 브리지 개입 금지
