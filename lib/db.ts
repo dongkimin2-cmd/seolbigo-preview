@@ -108,11 +108,12 @@ async function insertDiagnosis(requestId: string) {
   } catch { /* best-effort */ }
 }
 
-export async function insertBooking(b: { quoteId: string; day: string; time: string; method: string; amountWon: number }) {
+export async function insertBooking(b: { quoteId: string; day: string; time: string; method: string; amountWon: number; userId?: string }) {
   if (!hasSupabase) return { id: 'B-2611-0342' };
   try {
     const { data } = await supabase().from('bookings')
-      .insert({ quote_id: b.quoteId, visit_day: b.day, visit_time: b.time, method: b.method, amount_won: b.amountWon })
+      .insert({ quote_id: b.quoteId, visit_day: b.day, visit_time: b.time, method: b.method,
+        amount_won: b.amountWon, user_id: b.userId ?? null })
       .select('id').single();
     return data ?? { id: 'B-2611-0342' };
   } catch { return { id: 'B-2611-0342' }; }
