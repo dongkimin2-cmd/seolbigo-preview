@@ -31,7 +31,7 @@ export default function Gnb() {
         <div className="gnb__right">
           <Link className="lk" href="/manager">관리사무소</Link>
           <Link className="lk" href="/insurer">보험사</Link>
-          <span className="lk">로그인 / 회원가입</span>
+          <Link className="lk" href="/login">로그인 / 회원가입</Link>
           <Link className="btn small primary" href="/pro-center" style={{ textDecoration: 'none' }}>사업자 센터</Link>
         </div>
         <button className="mbtn" aria-label="메뉴" onClick={() => setOpen(v => !v)}>

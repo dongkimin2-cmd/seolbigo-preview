@@ -58,3 +58,15 @@ SOLAPI_SENDER=01012345678            # Solapi 에 등록된 발신번호
 
 주의: Solapi 는 발신번호 등록·알림톡 템플릿 심사가 선행 필요. 드라이버는 SMS 스텁이며 실사용 전 공식 문서로 검증하세요.
 Auth(로그인) 연동 전까지 DB 쓰기는 service role 로 수행됩니다 — RLS 정책은 마이그레이션에 포함되어 있어 Auth 도입 시 그대로 적용됩니다.
+
+## Auth 스캐폴드 (Phase 2 — ⚠️ 실환경 미검증)
+
+키가 없으면 완전히 비활성입니다(현 데모 동작 무변화). 활성화 절차:
+
+1. `supabase/migrations/0002_profiles.sql` 을 SQL Editor 에서 실행 (profiles 테이블 + 가입 트리거 + RLS)
+2. Vercel(또는 .env.local)에 `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` = `sb_publishable_...` 추가 → 재배포
+3. Supabase → Authentication → URL Configuration 에 Site URL(배포 주소)과 Redirect URL `<사이트>/auth/callback` 등록
+4. `/login` 에서 이메일 가입/로그인 확인. 카카오는 Authentication → Providers → Kakao 설정 후 LoginClient 의 버튼을 signInWithOAuth 로 교체
+5. 역할(role)은 profiles 테이블에서 운영자가 승격 (consumer → pro/manager/insurer)
+
+구성: `lib/auth.ts`(서버 세션·역할 조회) · `middleware.ts`(세션 갱신, 라우트 강제 보호는 아직 없음) · `app/login` + `components/LoginClient.tsx` · `app/auth/callback`
