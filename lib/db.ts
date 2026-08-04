@@ -6,7 +6,7 @@
 //   SUPABASE_SERVICE_ROLE_KEY=...   (서버 라우트 전용 — 클라이언트에 노출 금지)
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import {
-  DEMO_QUOTES, DEMO_SIMILAR_CASES, GROUPBUY, SERVICES,
+  DEMO_DIAGNOSIS, DEMO_QUOTES, DEMO_SIMILAR_CASES, GROUPBUY, SERVICES,
   type Quote, type SimilarCase,
 } from './mock-data';
 
@@ -85,8 +85,27 @@ export async function insertRequest(input: { symptoms: string[]; address: string
     const { data } = await supabase().from('requests')
       .insert({ symptoms: input.symptoms, address: input.address, service_id: 'leak-repair' })
       .select('id').single();
+    if (data?.id) void insertDiagnosis(String(data.id));   // 진단 결과 기록 (best-effort)
     return data ?? { id: 'mock-request' };
   } catch { return { id: 'mock-request' }; }
+}
+
+// 진단 결과 저장 — AI 파이프라인 연결 전까지 표준 데모 진단(DEMO_DIAGNOSIS)을 요청에 귀속시켜 기록.
+// case_no 는 unique 제약이 있어 요청별로 생성.
+async function insertDiagnosis(requestId: string) {
+  try {
+    const d = DEMO_DIAGNOSIS;
+    await supabase().from('diagnoses').insert({
+      request_id: requestId,
+      case_no: `D-${Date.now().toString(36).toUpperCase()}-${requestId.slice(0, 4)}`,
+      title: d.title, defect_type: d.type, description: d.description,
+      urgency: d.urgency, urgency_label: d.urgencyLabel,
+      confidence: d.confidence,
+      price_min_man: d.priceMin, fair_min_man: d.fairMin, fair_max_man: d.fairMax,
+      price_mid_man: d.priceMid, price_max_man: d.priceMax,
+      matched_cases: d.matchedCases,
+    });
+  } catch { /* best-effort */ }
 }
 
 export async function insertBooking(b: { quoteId: string; day: string; time: string; method: string; amountWon: number }) {

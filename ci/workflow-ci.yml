@@ -1,0 +1,25 @@
+# ⚠️ 이 파일을 .github/workflows/ci.yml 로 복사해야 활성화됩니다.
+# (Cowork 세션의 PAT 에 Workflows 권한이 없어 워크플로 경로로 직접 push 불가 — 사용자가 GitHub 웹에서 생성하거나 PAT 권한 추가)
+# CI — next-skeleton 브랜치 push/PR 시 빌드 + 라우트 스모크
+# 환경변수(Supabase 키)는 넣지 않음 — mock 모드로 빌드·스모크 (실DB 는 Vercel 배포에서)
+name: CI
+on:
+  push:
+    branches: [next-skeleton]
+  pull_request:
+    branches: [next-skeleton]
+jobs:
+  build-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx next build
+      - name: Route smoke (mock 모드)
+        run: |
+          npx next start -p 3100 &
+          node ci/smoke.mjs
