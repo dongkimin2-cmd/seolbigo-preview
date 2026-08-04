@@ -29,3 +29,25 @@ insert into groupbuy_campaigns (service_id, complex_name, goal_households, indiv
   ('heat-clean', '청솔아파트 103동', 24, 340000,
    '[{"from":1,"to":9,"won":340000,"label":"개별 시공"},{"from":10,"to":17,"won":290000,"label":"반나절 일괄"},{"from":18,"to":23,"won":262000,"label":""},{"from":24,"to":null,"won":238000,"label":"하루 한 동 일괄"}]',
    '2026-11-30', '2026-12-03', 'open');
+
+-- 데모 요청 1건 + 견적 3건 (DEMO_QUOTES 와 동일 값) — 견적은 request_id FK 가 필요해 요청과 함께 시드.
+-- 이게 없으면 quotes 폴백(mock id 'q1')으로 예약 insert 가 uuid 캐스트 실패 → 조용히 미저장됨.
+insert into requests (id, service_id, symptoms, address, status) values
+  ('10000000-0000-0000-0000-000000000001', 'leak-repair',
+   array['천장 얼룩', '물방울 떨어짐'], '서울 청솔아파트 103동 1202호 (데모)', 'quoted')
+on conflict (id) do nothing;
+
+insert into quotes (id, request_id, pro_id, price_won, line_items, badges, recommended, warning, created_at) values
+  ('20000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 410000,
+   '[{"name":"배관 이음부 보수","won":310000},{"name":"천장 마감 복구","won":100000}]',
+   '[{"label":"누수탐지 포함","tone":"gline"},{"label":"천장복구 포함","tone":"gline"},{"label":"오늘 오후 방문 가능","tone":"green"},{"label":"보험 서류 대행","tone":"blue"},{"label":"1년 보증","tone":"gline"}]',
+   true, null, now()),
+  ('20000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000002', 360000,
+   '[{"name":"배관 이음부 보수","won":310000},{"name":"누수 탐지","won":50000}]',
+   '[{"label":"누수탐지 포함","tone":"gline"},{"label":"천장복구 별도","tone":"orange"},{"label":"모레 방문","tone":"gline"},{"label":"1년 보증","tone":"gline"}]',
+   false, null, now() + interval '1 second'),
+  ('20000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000003', 520000,
+   '[{"name":"배관 전체 교체 (견적)","won":470000},{"name":"누수 탐지","won":50000}]',
+   '[{"label":"누수탐지 포함","tone":"gline"},{"label":"천장복구 별도","tone":"orange"},{"label":"1년 보증","tone":"gline"}]',
+   false, '적정 구간을 벗어났습니다. 사업자가 밝힌 사유는 "배관 전체 교체 필요 판단"입니다. 현장 확인 전 판단이므로 방문 후 재견적을 요청하는 것을 권합니다.', now() + interval '2 seconds')
+on conflict (id) do nothing;
