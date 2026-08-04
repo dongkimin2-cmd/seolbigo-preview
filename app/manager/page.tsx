@@ -1,7 +1,12 @@
 // 자동 이식된 목업 화면 p-mgr-home — 원본: seolbigo-preview/index.html (백오피스)
 // 헤더·내브는 BackofficeShell 공용 (실제 <Link> 라우팅) — 2026-08-04
+// 데이터 기반 전환 (2026-08-04) — KPI·조치 항목·일정·범례를 lib/mgr-data.ts 에서 렌더
+import Link from 'next/link';
 import DongGrid from '../../components/DongGrid';
 import BackofficeShell from '../../components/BackofficeShell';
+import DoneToastButton from '../../components/mgr/DoneToastButton';
+import { GO_ROUTES } from '../../lib/routes';
+import { MGR_HOME_KPIS, MGR_DONG_LEGEND, MGR_ACTIONS, MGR_MONTH_SCHEDULE } from '../../lib/mgr-data';
 
 export default function Page() {
   return (
@@ -11,26 +16,21 @@ export default function Page() {
               <div><h1 className="t-h24" style={{ margin: "0" }}>청솔아파트 배관 현황</h1>
                 <p className="t-b14 c-sec" style={{ margin: "4px 0 0" }}>준공 1999년 · 27년차 · 21개동 1,240세대 · 중앙난방</p></div>
               <div className="row gap8">
-                <button className="btn medium outlined" data-go="mgr-brief">입대의 보고자료 생성</button>
-                <button className="btn medium primary" data-go="mgr-map">이력 지도 열기</button></div>
+                <Link href={GO_ROUTES['mgr-brief']} className="btn medium outlined">입대의 보고자료 생성</Link>
+                <Link href={GO_ROUTES['mgr-map']} className="btn medium primary">이력 지도 열기</Link></div>
             </div>
-      
+
             <div className="grid g4" style={{ gap: 12, marginBottom: 16 }}>
-              <div className="panel"><div className="t-b12 c-sec">누적 기록된 이력</div>
-                <div className="t-h24 num" style={{ margin: "4px 0 2px" }}>318건</div>
-                <div className="t-b12 c-sec">2019년~ · 좌표 단위 기록</div></div>
-              <div className="panel" style={{ background: "var(--sg-bg-warning-subtle)", boxShadow: "none" }}>
-                <div className="t-b12 c-sec">세정 주기 초과 라인</div>
-                <div className="t-h24 num" style={{ margin: "4px 0 2px", color: "var(--sg-text-warning)" }}>6개</div>
-                <div className="t-b12 c-sec">103·107·112동 오수관</div></div>
-              <div className="panel"><div className="t-b12 c-sec">올해 하자 발생</div>
-                <div className="t-h24 num" style={{ margin: "4px 0 2px" }}>14건</div>
-                <div className="t-b12 c-suc fw6">작년 대비 −38%</div></div>
-              <div className="panel"><div className="t-b12 c-sec">절감한 유지보수비</div>
-                <div className="t-h24 num c-brand" style={{ margin: "4px 0 2px" }}>2,840만원</div>
-                <div className="t-b12 c-sec">예방 세정 도입 후 2년</div></div>
+              {MGR_HOME_KPIS.map(k => (
+                <div key={k.label} className="panel" style={k.warn ? { background: "var(--sg-bg-warning-subtle)", boxShadow: "none" } : undefined}>
+                  <div className="t-b12 c-sec">{k.label}</div>
+                  <div className={'t-h24 num' + (k.valueBrand ? ' c-brand' : '')}
+                    style={k.warn ? { margin: "4px 0 2px", color: "var(--sg-text-warning)" } : { margin: "4px 0 2px" }}>{k.value}</div>
+                  <div className={k.subSuccess ? 't-b12 c-suc fw6' : 't-b12 c-sec'}>{k.sub}</div>
+                </div>
+              ))}
             </div>
-      
+
             <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 340px", gap: 16, alignItems: "start" }}>
               <div>
                 <div className="panel" style={{ marginBottom: 16 }}>
@@ -39,37 +39,30 @@ export default function Page() {
                     <span className="t-b12 c-sec">오염도 · 연식 · 하자 이력 종합</span></div>
                   <DongGrid />
                   <div className="row gap16" style={{ marginTop: 14, flexWrap: "wrap" }}>
-                    <span className="t-b12 c-sec"><i className="lg" style={{ background: "#E7FCEF" }} />양호</span>
-                    <span className="t-b12 c-sec"><i className="lg" style={{ background: "#FFF7F0" }} />관찰</span>
-                    <span className="t-b12 c-sec"><i className="lg" style={{ background: "#FFE0CC" }} />주의</span>
-                    <span className="t-b12 c-sec"><i className="lg" style={{ background: "#FDEBEC" }} />즉시 조치</span>
+                    {MGR_DONG_LEGEND.map(l => (
+                      <span key={l.label} className="t-b12 c-sec"><i className="lg" style={{ background: l.color }} />{l.label}</span>
+                    ))}
                   </div>
                 </div>
-      
+
                 <div className="panel">
                   <div className="row between" style={{ marginBottom: 14 }}>
                     <h3 className="panel__t" style={{ margin: "0" }}>조치가 필요한 항목</h3>
-                    <span className="more" data-go="mgr-report">리포트 보기 ›</span></div>
+                    <Link href={GO_ROUTES['mgr-report']} className="more">리포트 보기 ›</Link></div>
                   <div className="col gap8">
-                    <div className="jobrow">
-                      <span className="badge b-red">즉시</span>
-                      <div style={{ flex: "1" }}><div className="t-b14 fw7">103동 오수관 — 오염도 81점</div>
-                        <div className="t-b12 c-sec">관경 42% 협착 · 저층 역류 위험 · 마지막 세정 기록 없음</div></div>
-                      <button className="btn small primary" data-go="mgr-contract">세정 발주</button></div>
-                    <div className="jobrow">
-                      <span className="badge b-orange">주의</span>
-                      <div style={{ flex: "1" }}><div className="t-b14 fw7">107동 입상관 — 세정 주기 8개월 초과</div>
-                        <div className="t-b12 c-sec">직전 세정 2024.03 · 권장 주기 1년 (노후 단지)</div></div>
-                      <button className="btn small outlined" data-go="mgr-contract">일정 잡기</button></div>
-                    <div className="jobrow">
-                      <span className="badge b-gray">예정</span>
-                      <div style={{ flex: "1" }}><div className="t-b14 fw7">112동 상가 그리스트랩 — 6개월 주기 도래</div>
-                        <div className="t-b12 c-sec">음식점 4곳 · 2027.01 예정</div></div>
-                      <button className="btn small ghost">자동 배정됨</button></div>
+                    {MGR_ACTIONS.map(a => (
+                      <div key={a.title} className="jobrow">
+                        <span className={'badge b-' + a.badge.tone}>{a.badge.label}</span>
+                        <div style={{ flex: "1" }}><div className="t-b14 fw7">{a.title}</div>
+                          <div className="t-b12 c-sec">{a.desc}</div></div>
+                        {a.action.go
+                          ? <Link href={GO_ROUTES[a.action.go]} className={'btn small ' + a.action.kind}>{a.action.label}</Link>
+                          : <button className={'btn small ' + a.action.kind}>{a.action.label}</button>}</div>
+                    ))}
                   </div>
                 </div>
               </div>
-      
+
               <div className="col gap12">
                 <div className="panel" style={{ background: "var(--sg-bg-brand-subtle)", boxShadow: "none" }}>
                   <div className="t-b14 fw7" style={{ marginBottom: 6 }}>소장이 바뀌어도 이력은 남습니다</div>
@@ -79,9 +72,9 @@ export default function Page() {
                 <div className="panel">
                   <h3 className="panel__t">이번 달 일정</h3>
                   <div className="col gap10" style={{ gap: 10 }}>
-                    <div className="row between"><span className="t-b14">103동 오수관 세정</span><span className="badge b-orange">발주 대기</span></div>
-                    <div className="row between"><span className="t-b14">105동 세대 클리닝 공동구매</span><span className="badge b-brand">모집중 18/24</span></div>
-                    <div className="row between"><span className="t-b14">장기수선충당금 집행 보고</span><span className="badge b-gline">11.28</span></div>
+                    {MGR_MONTH_SCHEDULE.map(s => (
+                      <div key={s.title} className="row between"><span className="t-b14">{s.title}</span><span className={'badge b-' + s.badge.tone}>{s.badge.label}</span></div>
+                    ))}
                   </div>
                 </div>
                 <div className="panel">
@@ -91,7 +84,8 @@ export default function Page() {
                   <div className="row between" style={{ marginBottom: 8 }}>
                     <span className="t-b12 c-sec">105동 참여</span><span className="t-b14 fw7 num">18 / 24세대</span></div>
                   <div className="gauge" style={{ marginBottom: 12 }}><i style={{ width: "75%" }} /></div>
-                  <button className="btn small outlined block" data-done="✓ 발송 완료" data-toast="105동 게시판·앱 알림으로 공지가 발송되었습니다">관리사무소 공지 발송</button>
+                  <DoneToastButton className="btn small outlined block" doneLabel="✓ 발송 완료"
+                    msg="105동 게시판·앱 알림으로 공지가 발송되었습니다">관리사무소 공지 발송</DoneToastButton>
                 </div>
               </div>
             </div>
