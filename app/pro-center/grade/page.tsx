@@ -51,7 +51,7 @@ export default function Page() {
                 <div className="panel" style={{ textAlign: "center" }}>
                   <div className="ring" style={{ width: 132, height: 132, flex: "0 0 132px", margin: "0 auto 14px" }}>
                     <svg width="132" height="132"><circle cx="66" cy="66" r="55" fill="none" stroke="#EFF1F5" strokeWidth={14} />
-                      <circle cx="66" cy="66" r="55" fill="none" stroke="#0284C7" strokeWidth={14} strokeLinecap="round" strokeDasharray="345" strokeDashoffset={48} /></svg>
+                      <circle cx="66" cy="66" r="55" fill="none" stroke="#0277B5" strokeWidth={14} strokeLinecap="round" strokeDasharray="345" strokeDashoffset={48} /></svg>
                     <div className="ring__t"><div className="t-h24 num">86</div><div className="t-b12 c-sec">/ 100</div></div></div>
                   <div className="t-h20 c-brand" style={{ marginBottom: 2 }}>플래티넘</div>
                   <div className="t-b14 c-sec">전체 사업자 중 상위 8%</div>
