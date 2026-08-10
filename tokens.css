@@ -155,7 +155,8 @@
   --sb-role-consumer: #0277B5;
   --sb-role-manager:  #00A163;
   --sb-role-pro:      #FF7C11;
-  --sb-role-insurer:  #0087FF;
+  --sb-role-insurer:  #1E3A8A;
+  --sb-role-insurer-subtle: #E9EEFA;
 
   /* 기준가 분포 게이지 */
   --sb-range-track: #EFF1F5;
