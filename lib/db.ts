@@ -57,6 +57,7 @@ export interface LiveRequest {
   status: string;
   quoteCount: number;  // 이 요청에 제출된 견적 수
   photoCount: number;  // 첨부 사진 수 (E1-5)
+  photos: string[];    // Storage 경로 (서명 URL 발급용)
 }
 
 /* ---------- 조회 ---------- */
@@ -122,7 +123,7 @@ export async function insertRequest(input: { symptoms: string[]; address: string
     const id = 'R-' + Date.now().toString(36).toUpperCase();
     st.requests.unshift({ id, symptoms: input.symptoms, address: input.address,
       createdAt: new Date().toISOString(), status: 'diagnosed', quoteCount: 0,
-      photoCount: input.photos?.length ?? 0 });
+      photoCount: input.photos?.length ?? 0, photos: input.photos ?? [] });
     return { id };
   }
   try {
@@ -237,6 +238,7 @@ export async function fetchOpenRequests(): Promise<LiveRequest[]> {
       status: String(r.status ?? 'submitted'),
       quoteCount: Array.isArray(r.quotes) ? r.quotes.length : 0,
       photoCount: Array.isArray(r.photos) ? r.photos.length : 0,
+      photos: (r.photos ?? []) as string[],
     }));
   } catch { return []; }
 }

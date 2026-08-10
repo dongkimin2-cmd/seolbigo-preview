@@ -50,7 +50,7 @@ export default function Page() {
       }
       const data = await res.json();
       if (!data.ok) throw new Error('진단 요청 실패');
-      saveDiagnosis({ input: data.input, result: data.result });
+      saveDiagnosis({ input: data.input, result: data.result, photoUrls: data.photoUrls ?? [] });
       router.push('/diagnose/analyzing');
     } catch {
       toast('진단 요청에 실패했어요. 잠시 후 다시 시도해주세요.', 'warn');

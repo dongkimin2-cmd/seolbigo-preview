@@ -8,10 +8,11 @@ import { loadDiagnosis } from '../../../lib/diag-store';
 export default function Page() {
   const [result, setResult] = useState<DiagnosisResult>(DEMO_DIAGNOSIS);
   const [symptoms, setSymptoms] = useState<string[]>([]);
+  const [photo, setPhoto] = useState<string | null>(null);
 
   useEffect(() => {
     const s = loadDiagnosis();
-    if (s) { setResult(s.result); setSymptoms(s.input.symptoms); }
+    if (s) { setResult(s.result); setSymptoms(s.input.symptoms); setPhoto(s.photoUrls?.[0] ?? null); }
   }, []);
 
   const r = result;
@@ -50,7 +51,10 @@ export default function Page() {
               </div>
             )}
             <div style={{ display: 'grid', gridTemplateColumns: '220px minmax(0,1fr)', gap: 24, alignItems: 'start' }}>
-              <div className="ph wet" style={{ aspectRatio: '4/3', borderRadius: 10 }} />
+              {photo
+                // eslint-disable-next-line @next/next/no-img-element
+                ? <img src={photo} alt="제출한 현장 사진" style={{ aspectRatio: '4/3', borderRadius: 10, width: '100%', objectFit: 'cover' }} />
+                : <div className="ph wet" style={{ aspectRatio: '4/3', borderRadius: 10 }} />}
               <div>
                 <div className="row between" style={{ marginBottom: 12 }}>
                   <span className="t-b14 fw6">AI 분류 신뢰도</span>

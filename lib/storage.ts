@@ -34,3 +34,17 @@ export async function uploadDiagnosisPhotos(files: File[]): Promise<string[]> {
   }
   return out;
 }
+
+// 저장 경로 → 서명 URL (기본 1시간). mock 경로·실패분은 null — 화면은 플레이스홀더 폴백.
+export async function signedPhotoUrls(paths: string[], expiresSec = 3600): Promise<(string | null)[]> {
+  if (!paths.length) return [];
+  if (!hasSupabase) return paths.map(() => null);
+  const real = paths.filter(p => !p.startsWith('mock://'));
+  if (!real.length) return paths.map(() => null);
+  try {
+    const { data, error } = await supabase().storage.from(BUCKET).createSignedUrls(real, expiresSec);
+    if (error || !data) return paths.map(() => null);
+    const map = new Map(data.map(d => [d.path, d.error ? null : d.signedUrl]));
+    return paths.map(p => map.get(p) ?? null);
+  } catch { return paths.map(() => null); }
+}

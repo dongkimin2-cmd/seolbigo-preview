@@ -5,14 +5,20 @@
 import BackofficeShell from '../../../components/BackofficeShell';
 import ProInboxClient from '../../../components/pro/ProInboxClient';
 import { fetchOpenRequests } from '../../../lib/db';
+import { signedPhotoUrls } from '../../../lib/storage';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Page() {
   const live = await fetchOpenRequests();
+  // 첫 사진만 썸네일로 (서명 URL 1시간) — mock 경로는 null → 플레이스홀더 폴백
+  const thumbs = await signedPhotoUrls(live.map(r => r.photos[0]).filter(Boolean) as string[]);
+  const thumbByReq: Record<string, string | null> = {};
+  let ti = 0;
+  for (const r of live) thumbByReq[r.id] = r.photos[0] ? thumbs[ti++] ?? null : null;
   return (
     <BackofficeShell persona="pro" id="p-pro-inbox">
-      <ProInboxClient live={live} />
+      <ProInboxClient live={live} thumbs={thumbByReq} />
     </BackofficeShell>
   );
 }

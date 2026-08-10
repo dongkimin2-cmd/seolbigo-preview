@@ -8,6 +8,7 @@ const KEY = 'seolbigo:diagnosis';
 export interface DiagnosisSession {
   input: DiagnosisInput;
   result: DiagnosisResult;
+  photoUrls?: string[];   // 업로드 사진 서명 URL (1시간 유효 — 만료 시 화면은 플레이스홀더 폴백)
 }
 
 export function saveDiagnosis(s: DiagnosisSession) {

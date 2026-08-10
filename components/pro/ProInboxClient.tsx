@@ -20,7 +20,7 @@ function ago(iso: string) {
   return h < 24 ? `${h}시간 전` : `${Math.round(h / 24)}일 전`;
 }
 
-export default function ProInboxClient({ live = [] }: { live?: LiveRequest[] }) {
+export default function ProInboxClient({ live = [], thumbs = {} }: { live?: LiveRequest[]; thumbs?: Record<string, string | null> }) {
   const router = useRouter();
   const [filter, setFilter] = useState<InboxFilterId>('all');
   const [sort, setSort] = useState<InboxSort>('마감 임박순');
@@ -69,7 +69,10 @@ export default function ProInboxClient({ live = [] }: { live?: LiveRequest[] }) 
               <span className="t-b12 c-sec">{ago(r.createdAt)}</span>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "120px minmax(0,1fr) 200px", gap: 18, alignItems: "start" }}>
-              <div className="ph wet" style={{ aspectRatio: "1/1", borderRadius: 10 }} />
+              {thumbs[r.id]
+                // eslint-disable-next-line @next/next/no-img-element
+                ? <img src={thumbs[r.id]!} alt="현장 사진" style={{ aspectRatio: "1/1", borderRadius: 10, width: "100%", objectFit: "cover" }} />
+                : <div className="ph wet" style={{ aspectRatio: "1/1", borderRadius: 10 }} />}
               <div>
                 <div className="t-h18" style={{ marginBottom: 4 }}>
                   {(r.symptoms[0] ?? '누수 의심')} — AI 진단 완료</div>

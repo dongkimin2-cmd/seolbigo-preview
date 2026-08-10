@@ -5,7 +5,7 @@
 import { NextResponse } from 'next/server';
 import { DEMO_DIAGNOSIS } from '../../../lib/mock-data';
 import { insertRequest } from '../../../lib/db';
-import { uploadDiagnosisPhotos } from '../../../lib/storage';
+import { uploadDiagnosisPhotos, signedPhotoUrls } from '../../../lib/storage';
 
 export async function POST(req: Request) {
   let symptoms: string[] = [];
@@ -29,11 +29,13 @@ export async function POST(req: Request) {
 
   const input = { symptoms, address };
   const request = await insertRequest({ ...input, photos });
+  const photoUrls = (await signedPhotoUrls(photos)).filter((u): u is string => Boolean(u));
   await new Promise(r => setTimeout(r, 400));   // 분석 지연 연출
   return NextResponse.json({
     ok: true,
     requestId: request.id,
     photoCount: photos.length,
+    photoUrls,
     input,
     result: DEMO_DIAGNOSIS,
   });
