@@ -13,11 +13,11 @@
 
 :root {
   /* ---------- Brand (숨고 Prisma 그대로) ---------- */
-  --sg-brand-primary:        #693BF2;
-  --sg-brand-primary-hover:  #6302FB;
-  --sg-brand-primary-active: #5400D7;
-  --sg-brand-primary-light:  #C5B6FF;
-  --sg-brand-primary-subtle: #F1EEFF;
+  --sg-brand-primary:        #0284C7;
+  --sg-brand-primary-hover:  #0369A1;
+  --sg-brand-primary-active: #075985;
+  --sg-brand-primary-light:  #7DD3FC;
+  --sg-brand-primary-subtle: #E0F2FE;
   --sg-brand-secondary:      #0087FF;
   --sg-brand-secondary-light:#3DA3FF;
 
@@ -41,7 +41,7 @@
   --sg-text-disabled:    #AAB4BF;
   --sg-text-placeholder: #C7CED6;
   --sg-text-inverse:     #FFFFFF;
-  --sg-text-brand:       #693BF2;
+  --sg-text-brand:       #0284C7;
   --sg-text-info:        #0087FF;
   --sg-text-success:     #00A163;
   --sg-text-warning:     #FF7C11;
@@ -53,10 +53,10 @@
   --sg-bg-muted:     #EFF1F5;
   --sg-bg-emphasis:  #E0E5EB;
   --sg-bg-inverse:   #293341;
-  --sg-bg-brand:           #693BF2;
-  --sg-bg-brand-hover:     #6302FB;
-  --sg-bg-brand-active:    #5400D7;
-  --sg-bg-brand-subtle:    #F1EEFF;
+  --sg-bg-brand:           #0284C7;
+  --sg-bg-brand-hover:     #0369A1;
+  --sg-bg-brand-active:    #075985;
+  --sg-bg-brand-subtle:    #E0F2FE;
   --sg-bg-danger:          #FF3541;
   --sg-bg-danger-hover:    #EA1623;
   --sg-bg-danger-subtle:   #FDEBEC;
@@ -75,7 +75,7 @@
   --sg-border-default: #E0E5EB;
   --sg-border-strong:  #C7CED6;
   --sg-border-inverse: #1C242F;
-  --sg-border-brand:   #693BF2;
+  --sg-border-brand:   #0284C7;
   --sg-border-danger:  #FF3541;
   --sg-border-hairline: rgba(0, 0, 0, 0.05);
 
@@ -152,7 +152,7 @@
   --sb-urgency-urgent-bg:  #FDEBEC;
 
   /* 4개 주체 역할 액센트 */
-  --sb-role-consumer: #693BF2;
+  --sb-role-consumer: #0284C7;
   --sb-role-manager:  #00A163;
   --sb-role-pro:      #FF7C11;
   --sb-role-insurer:  #0087FF;
@@ -160,5 +160,5 @@
   /* 기준가 분포 게이지 */
   --sb-range-track: #EFF1F5;
   --sb-range-fair:  #E7FCEF;
-  --sb-range-mark:  #693BF2;
+  --sb-range-mark:  #0284C7;
 }
