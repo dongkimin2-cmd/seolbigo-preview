@@ -2,8 +2,7 @@ import { emojiIcon, EMOJI_FG, Ic } from '../components/icons';
 // p-home — 데이터 기반으로 전환 완료. 공동구매 현황은 DB(fetchGroupbuy) 조회 (2026-08-04).
 // 카테고리(SERVICES)·시공 사례(DEMO_CASES)는 코드 단일 소스. (서버 컴포넌트)
 import { DEMO_CASES, SERVICES, tierFor } from '../lib/mock-data';
-import { fetchGroupbuy, fetchLatestBooking } from '../lib/db';
-import Link from 'next/link';
+import { fetchGroupbuy } from '../lib/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,13 +15,6 @@ const STATS = [
 
 export default async function Page() {
   const gb = await fetchGroupbuy();
-  const booking = await fetchLatestBooking();
-  // 진행 중(취소·환불 제외)인 실예약이 있으면 홈 상단에 이어보기 배너
-  const BOOKING_LABEL: Record<string, string> = {
-    escrow: '예약 확정 · 방문 대기', in_progress: '시공 진행중',
-    await_approval: '시공 완료 · 확인해 주세요', paid_out: '거래 완료 · 보증 시작',
-  };
-  const bookingLabel = booking ? BOOKING_LABEL[booking.status] : undefined;
   const gbPct = Math.min(100, Math.round(gb.current / gb.goal * 100));
   const nowWon = tierFor(gb.current, gb.tiers).won;
   const finalWon = gb.tiers[gb.tiers.length - 1].won;
@@ -30,18 +22,6 @@ export default async function Page() {
   return (
     <section className="page on" id="p-home">
       <div className="wrap">
-        {bookingLabel && (
-          <Link href="/tracking" style={{ display: 'block', textDecoration: 'none' }}>
-            <div className="panel row between" style={{ margin: '16px auto 0', maxWidth: 720, padding: '12px 18px',
-              boxShadow: '0 0 0 1.5px var(--sg-brand-primary) inset', cursor: 'pointer' }}>
-              <div className="row gap10">
-                <span className={'badge ' + (booking!.status === 'await_approval' ? 'b-orange' : booking!.status === 'paid_out' ? 'b-green' : 'b-brands')}>{bookingLabel}</span>
-                <span className="t-b14 fw6">진행 중인 시공 — {booking!.day} {booking!.time} · {booking!.amountWon.toLocaleString()}원</span>
-              </div>
-              <span className="t-b14 c-brand fw6">진행 상황 보기 ›</span>
-            </div>
-          </Link>
-        )}
         <div className="hero">
           <div className="badge b-brand b12" style={{ marginBottom: 12 }}>AI 진단 · 기준가 공개 · 1년 안심보증</div>
           <h1 className="t-d28" style={{ margin: '0 0 6px' }}>
