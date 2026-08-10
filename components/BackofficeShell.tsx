@@ -15,7 +15,7 @@ const CONFIG: Record<Persona, {
 }> = {
   pro: {
     tag: '사업자 센터',
-    tagStyle: { background: 'var(--sb-role-pro)', color: '#1C242F' },
+    tagStyle: { background: 'var(--sb-role-pro)' },
     right: (
       <div className="row gap12">
         <span className="badge b-brand b12">플래티넘 등급</span>
