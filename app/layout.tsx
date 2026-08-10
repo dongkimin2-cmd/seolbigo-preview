@@ -1,3 +1,4 @@
+import { IconDefs } from '../components/icons';
 import type { Metadata, Viewport } from 'next';
 import './tokens.css';
 import './mockup.css';
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body>
+        <IconDefs />
         <div id="app">
           <Gnb />
           <main>{children}</main>

@@ -517,3 +517,8 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
 .btn.primary{box-shadow:0 2px 8px rgba(24,119,210,.28)}
 .chip{border-radius:10px}
 .inp{border-radius:12px}
+
+/* ===== 아이콘 시스템 (Tabler Icons, MIT — 2026-08-10 이모지 교체) ===== */
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.cat i .ic{width:26px;height:26px}
+.pronav a .ic{width:18px;height:18px}

@@ -1,3 +1,4 @@
+import { emojiIcon, EMOJI_FG, Ic } from '../components/icons';
 // p-home — 데이터 기반으로 전환 완료. 공동구매 현황은 DB(fetchGroupbuy) 조회 (2026-08-04).
 // 카테고리(SERVICES)·시공 사례(DEMO_CASES)는 코드 단일 소스. (서버 컴포넌트)
 import { DEMO_CASES, SERVICES, tierFor } from '../lib/mock-data';
@@ -41,7 +42,7 @@ export default async function Page() {
           <div className="cats">
             {SERVICES.map(s => (
               <button key={s.id} className="cat" data-go={s.go} data-svc={s.name}>
-                <i style={{ background: s.iconBg }}>{s.icon}</i>
+                <i style={{ background: s.iconBg, color: EMOJI_FG[s.icon] }}>{emojiIcon(s.icon)}</i>
                 <span>{s.nameLines[0]}<br />{s.nameLines[1]}</span>
                 <em className={'cat__how' + (s.howTone ? ' how-' + s.howTone : '')}>{s.how}</em>
               </button>
@@ -137,13 +138,13 @@ export default async function Page() {
 
         <section className="sec">
           <div className="grid g4">
-            <div><div className="t-h16" style={{ marginBottom: 4 }}>🛡️ 1년 안심 보증</div>
+            <div><div className="t-h16" style={{ marginBottom: 4 }}><Ic id="shield-check" /> 1년 안심 보증</div>
               <p className="t-b14 c-sec" style={{ margin: 0 }}>플랫폼 결제 건은 재시공·A/S를 설비고가 보장합니다.</p></div>
-            <div><div className="t-h16" style={{ marginBottom: 4 }}>🔒 에스크로 결제</div>
+            <div><div className="t-h16" style={{ marginBottom: 4 }}><Ic id="lock" /> 에스크로 결제</div>
               <p className="t-b14 c-sec" style={{ margin: 0 }}>시공 완료를 확인한 뒤 대금이 사업자에게 지급됩니다.</p></div>
             <div><div className="t-h16" style={{ marginBottom: 4 }}>📄 보험 Fast-Track</div>
               <p className="t-b14 c-sec" style={{ margin: 0 }}>공식 내역서가 보험사 청구 서류로 바로 이어집니다.</p></div>
-            <div><div className="t-h16" style={{ marginBottom: 4 }}>📷 조작 불가 필모그래피</div>
+            <div><div className="t-h16" style={{ marginBottom: 4 }}><Ic id="camera" /> 조작 불가 필모그래피</div>
               <p className="t-b14 c-sec" style={{ margin: 0 }}>Before/After 촬영 메타데이터를 시공 일정과 대조 검증합니다.</p></div>
           </div>
         </section>

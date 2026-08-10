@@ -1,4 +1,5 @@
 'use client';
+import { Ic } from '../../../components/icons';
 // p-survey — 상태 기반으로 전환 완료: 공사 범위 다중 선택 + 예약 접수 상태
 import { useState } from 'react';
 import { toast } from '../../../lib/toast';
@@ -35,7 +36,7 @@ export default function Page() {
           </div>
 
           <div className="callout info" style={{ marginBottom: 16 }}>
-            <span className="c-inf" style={{ flex: '0 0 20px' }}>📐</span>
+            <span className="c-inf" style={{ flex: '0 0 20px' }}><Ic id="ruler" /></span>
             <div><p className="t-b14 fw6" style={{ margin: '0 0 2px' }}>왜 사진으로 견적을 내지 않나요?</p>
               <p className="t-b14 c-sec" style={{ margin: 0 }}>같은 34평이어도 매립 구간이 3m인 집과 12m인 집의 공사비는 세 배 이상 차이납니다.
                 설비고는 근거 없는 숫자를 먼저 던지지 않습니다.</p></div>

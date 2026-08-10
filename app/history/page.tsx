@@ -1,4 +1,5 @@
 'use client';
+import { Ic } from '../../components/icons';
 // p-history — 데이터 기반으로 전환 완료: 이력 목록이 HistoryItem[] + 이번 세션의 시공(선택 견적·추가금)으로 구성됩니다.
 import { useEffect, useState } from 'react';
 import { DEMO_QUOTES, HISTORY_OLD, type HistoryItem, type Quote } from '../../lib/mock-data';
@@ -60,7 +61,7 @@ export default function Page() {
               </div>
             </div>
             <div className="callout" style={{ marginTop: 20, background: 'var(--sg-bg-warning-subtle)' }}>
-              <span style={{ flex: '0 0 20px', color: 'var(--sg-text-warning)' }}>⚠</span>
+              <span style={{ flex: '0 0 20px', color: 'var(--sg-text-warning)' }}><Ic id="alert-triangle" /></span>
               <div><p className="t-b14 fw6" style={{ margin: '0 0 2px' }}>수도·난방배관 클리닝을 권장합니다</p>
                 <p className="t-b12 c-sec" style={{ margin: 0 }}>준공 25년을 넘긴 중앙난방 세대는 스케일 1mm만 쌓여도 약 2%의 에너지가 손실됩니다.
                   같은 조건 세대의 시공 후 난방비는 평균 18% 줄었습니다.</p></div>

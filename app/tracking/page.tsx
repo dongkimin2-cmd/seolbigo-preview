@@ -1,4 +1,5 @@
 'use client';
+import { Ic } from '../../components/icons';
 // p-tracking — 데이터 기반으로 전환 완료: 선택 견적 + 승인된 추가금이 타임라인·주문 요약에 반영됩니다.
 import { useEffect, useState } from 'react';
 import { DEMO_QUOTES, DEMO_VARIATIONS, type Quote } from '../../lib/mock-data';
@@ -75,7 +76,7 @@ export default function Page() {
           <div className="block" style={{ marginBottom: 0 }}>
             <h2 className="block__t">기사님과 연락</h2>
             <div className="callout info" style={{ marginTop: 12 }}>
-              <span className="c-inf" style={{ flex: '0 0 20px' }}>☎</span>
+              <span className="c-inf" style={{ flex: '0 0 20px' }}><Ic id="phone" /></span>
               <p className="t-b14 c-sec" style={{ margin: 0 }}>안심번호로 통화할 수 있습니다. 양쪽의 실제 번호는 공개되지 않으며,
                 통화 내역은 분쟁 발생 시 증빙으로 사용됩니다.</p>
             </div>

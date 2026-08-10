@@ -1,4 +1,5 @@
 'use client';
+import { Ic } from '../../components/icons';
 // p-booking — 상태 기반으로 전환 완료 (MockupBridge 비의존)
 // 선택한 견적(quote-store)이 요약·금액을 채우고, 날짜·시간·결제수단은 React 상태.
 // 제출 시 POST /api/bookings → 예약 확정 후 변경 승인 화면으로 이동.
@@ -90,7 +91,7 @@ export default function Page() {
                 <textarea className="inp" placeholder="예: 낮에는 집에 사람이 없어 경비실에 연락 부탁드립니다." /></div>
             </div>
             <div className="callout info" style={{ marginTop: 16 }}>
-              <span className="c-inf" style={{ flex: '0 0 20px' }}>☎</span>
+              <span className="c-inf" style={{ flex: '0 0 20px' }}><Ic id="phone" /></span>
               <p className="t-b14 c-sec" style={{ margin: 0 }}>연락처는 <b>안심번호</b>로 연결되어 실제 번호가 사업자에게 공개되지 않습니다.</p>
             </div>
           </div>
@@ -140,7 +141,7 @@ export default function Page() {
               {busy ? '결제 처리 중…' : '결제하고 예약 확정'}</button>
           </div>
           <div className="panel" style={{ background: 'var(--sg-bg-info-subtle)', boxShadow: 'none' }}>
-            <div className="t-b14 fw7" style={{ marginBottom: 6 }}>🔒 에스크로로 보관됩니다</div>
+            <div className="t-b14 fw7" style={{ marginBottom: 6 }}><Ic id="lock" /> 에스크로로 보관됩니다</div>
             <p className="t-b12 c-sec" style={{ margin: 0 }}>시공 완료를 확인하고 승인하시면 그때 사업자에게 지급됩니다.
               중개 수수료 8%는 지급 시 공제되며, 고객이 따로 부담하는 금액은 없습니다.</p>
           </div>

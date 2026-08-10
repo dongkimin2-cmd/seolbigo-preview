@@ -1,3 +1,4 @@
+import { Ic } from '../../../components/icons';
 // 자동 이식된 목업 화면 p-mgr-bid — 원본: seolbigo-preview/index.html (백오피스)
 // 헤더·내브는 BackofficeShell 공용 (실제 <Link> 라우팅) — 2026-08-04
 // 데이터 기반 전환 (2026-08-04) — 서류 목록·산출 표·진행 타임라인·집행 근거를 lib/mgr-data.ts 에서 렌더
@@ -16,7 +17,7 @@ export default function Page() {
             <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 340px", gap: 16, alignItems: "start" }}>
               <div>
                 <div className="callout info" style={{ marginBottom: 16 }}>
-                  <span className="c-inf" style={{ flex: "0 0 20px" }}>⚖️</span>
+                  <span className="c-inf" style={{ flex: "0 0 20px" }}><Ic id="scale" /></span>
                   <div><p className="t-b14 fw6" style={{ margin: "0 0 2px" }}>이번 건은 경쟁입찰 대상입니다</p>
                     <p className="t-b14 c-sec" style={{ margin: "0" }}>21개동 입상관 일괄 세정 · 예정가격 <b className="num">2,940만원</b> —
                       「주택관리업자 및 사업자 선정지침」에 따라 K-apt 전자입찰을 거쳐야 합니다.</p></div>

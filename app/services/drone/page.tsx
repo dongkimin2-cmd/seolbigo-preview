@@ -1,4 +1,5 @@
 'use client';
+import { Ic } from '../../../components/icons';
 // p-drone — 상태 기반으로 전환 완료: 점검 대상 단일 선택 + 증상 칩 + 예약 접수 상태
 import { useState } from 'react';
 import { toast } from '../../../lib/toast';
@@ -105,7 +106,7 @@ export default function Page() {
               <div className="t-b12 c-ter" style={{ marginTop: 8 }}>※ 예시 화면입니다. 실제 리포트는 촬영 후 생성됩니다.</div>
             </div>
             <div className="callout" style={{ marginTop: 16 }}>
-              <span className="c-ter" style={{ flex: '0 0 20px' }}>⚖️</span>
+              <span className="c-ter" style={{ flex: '0 0 20px' }}><Ic id="scale" /></span>
               <p className="t-b12 c-sec" style={{ margin: 0 }}>본 점검은 <b>참고용 상태 조사</b>이며, 시설물안전법상
                 정밀안전점검·정밀안전진단을 대체하지 않습니다. 드론 비행 승인·항공촬영 신고는 설비고가 일괄 대행합니다.</p>
             </div>

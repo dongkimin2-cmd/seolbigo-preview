@@ -2,6 +2,7 @@
 // 백오피스 공용 셸 — 상단바(prognb) + 사이드내브(pronav) + 본문(probody).
 // 17개 화면에 중복돼 있던 헤더·내브를 한곳으로 모으고, data-go 대신 실제 <Link> 라우팅 사용.
 // (2026-08-04 백오피스 데이터 전환의 1단계)
+import { labelWithIcon, Ic } from './icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { CSSProperties, ReactNode } from 'react';
@@ -95,11 +96,11 @@ export default function BackofficeShell({ persona, id, children }: {
         <nav className="pronav">
           {c.nav.map(item => (
             <Link key={item.href} href={item.href} className={pathname === item.href ? 'on' : undefined}>
-              {item.label}{item.n != null && <> <span className="pronav__n">{item.n}</span></>}
+              {labelWithIcon(item.label)}{item.n != null && <> <span className="pronav__n">{item.n}</span></>}
             </Link>
           ))}
           <hr className="hair" style={{ margin: '12px 8px' }} />
-          <Link href="/">↩ 고객 화면으로</Link>
+          <Link href="/"><Ic id="arrow-back-up" /> 고객 화면으로</Link>
         </nav>
         <div className="probody">{children}</div>
       </div>

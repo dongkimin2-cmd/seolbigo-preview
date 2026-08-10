@@ -1,3 +1,4 @@
+import { emojiIcon, EMOJI_FG } from '../../components/icons';
 // p-services — 데이터 기반으로 전환 완료: 서비스 카탈로그(SERVICES/SERVICE_GROUPS)의 단일 소스에서 렌더.
 // 홈 카테고리와 같은 데이터를 쓰므로 서비스 추가·수정이 한곳에서 끝납니다. (서버 컴포넌트)
 import { SERVICES, SERVICE_GROUPS } from '../../lib/mock-data';
@@ -28,7 +29,7 @@ export default function Page() {
                   const s = byId[id];
                   return (
                     <button key={id} className="svc" data-go={s.go} data-svc={s.name}>
-                      <i style={{ background: s.iconBg }}>{s.icon}</i>
+                      <i style={{ background: s.iconBg, color: EMOJI_FG[s.icon] }}>{emojiIcon(s.icon)}</i>
                       <div><div className="t-b16 fw7">{s.name}</div>
                         <div className="t-b12 c-sec">{s.desc}</div></div>
                       <span className="svc__go">›</span>

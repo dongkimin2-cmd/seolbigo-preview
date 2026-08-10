@@ -1,4 +1,5 @@
 'use client';
+import { Ic } from '../../components/icons';
 // p-insurance — 데이터 기반으로 전환 완료: 사실자료 리포트의 시공 내역·청구 금액이
 // 선택 견적 + 승인 추가금에서 계산되고, 표준 분포는 STANDARD_RANGES 대조표에서 나옵니다.
 import { useEffect, useState } from 'react';
@@ -93,7 +94,7 @@ export default function Page() {
               </div>
             </div>
             <div className="callout" style={{ marginTop: 16 }}>
-              <span className="c-ter" style={{ flex: '0 0 20px' }}>⚖️</span>
+              <span className="c-ter" style={{ flex: '0 0 20px' }}><Ic id="scale" /></span>
               <p className="t-b12 c-sec" style={{ margin: 0 }}>본 리포트는 <b>사실자료 제공</b>에 한하며, 보험금 사정이나 적정성 판단을 대행하지 않습니다.
                 손해사정 업무는 등록 손해사정법인이 수행합니다.</p>
             </div>
