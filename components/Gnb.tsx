@@ -15,6 +15,7 @@ const NAV = [
   { href: '/services', label: '전체 서비스' },
   { href: '/cases', label: '시공 사례' },
   { href: '/groupbuy', label: '공동구매' },
+  { href: '/journey', label: '내 진행 현황' },
   { href: '/history', label: '우리집 이력' },
   { href: '/insurance', label: '보험 청구' },
 ];
