@@ -66,6 +66,7 @@
   --sg-bg-danger-subtle:   #FDEBEC;
   --sg-bg-info:            #0087FF;
   --sg-bg-info-subtle:     #E7F4FF;
+  --sg-bg-insurer-subtle:  var(--sb-role-insurer-subtle); /* 보험사 KPI 패널용 별칭 */
   --sg-bg-success:         #00A163;
   --sg-bg-success-subtle:  #E7FCEF;
   --sg-bg-warning:         #FF7C11;
@@ -159,7 +160,8 @@
   --sb-role-consumer: #0277B5;
   --sb-role-manager:  #00A163;
   --sb-role-pro:      #FF7C11;
-  --sb-role-insurer:  #0087FF;
+  --sb-role-insurer:  #1E3A8A;
+  --sb-role-insurer-subtle: #E9EEFA;
 
   /* 기준가 분포 게이지 */
   --sb-range-track: #EFF1F5;

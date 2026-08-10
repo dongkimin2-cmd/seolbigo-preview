@@ -57,10 +57,10 @@ const CONFIG: Record<Persona, {
   },
   ins: {
     tag: '보험사',
-    tagStyle: { background: 'var(--sg-bg-info)' },
+    tagStyle: { background: 'var(--sb-role-insurer)' },
     right: (
       <div className="row gap12">
-        <span className="badge b-blue b12">○○화재해상보험 · 일상생활배상책임</span>
+        <span className="badge b-navy b12">○○화재해상보험 · 일상생활배상책임</span>
         <div className="row gap8">
           <div className="avatar ci" style={{ width: 32, height: 32, fontSize: 13 }}>보</div>
           <span className="t-b14 fw6">보상팀 이심사</span>

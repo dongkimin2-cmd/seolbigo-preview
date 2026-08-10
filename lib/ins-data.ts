@@ -8,14 +8,14 @@ export interface InsKpi {
   value: string;                    // 큰 숫자 (표시 문자열)
   sub: string;                      // 보조 설명
   valueClass?: string;              // 값 색상 추가 클래스 ('c-inf' | 'c-suc' 등)
-  subtleBg?: 'info' | 'success';    // 강조 배경 패널 (var(--sg-bg-{}-subtle))
+  subtleBg?: 'info' | 'success' | 'insurer';    // 강조 배경 패널 (var(--sg-bg-{}-subtle))
 }
 
 /* ---------- 청구 심사 인박스 (p-ins-home) ---------- */
 
 export const INS_HOME_KPIS: InsKpi[] = [
   { label: '이번 달 누수 접수', value: '1,284건', sub: '전체 청구의 52.7%' },
-  { label: '설비고 연계 건', value: '218건', sub: '17.0% · 전월 대비 +4.2%p', valueClass: 'c-inf', subtleBg: 'info' },
+  { label: '설비고 연계 건', value: '218건', sub: '17.0% · 전월 대비 +4.2%p', valueClass: 'c-insurer', subtleBg: 'insurer' },
   { label: '평균 정산 소요', value: '2.4일', sub: '비연계 건 11.6일' },
   { label: '현장조사 생략률', value: '71%', sub: '연계 건 기준 · 건당 18만원 절감', valueClass: 'c-suc' },
 ];

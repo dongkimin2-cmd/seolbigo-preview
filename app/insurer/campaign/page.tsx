@@ -75,7 +75,7 @@ export default function Page() {
               </div>
 
               <div className="col gap12">
-                <div className="panel" style={{ background: "var(--sg-bg-info-subtle)", boxShadow: "none" }}>
+                <div className="panel" style={{ background: "var(--sb-role-insurer-subtle)", boxShadow: "none" }}>
                   <div className="t-b14 fw7" style={{ marginBottom: 6 }}>해외 검증 사례</div>
                   <p className="t-b12 c-sec" style={{ margin: "0 0 10px" }}>영국 Ondo InsurTech의 <b>LeakBot</b>은 보험사가 누수 감지기를
                     가입자에게 배포하고 기기당 월 구독료를 내는 구조로 <b>보험사 ROI 188%</b>를 실증하며

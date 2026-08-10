@@ -24,9 +24,9 @@ export default function Page() {
                 {INS_COMPARE_METRICS.map(m => (
                   <div key={m.title}><div className="row between t-b14" style={{ marginBottom: 8 }}>
                       <span className="fw6">{m.title}</span>
-                      <span className="c-sec">연계 <b className="num c-inf">{m.linked}</b> · 비연계 <b className="num">{m.unlinked}</b></span></div>
+                      <span className="c-sec">연계 <b className="num c-insurer">{m.linked}</b> · 비연계 <b className="num">{m.unlinked}</b></span></div>
                     <div className="row gap12"><span className="t-b12 c-sec" style={{ width: 52 }}>연계</span>
-                      <div className="posbar" style={{ flex: "1" }}><i style={{ position: "absolute", left: "0", top: "0", bottom: "0", width: m.linkedWidth, borderRadius: 999, background: "var(--sg-bg-info)" }} /></div>
+                      <div className="posbar" style={{ flex: "1" }}><i style={{ position: "absolute", left: "0", top: "0", bottom: "0", width: m.linkedWidth, borderRadius: 999, background: "var(--sb-role-insurer)" }} /></div>
                       <span className="t-b12 fw7 num c-suc" style={{ width: 56, textAlign: "right" }}>{m.delta}</span></div>
                     <div className="row gap12" style={{ marginTop: 6 }}><span className="t-b12 c-sec" style={{ width: 52 }}>비연계</span>
                       <div className="posbar" style={{ flex: "1" }}><i style={{ position: "absolute", left: "0", top: "0", bottom: "0", width: m.unlinkedWidth, borderRadius: 999, background: "var(--sg-gray-300)" }} /></div>
@@ -59,7 +59,7 @@ export default function Page() {
               </div>
 
               <div className="col gap12">
-                <div className="panel" style={{ background: "var(--sg-bg-info-subtle)", boxShadow: "none" }}>
+                <div className="panel" style={{ background: "var(--sb-role-insurer-subtle)", boxShadow: "none" }}>
                   <div className="t-b12 c-sec">누수 지급보험금 (반기)</div>
                   <div className="t-h24 num" style={{ margin: "4px 0 2px" }}>1,517억원</div>
                   <div className="t-b12 c-sec">지급 원인 1위 · 금액 비중 65.6%<br />(한국신용정보원, 2023 상반기)</div>
