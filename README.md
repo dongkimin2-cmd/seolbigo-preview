@@ -70,3 +70,14 @@ Auth(로그인) 연동 전까지 DB 쓰기는 service role 로 수행됩니다 �
 5. 역할(role)은 profiles 테이블에서 운영자가 승격 (consumer → pro/manager/insurer)
 
 구성: `lib/auth.ts`(서버 세션·역할 조회) · `middleware.ts`(세션 갱신, 라우트 강제 보호는 아직 없음) · `app/login` + `components/LoginClient.tsx` · `app/auth/callback`
+
+
+## 사진 업로드 (E1-5 · Supabase Storage)
+
+진단 사진은 Storage `photos` 버킷(비공개)에 저장됩니다. 최초 1회 설정:
+
+1. Supabase 대시보드 → Storage → **New bucket** → 이름 `photos`, **Public OFF** 로 생성
+2. 끝. 서버가 service role 키로 접근하므로 별도 Storage 정책은 필요 없습니다.
+
+키가 없거나 버킷이 없으면 업로드는 조용히 생략되고(mock 경로 기록) 데모 동작은 그대로 유지됩니다.
+소비자 화면에 사진을 다시 보여주는 것(signed URL)은 후속 과제입니다.

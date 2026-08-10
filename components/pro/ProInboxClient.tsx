@@ -76,6 +76,7 @@ export default function ProInboxClient({ live = [] }: { live?: LiveRequest[] }) 
                 <div className="t-b14 c-sec" style={{ marginBottom: 10 }}>{r.address || '주소 미입력'}</div>
                 <div className="row gap6" style={{ flexWrap: "wrap" }}>
                   {r.symptoms.map(t => <span key={t} className="badge b-gline">{t}</span>)}
+                  {r.photoCount > 0 && <span className="badge b-blue">사진 {r.photoCount}장</span>}
                 </div>
               </div>
               <div style={{ textAlign: "right" }}>

@@ -1,7 +1,7 @@
 'use client';
 // p-diag1 — 상태 기반으로 전환 완료 (MockupBridge 비의존)
 // 증상·주소를 React 상태로 관리하고, 제출 시 POST /api/diagnose → 결과를 저장 후 분석 화면으로 이동
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { SYMPTOMS } from '../../lib/mock-data';
 import { saveDiagnosis } from '../../lib/diag-store';
@@ -14,6 +14,13 @@ export default function Page() {
   const [address, setAddress] = useState('서울 강남구 청솔아파트 103동 1204호');
   const [addrErr, setAddrErr] = useState(false);
   const [busy, setBusy] = useState(false);
+  // E1-5: 사진 첨부 — 선택한 파일은 제출 시 Storage 로 업로드됩니다 (최대 5개)
+  const [files, setFiles] = useState<File[]>([]);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const addFiles = (list: FileList | null) => {
+    if (!list) return;
+    setFiles(prev => [...prev, ...Array.from(list)].slice(0, 5));
+  };
 
   const toggle = (s: string) => setSelected(prev => {
     const next = new Set(prev);
@@ -26,11 +33,21 @@ export default function Page() {
     if (!address.trim()) { setAddrErr(true); toast('아파트 · 주소를 입력해주세요.', 'warn'); return; }
     setBusy(true);
     try {
-      const res = await fetch('/api/diagnose', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ symptoms: [...selected], address }),
-      });
+      // 사진이 있으면 multipart, 없으면 JSON (둘 다 /api/diagnose 가 처리)
+      let res: Response;
+      if (files.length) {
+        const fd = new FormData();
+        for (const s of selected) fd.append('symptoms', s);
+        fd.append('address', address);
+        for (const f of files) fd.append('photos', f);
+        res = await fetch('/api/diagnose', { method: 'POST', body: fd });
+      } else {
+        res = await fetch('/api/diagnose', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ symptoms: [...selected], address }),
+        });
+      }
       const data = await res.json();
       if (!data.ok) throw new Error('진단 요청 실패');
       saveDiagnosis({ input: data.input, result: data.result });
@@ -59,15 +76,31 @@ export default function Page() {
           <div className="block">
             <h2 className="block__t">현장 사진 · 동영상</h2>
             <p className="block__d">천장·벽 얼룩, 물이 새는 부위, 배관 연결부가 잘 보이게 2~3장이면 충분합니다.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
-              <div className="ph wet" style={{ aspectRatio: '1/1', borderRadius: 10, position: 'relative' }}>
-                <span className="badge b-dim" style={{ position: 'absolute', top: 8, left: 8 }}>1</span></div>
-              <div className="ph pipe" style={{ aspectRatio: '1/1', borderRadius: 10, position: 'relative' }}>
-                <span className="badge b-dim" style={{ position: 'absolute', top: 8, left: 8 }}>2</span></div>
-              <div style={{ aspectRatio: '1/1', borderRadius: 10, border: '1px dashed var(--sg-border-strong)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6, cursor: 'pointer', color: 'var(--sg-text-tertiary)' }}>
-                <span style={{ fontSize: 26 }}>＋</span><span className="t-b12">파일 추가</span></div>
-              <div style={{ aspectRatio: '1/1', borderRadius: 10, background: 'var(--sg-bg-subtle)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4, padding: 12, textAlign: 'center' }}>
-                <span className="t-b12 c-sec">드래그해서<br />올려도 됩니다</span></div>
+            <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp,video/mp4" multiple
+              style={{ display: 'none' }} onChange={e => { addFiles(e.target.files); e.target.value = ''; }} />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}
+              onDragOver={e => e.preventDefault()}
+              onDrop={e => { e.preventDefault(); addFiles(e.dataTransfer.files); }}>
+              {files.map((f, i) => (
+                <div key={i} style={{ aspectRatio: '1/1', borderRadius: 10, position: 'relative', overflow: 'hidden', background: 'var(--sg-bg-subtle)' }}>
+                  {f.type.startsWith('image/')
+                    // eslint-disable-next-line @next/next/no-img-element
+                    ? <img src={URL.createObjectURL(f)} alt={f.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    : <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', fontSize: 12, color: 'var(--sg-text-secondary)', padding: 8, textAlign: 'center' }}>{f.name}</div>}
+                  <span className="badge b-dim" style={{ position: 'absolute', top: 8, left: 8 }}>{i + 1}</span>
+                  <button aria-label="삭제" onClick={() => setFiles(prev => prev.filter((_, j) => j !== i))}
+                    style={{ position: 'absolute', top: 6, right: 6, width: 22, height: 22, borderRadius: 11, border: 0, cursor: 'pointer', background: 'rgba(28,36,47,.55)', color: '#fff', fontSize: 12, lineHeight: 1 }}>✕</button>
+                </div>
+              ))}
+              {files.length < 5 && (
+                <div onClick={() => fileRef.current?.click()}
+                  style={{ aspectRatio: '1/1', borderRadius: 10, border: '1px dashed var(--sg-border-strong)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6, cursor: 'pointer', color: 'var(--sg-text-tertiary)' }}>
+                  <span style={{ fontSize: 26 }}>＋</span><span className="t-b12">파일 추가</span></div>
+              )}
+              {files.length === 0 && (
+                <div style={{ aspectRatio: '1/1', borderRadius: 10, background: 'var(--sg-bg-subtle)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4, padding: 12, textAlign: 'center' }}>
+                  <span className="t-b12 c-sec">드래그해서<br />올려도 됩니다</span></div>
+              )}
             </div>
             <div className="t-b12 c-sec" style={{ marginTop: 12 }}>JPG · PNG · MP4 / 최대 5개 / 개당 50MB</div>
           </div>
@@ -106,7 +139,7 @@ export default function Page() {
           <div className="panel">
             <h3 className="panel__t">진단 요약</h3>
             <div className="col gap10" style={{ gap: 10 }}>
-              <div className="row between"><span className="t-b14 c-sec">첨부</span><span className="t-b14 fw6">사진 2장</span></div>
+              <div className="row between"><span className="t-b14 c-sec">첨부</span><span className="t-b14 fw6">{files.length ? `사진 ${files.length}장` : '없음 (선택)'}</span></div>
               <div className="row between"><span className="t-b14 c-sec">증상</span><span className="t-b14 fw6" id="diagSymCount">{selected.size}개 선택</span></div>
               <div className="row between"><span className="t-b14 c-sec">건물</span><span className="t-b14 fw6">1999년 · 중앙난방</span></div>
             </div>

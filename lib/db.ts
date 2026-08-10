@@ -5,6 +5,7 @@
 //   NEXT_PUBLIC_SUPABASE_URL=https://<project>.supabase.co
 //   SUPABASE_SERVICE_ROLE_KEY=...   (서버 라우트 전용 — 클라이언트에 노출 금지)
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { assessQuote } from './pricing';
 import {
   DEMO_DIAGNOSIS, DEMO_QUOTES, DEMO_SIMILAR_CASES, GROUPBUY, SERVICES,
   type Quote, type SimilarCase,
@@ -55,6 +56,7 @@ export interface LiveRequest {
   createdAt: string;   // ISO
   status: string;
   quoteCount: number;  // 이 요청에 제출된 견적 수
+  photoCount: number;  // 첨부 사진 수 (E1-5)
 }
 
 /* ---------- 조회 ---------- */
@@ -114,17 +116,18 @@ export async function fetchSimilarCases(): Promise<SimilarCase[]> {
 
 /* ---------- 쓰기 (mock 모드에서는 no-op) ---------- */
 
-export async function insertRequest(input: { symptoms: string[]; address: string }) {
+export async function insertRequest(input: { symptoms: string[]; address: string; photos?: string[] }) {
   if (!hasSupabase) {
     const st = mockStore();
     const id = 'R-' + Date.now().toString(36).toUpperCase();
     st.requests.unshift({ id, symptoms: input.symptoms, address: input.address,
-      createdAt: new Date().toISOString(), status: 'diagnosed', quoteCount: 0 });
+      createdAt: new Date().toISOString(), status: 'diagnosed', quoteCount: 0,
+      photoCount: input.photos?.length ?? 0 });
     return { id };
   }
   try {
     const { data } = await supabase().from('requests')
-      .insert({ symptoms: input.symptoms, address: input.address, service_id: 'leak-repair' })
+      .insert({ symptoms: input.symptoms, address: input.address, service_id: 'leak-repair', photos: input.photos ?? [] })
       .select('id').single();
     if (data?.id) void insertDiagnosis(String(data.id));   // 진단 결과 기록 (best-effort)
     return data ?? { id: 'mock-request' };
@@ -222,7 +225,7 @@ export async function fetchOpenRequests(): Promise<LiveRequest[]> {
   if (!hasSupabase) return mockStore().requests;
   try {
     const { data, error } = await supabase().from('requests')
-      .select('id, symptoms, address, status, created_at, quotes(id)')
+      .select('id, symptoms, address, status, created_at, photos, quotes(id)')
       .in('status', ['submitted', 'analyzing', 'diagnosed', 'quoted'])
       .order('created_at', { ascending: false }).limit(20);
     if (error || !data) return [];
@@ -233,6 +236,7 @@ export async function fetchOpenRequests(): Promise<LiveRequest[]> {
       createdAt: String(r.created_at ?? ''),
       status: String(r.status ?? 'submitted'),
       quoteCount: Array.isArray(r.quotes) ? r.quotes.length : 0,
+      photoCount: Array.isArray(r.photos) ? r.photos.length : 0,
     }));
   } catch { return []; }
 }
@@ -242,11 +246,8 @@ export async function insertQuote(q: {
   requestId?: string; priceWon: number; note?: string;
   lineItems?: { name: string; won: number }[];
 }): Promise<{ ok: boolean; id?: string }> {
-  const FAIR_MAX = DEMO_DIAGNOSIS.fairMax * 10_000;
-  const warning = q.priceWon > FAIR_MAX
-    ? `적정 구간(${DEMO_DIAGNOSIS.fairMin}~${DEMO_DIAGNOSIS.fairMax}만원)을 웃도는 금액입니다.` +
-      (q.note?.trim() ? ` 사업자 사유: ${q.note.trim()}` : ' 포함 공정을 확인하세요.')
-    : undefined;
+  // E1-3: 규칙 기반 자동 판정 — 항목별 표준 범위 + 총액 적정 구간 (lib/pricing.ts)
+  const { warning } = assessQuote(q.lineItems ?? [], q.priceWon, q.note);
   if (!hasSupabase) {
     const st = mockStore();
     const id = 'Q-' + Date.now().toString(36).toUpperCase();
