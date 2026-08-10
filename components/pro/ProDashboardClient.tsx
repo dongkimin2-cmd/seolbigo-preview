@@ -88,7 +88,7 @@ export default function ProDashboardClient() {
             <div className="row gap12" style={{ alignItems: "center", marginBottom: 14 }}>
               <div className="ring" style={{ width: 76, height: 76, flex: "0 0 76px" }}>
                 <svg width="76" height="76"><circle cx="38" cy="38" r="31" fill="none" stroke="#EFF1F5" strokeWidth={10} />
-                  <circle cx="38" cy="38" r="31" fill="none" stroke="#0277B5" strokeWidth={10} strokeLinecap="round" strokeDasharray="195" strokeDashoffset={27} /></svg>
+                  <circle cx="38" cy="38" r="31" fill="none" stroke="#3F9FF2" strokeWidth={10} strokeLinecap="round" strokeDasharray="195" strokeDashoffset={27} /></svg>
                 <div className="ring__t"><div className="t-h18 num">86</div></div></div>
               <div><div className="t-b16 fw7 c-brand">플래티넘</div>
                 <div className="t-b12 c-sec">상위 8% · 검색 노출 1순위</div></div>
