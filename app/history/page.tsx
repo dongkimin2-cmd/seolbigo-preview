@@ -3,17 +3,29 @@ import { Ic } from '../../components/icons';
 // p-history — 데이터 기반으로 전환 완료: 이력 목록이 HistoryItem[] + 이번 세션의 시공(선택 견적·추가금)으로 구성됩니다.
 import { useEffect, useState } from 'react';
 import { DEMO_QUOTES, HISTORY_OLD, type HistoryItem, type Quote } from '../../lib/mock-data';
+import Link from 'next/link';
 import { loadSelectedQuote } from '../../lib/quote-store';
 import { loadVariation } from '../../lib/variation-store';
+import type { LiveBooking } from '../../lib/db';
+
+const LIVE_LABEL: Record<string, { label: string; cls: string }> = {
+  escrow: { label: '예약 확정 · 방문 대기', cls: 'b-blue' },
+  in_progress: { label: '시공 진행중', cls: 'b-brands' },
+  await_approval: { label: '완료 확인 대기', cls: 'b-orange' },
+  paid_out: { label: '거래 완료', cls: 'b-green' },
+};
 
 export default function Page() {
   const [quote, setQuote] = useState<Quote>(DEMO_QUOTES[0]);
   const [extra, setExtra] = useState(80_000);
+  const [live, setLive] = useState<LiveBooking | null>(null);
 
   useEffect(() => {
     setQuote(loadSelectedQuote());
     const v = loadVariation();
     if (v) setExtra(v.extraWon);
+    fetch('/api/bookings').then(r => r.json())
+      .then(d => { if (d?.booking) setLive(d.booking); }).catch(() => {});
   }, []);
 
   const latest: HistoryItem = {
@@ -70,6 +82,18 @@ export default function Page() {
 
           <div className="block" style={{ marginBottom: 0 }}>
             <h2 className="block__t">시공 이력 <span className="c-brand num">{items.length}건</span></h2>
+            {live && LIVE_LABEL[live.status] && (
+              <Link href="/tracking" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+                <div className="panel row between" style={{ padding: '14px 18px', marginBottom: 12,
+                  boxShadow: '0 0 0 1.5px var(--sg-brand-primary) inset', cursor: 'pointer' }}>
+                  <div className="row gap10">
+                    <span className={'badge ' + LIVE_LABEL[live.status].cls}>{LIVE_LABEL[live.status].label}</span>
+                    <span className="t-b14 fw6">진행 중인 시공 · {live.day} {live.time} · {live.amountWon.toLocaleString()}원</span>
+                  </div>
+                  <span className="t-b14 c-brand fw6">진행 상황 보기 ›</span>
+                </div>
+              </Link>
+            )}
             <div className="tl" style={{ marginTop: 20 }}>
               {items.map(it => (
                 <div key={it.title + it.date} className="tl__i done">
