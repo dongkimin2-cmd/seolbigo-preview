@@ -5,6 +5,13 @@ import type { ReactNode } from 'react';
 export function IconDefs() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" style={{ display: 'none' }} aria-hidden="true">
+      <symbol id="tb-photo-ai" viewBox="0 0 24 24">
+  <path d="M15 8h.01"  />
+  <path d="M10 21h-4a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v5"  />
+  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l1 1"  />
+  <path d="M14 21v-4a2 2 0 1 1 4 0v4"  />
+  <path d="M14 19h4"  />
+  <path d="M21 15v6"  /></symbol>
       <symbol id="tb-droplet" viewBox="0 0 24 24">
   <path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546"  /></symbol>
       <symbol id="tb-tools" viewBox="0 0 24 24">

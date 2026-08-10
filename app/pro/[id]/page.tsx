@@ -1,3 +1,4 @@
+import { Ic } from '../../../components/icons';
 
 // 자동 이식된 목업 화면 p-pro — 원본: seolbigo-preview/index.html
 // 정적 상세 화면 — 상태 없음. 브리지는 라우팅(data-go)과 Before/After 슬라이더만 담당합니다.
@@ -70,14 +71,14 @@ export default function Page() {
               <h2 className="block__t">&#54980;&#44592; 126&#44148;</h2>
               <div className="col gap12" style={{ marginTop: 14 }}>
                 <div className="callout">
-                  <span style={{ flex: "0 0 20px" }}>&#128172;</span>
+                  <span style={{ flex: "0 0 20px", color: "var(--sg-text-secondary)" }}><Ic id="message-circle" /></span>
                   <div><div className="row gap4" style={{ marginBottom: 4 }}>
                     <span style={{ color: "var(--sg-accent-amber)" }}>★★★★★</span>
                     <span className="t-b12 c-sec">&#52397;&#49556; 1204&#54840; · &#48176;&#44288; &#51060;&#51020;&#48512; &#48372;&#49688;</span></div>
                   <p className="t-b14" style={{ margin: "0" }}>&#52628;&#44032;&#44552;&#51060; &#50780; &#48537;&#45716;&#51648; &#50545;&#50640;&#49436; &#54637;&#47785;&#51004;&#47196; &#48372;&#50668;&#51480;&#49436; &#45225;&#46301;&#51060; &#46096;&#50612;&#50836;. &#45796;&#51020;&#50640;&#46020; &#50668;&#44592;&#47196; &#48512;&#47484; &#44161;&#45768;&#45796;.</p></div>
                 </div>
                 <div className="callout">
-                  <span style={{ flex: "0 0 20px" }}>&#128172;</span>
+                  <span style={{ flex: "0 0 20px", color: "var(--sg-text-secondary)" }}><Ic id="message-circle" /></span>
                   <div><div className="row gap4" style={{ marginBottom: 4 }}>
                     <span style={{ color: "var(--sg-accent-amber)" }}>★★★★★</span>
                     <span className="t-b12 c-sec">&#44060;&#54252;&#45720;&#54392;&#47480; · &#45212;&#48169;&#48176;&#44288; &#53364;&#47532;&#45789;</span></div>

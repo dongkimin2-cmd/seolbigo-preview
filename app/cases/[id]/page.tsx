@@ -1,3 +1,4 @@
+import { Ic } from '../../../components/icons';
 
 // 자동 이식된 목업 화면 p-case-detail — 원본: seolbigo-preview/index.html
 // 정적 상세 화면 — 상태 없음. 브리지는 라우팅(data-go)과 Before/After 슬라이더만 담당합니다.
@@ -56,7 +57,7 @@ export default function Page() {
             <div className="block" style={{ marginBottom: "0" }}>
               <h2 className="block__t">&#44256;&#44061; &#54980;&#44592;</h2>
               <div className="callout" style={{ marginTop: 12 }}>
-                <span style={{ flex: "0 0 20px" }}>&#128172;</span>
+                <span style={{ flex: "0 0 20px", color: "var(--sg-text-secondary)" }}><Ic id="message-circle" /></span>
                 <div><div className="row gap4" style={{ marginBottom: 4 }}>
                   <span style={{ color: "var(--sg-accent-amber)" }}>★★★★★</span>
                   <span className="t-b12 c-sec">1204&#54840; &#44256;&#44061; · 2026.11.15</span></div>
