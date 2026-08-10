@@ -1,4 +1,4 @@
-import { emojiIcon, EMOJI_FG } from '../../components/icons';
+import { emojiIcon, iconizeText, EMOJI_FG } from '../../components/icons';
 // p-services — 데이터 기반으로 전환 완료: 서비스 카탈로그(SERVICES/SERVICE_GROUPS)의 단일 소스에서 렌더.
 // 홈 카테고리와 같은 데이터를 쓰므로 서비스 추가·수정이 한곳에서 끝납니다. (서버 컴포넌트)
 import { SERVICES, SERVICE_GROUPS } from '../../lib/mock-data';
@@ -20,7 +20,7 @@ export default function Page() {
           {SERVICE_GROUPS.map((g, gi) => (
             <div key={g.title} className="block" style={gi === SERVICE_GROUPS.length - 1 ? { marginBottom: 0 } : undefined}>
               <div className="row between" style={{ marginBottom: 4 }}>
-                <h2 className="block__t" style={{ margin: 0 }}>{g.title}</h2>
+                <h2 className="block__t" style={{ margin: 0 }}>{iconizeText(g.title)}</h2>
                 <span className={'badge b12 b-' + g.badgeTone}>{g.badge}</span>
               </div>
               <p className="block__d">{g.desc}</p>

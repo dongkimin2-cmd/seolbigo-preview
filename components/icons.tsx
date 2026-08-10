@@ -211,3 +211,22 @@ export function labelWithIcon(label: string): ReactNode {
   if (!id) return label;
   return <><Ic id={id} /> {label.slice(first.length).replace(/^️?\s*/, '')}</>;
 }
+
+// 문자열 안의 매핑된 이모지를 전부 아이콘으로 치환 ('📷📐 사진과 면적…' 같은 복수 이모지 지원)
+export function iconizeText(text: string): ReactNode {
+  const out: ReactNode[] = [];
+  let buf = '';
+  let k = 0;
+  for (const ch of Array.from(text)) {
+    if (ch === '️') continue; // variation selector
+    const id = EMOJI_ICON[ch];
+    if (id) {
+      if (buf) { out.push(buf); buf = ''; }
+      out.push(<Ic key={k++} id={id} />);
+    } else {
+      buf += ch;
+    }
+  }
+  if (buf) out.push(buf);
+  return <>{out}</>;
+}

@@ -1,3 +1,4 @@
+import { emojiIcon } from '../../../components/icons';
 // 자동 이식된 목업 화면 p-ins-campaign — 원본: seolbigo-preview/index.html (백오피스)
 // 헤더·내브는 BackofficeShell 공용 (실제 <Link> 라우팅) — 2026-08-04
 // 데이터 기반 전환 (2026-08-04) — KPI·세그먼트·캠페인·쿠폰 단가를 lib/ins-data 로 추출.
@@ -58,7 +59,7 @@ export default function Page() {
                 <div className="col gap12" style={{ marginTop: 14 }}>
                   {CAMP_CAMPAIGNS.map(c => (
                     <div key={c.title} className="jobrow" style={c.ended ? { alignItems: "flex-start", opacity: ".6" } : { alignItems: "flex-start" }}>
-                      <span style={{ fontSize: 22 }}>{c.emoji}</span>
+                      <span style={{ fontSize: 22, color: "var(--sg-text-secondary)" }}>{emojiIcon(c.emoji)}</span>
                       <div style={{ flex: "1" }}>
                         <div className="row gap4" style={{ marginBottom: 4 }}>
                           <span className="t-b14 fw7">{c.title}</span>

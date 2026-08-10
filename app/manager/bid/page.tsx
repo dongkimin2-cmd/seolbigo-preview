@@ -1,4 +1,4 @@
-import { Ic } from '../../../components/icons';
+import { Ic, emojiIcon } from '../../../components/icons';
 // 자동 이식된 목업 화면 p-mgr-bid — 원본: seolbigo-preview/index.html (백오피스)
 // 헤더·내브는 BackofficeShell 공용 (실제 <Link> 라우팅) — 2026-08-04
 // 데이터 기반 전환 (2026-08-04) — 서류 목록·산출 표·진행 타임라인·집행 근거를 lib/mgr-data.ts 에서 렌더
@@ -29,7 +29,7 @@ export default function Page() {
                   <div className="col gap8" style={{ marginTop: 14 }}>
                     {MGR_BID_DOCS.map(d => (
                       <div key={d.title} className="jobrow" style={{ background: "#fff", boxShadow: "0 0 0 1px var(--sg-border-subtle) inset" }}>
-                        <span style={{ fontSize: 20 }}>{d.icon}</span>
+                        <span style={{ fontSize: 20, color: "var(--sg-text-secondary)" }}>{emojiIcon(d.icon)}</span>
                         <div style={{ flex: "1" }}><div className="t-b14 fw7">{d.title}</div>
                           <div className="t-b12 c-sec">{d.desc}</div></div>
                         {d.ready ? <span className="verified">✓ 생성 완료</span> : <span className="badge b-orange">생성중</span>}
