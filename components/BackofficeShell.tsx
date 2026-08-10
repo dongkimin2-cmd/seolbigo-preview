@@ -86,7 +86,7 @@ export default function BackofficeShell({ persona, id, children }: {
   return (
     <section className="page on pro" id={id}>
       <header className="prognb"><div className="prognb__in">
-        <Link href="/" className="logo" style={{ fontSize: 19 }}>
+        <Link href="/" className="logo" style={{ fontSize: 23 }}>
           설비고<span className="prognb__tag" style={c.tagStyle}>{c.tag}</span>
         </Link>
         <div className="gnb__sp" />

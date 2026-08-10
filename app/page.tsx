@@ -152,7 +152,7 @@ export default async function Page() {
 
       <footer style={{ background: 'var(--sg-bg-subtle)', marginTop: 24, padding: '32px 0' }}>
         <div className="wrap">
-          <div className="logo" style={{ fontSize: 17, marginBottom: 10 }}>설비고</div>
+          <div className="logo" style={{ fontSize: 21, marginBottom: 10 }}>설비고</div>
           <p className="t-b12 c-ter" style={{ margin: 0, maxWidth: 720 }}>
             설비고는 통신판매중개자로서 통신판매의 당사자가 아니며, 개별 시공에 대한 책임은 각 사업자에게 있습니다.
             플랫폼이 제공하는 기준가는 참고용 가견적이며 확정 견적이 아닙니다.
