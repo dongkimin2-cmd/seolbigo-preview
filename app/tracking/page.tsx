@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { DEMO_QUOTES, DEMO_VARIATIONS, type Quote } from '../../lib/mock-data';
 import { loadSelectedQuote } from '../../lib/quote-store';
 import { loadVariation } from '../../lib/variation-store';
+import { toast } from '../../lib/toast';
 import type { LiveBooking } from '../../lib/db';
 
 // E1-4: 실예약 상태 → 화면 단계 매핑 (사업자 대시보드와 같은 원본을 봅니다)
@@ -36,6 +37,24 @@ export default function Page() {
 
   const stage = live ? (STAGE[live.status] ?? STAGE.escrow) : null;
   const step = stage?.step ?? 3;   // 실예약 없으면 기존 데모 연출(시공 진행중) 유지
+  const [approving, setApproving] = useState(false);
+
+  // 완료 승인 — await_approval → paid_out (에스크로 지급). 실예약일 때만 실전이.
+  const approve = async () => {
+    if (!live || live.status !== 'await_approval' || approving) return;
+    setApproving(true);
+    try {
+      const res = await fetch('/api/bookings', {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: live.id, status: 'paid_out' }),
+      });
+      const out = await res.json().catch(() => ({ ok: false }));
+      if (out.ok) {
+        setLive({ ...live, status: 'paid_out' });
+        toast('완료를 승인했습니다 · 에스크로 대금이 사업자에게 지급됩니다');
+      } else toast('승인에 실패했습니다 · 잠시 후 다시 시도해주세요');
+    } finally { setApproving(false); }
+  };
 
   const total = quote.priceWon + extra;
   const workTitle = quote.lineItems.map(li => li.name).join(' + ');
@@ -117,7 +136,18 @@ export default function Page() {
             <div className="row between" style={{ marginBottom: 6 }}>
               <span className="t-h16">최종 금액</span><span className="t-h20 num">{total.toLocaleString()}원</span></div>
             <div className="t-b12 c-sec" style={{ marginBottom: 16 }}>에스크로 보관중 · 완료 승인 시 지급</div>
-            <button className="btn large primary block" data-go="warranty">시공 완료 확인 (데모)</button>
+            {live ? (
+              live.status === 'await_approval' ? (
+                <button className="btn large primary block" disabled={approving} onClick={approve}>
+                  {approving ? '승인 중…' : '시공 완료 확인 · 대금 지급 승인'}</button>
+              ) : live.status === 'paid_out' ? (
+                <button className="btn large block done" disabled>✓ 완료 승인 · 지급 처리됨</button>
+              ) : (
+                <button className="btn large primary block" disabled>시공 완료 후 승인할 수 있습니다</button>
+              )
+            ) : (
+              <button className="btn large primary block" data-go="warranty">시공 완료 확인 (데모)</button>
+            )}
             <button className="btn medium ghost block" style={{ marginTop: 8 }}
               data-toast="안심번호로 연결됩니다 · 데모에서는 통화가 생략됩니다">문의하기</button>
           </div>

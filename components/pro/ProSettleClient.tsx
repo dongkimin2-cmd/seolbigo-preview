@@ -4,8 +4,10 @@ import { useMemo, useState } from 'react';
 import {
   SETTLE_KPIS, SETTLE_MONTHS, SETTLE_ROWS, type SettleMonth,
 } from '../../lib/pro-data';
+import type { SettledBooking } from '../../lib/db';
 
-export default function ProSettleClient() {
+export default function ProSettleClient({ settled = [] }: { settled?: SettledBooking[] }) {
+  const liveTotal = settled.reduce((t, b) => t + b.payoutWon, 0);
   const [month, setMonth] = useState<SettleMonth>(SETTLE_MONTHS[0]);
 
   const rows = useMemo(() => SETTLE_ROWS.filter(r => r.month === month), [month]);
@@ -25,6 +27,13 @@ export default function ProSettleClient() {
         ))}
       </div>
 
+      {settled.length > 0 && (
+        <div className="callout" style={{ marginBottom: 16, background: "var(--sg-bg-brand-subtle)" }}>
+          <span className="c-brand" style={{ flex: "0 0 20px" }}>✓</span>
+          <p className="t-b14" style={{ margin: 0 }}><b>실거래 {settled.length}건 완료 승인</b> — 지급 예정
+            합계 <b className="num">{liveTotal.toLocaleString()}원</b> (거래액의 90% = 수수료 8%·보증기금 2% 차감)</p>
+        </div>
+      )}
       <div className="panel" style={{ marginBottom: 16 }}>
         <div className="row between" style={{ marginBottom: 14 }}>
           <h3 className="panel__t" style={{ margin: "0" }}>정산 내역</h3>
@@ -39,6 +48,15 @@ export default function ProSettleClient() {
             <th style={{ textAlign: "right", padding: "9px 0", borderBottom: "1px solid var(--sg-border-default)", color: "var(--sg-text-secondary)", fontWeight: "600" }}>보증기금</th>
             <th style={{ textAlign: "right", padding: "9px 0", borderBottom: "1px solid var(--sg-border-default)", color: "var(--sg-text-secondary)", fontWeight: "600" }}>지급액</th>
             <th style={{ textAlign: "right", padding: "9px 0", borderBottom: "1px solid var(--sg-border-default)", color: "var(--sg-text-secondary)", fontWeight: "600" }}>상태</th></tr>
+          {settled.map(b => (
+            <tr key={b.id}><td className="num" style={{ padding: "12px 0", borderBottom: "1px solid var(--sg-border-subtle)" }}>{b.day || '—'}</td>
+              <td style={{ borderBottom: "1px solid var(--sg-border-subtle)" }}>배관 이음부 보수 · 실거래 <span className="badge b-brand b12">실시간</span></td>
+              <td className="num" style={{ textAlign: "right", borderBottom: "1px solid var(--sg-border-subtle)" }}>{b.amountWon.toLocaleString()}</td>
+              <td className="num c-sec" style={{ textAlign: "right", borderBottom: "1px solid var(--sg-border-subtle)" }}>−{b.feeWon.toLocaleString()}</td>
+              <td className="num c-sec" style={{ textAlign: "right", borderBottom: "1px solid var(--sg-border-subtle)" }}>−{b.fundWon.toLocaleString()}</td>
+              <td className="num fw7" style={{ textAlign: "right", borderBottom: "1px solid var(--sg-border-subtle)" }}>{b.payoutWon.toLocaleString()}</td>
+              <td style={{ textAlign: "right", borderBottom: "1px solid var(--sg-border-subtle)" }}><span className="badge b-green">지급 예정</span></td></tr>
+          ))}
           {rows.map((r, i) => {
             // 마지막 행은 하단 경계선 없음 (목업과 동일)
             const bb = i < rows.length - 1 ? "1px solid var(--sg-border-subtle)" : undefined;

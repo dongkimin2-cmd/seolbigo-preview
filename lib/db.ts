@@ -330,3 +330,29 @@ export async function updateBookingStatus(id: string, to: BookingStatus): Promis
     return { ok: true, status: to };
   } catch { return { ok: false }; }
 }
+
+
+// E1-6: 정산 실데이터 — 완료 승인(paid_out)된 예약 집계 (수수료 8% · 보증기금 2%)
+export interface SettledBooking {
+  id: string;
+  day: string;
+  amountWon: number;
+  feeWon: number;    // 중개 수수료 8%
+  fundWon: number;   // 보증기금 2%
+  payoutWon: number; // 지급액
+}
+export async function fetchSettledBookings(): Promise<SettledBooking[]> {
+  const toRow = (b: { id: string; day: string; amountWon: number }): SettledBooking => {
+    const fee = Math.round(b.amountWon * 0.08), fund = Math.round(b.amountWon * 0.02);
+    return { id: b.id, day: b.day, amountWon: b.amountWon, feeWon: fee, fundWon: fund,
+      payoutWon: b.amountWon - fee - fund };
+  };
+  if (!hasSupabase) return mockStore().bookings.filter(b => b.status === 'paid_out').map(toRow);
+  try {
+    const { data, error } = await supabase().from('bookings')
+      .select('id, visit_day, amount_won')
+      .eq('status', 'paid_out').order('created_at', { ascending: false }).limit(20);
+    if (error || !data) return [];
+    return data.map(r => toRow({ id: String(r.id), day: String(r.visit_day ?? ''), amountWon: Number(r.amount_won ?? 0) }));
+  } catch { return []; }
+}
