@@ -24,16 +24,9 @@ export function IconDefs() {
       <symbol id="tb-search" viewBox="0 0 24 24">
   <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"  />
   <path d="M21 21l-6 -6"  /></symbol>
-      <symbol id="tb-spray" viewBox="0 0 24 24">
-  <path d="M4 12a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2l0 -7"  />
-  <path d="M6 10v-4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v4"  />
-  <path d="M15 7h.01"  />
-  <path d="M18 9h.01"  />
-  <path d="M18 5h.01"  />
-  <path d="M21 3h.01"  />
-  <path d="M21 7h.01"  />
-  <path d="M21 11h.01"  />
-  <path d="M10 7h1"  /></symbol>
+      <symbol id="tb-droplet-bolt" viewBox="0 0 24 24">
+  <path d="M18.628 12.076a6.653 6.653 0 0 0 -.564 -1.199l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546c1.7 1.375 3.906 1.852 5.958 1.431"  />
+  <path d="M19 16l-2 3h4l-2 3"  /></symbol>
       <symbol id="tb-paint" viewBox="0 0 24 24">
   <path d="M5 5a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -2"  />
   <path d="M19 6h1a2 2 0 0 1 2 2a5 5 0 0 1 -5 5l-5 0v2"  />
@@ -181,7 +174,7 @@ export function Ic({ id }: { id: string }) {
 
 // 이모지 → 아이콘 id (데이터 파일의 이모지를 렌더 시점에 변환 — 데이터는 무변경)
 export const EMOJI_ICON: Record<string, string> = {
-  '💧': 'droplet', '🔧': 'tools', '🔍': 'zoom-scan', '🔎': 'search', '🌀': 'spray',
+  '💧': 'droplet', '🔧': 'tools', '🔍': 'zoom-scan', '🔎': 'search', '🌀': 'droplet-bolt',
   '🧱': 'paint', '🚿': 'droplets', '♨': 'flame', '🛸': 'drone',
   '🏠': 'home', '📥': 'inbox', '📝': 'file-pencil', '🎥': 'video', '📷': 'camera',
   '🏅': 'medal', '📦': 'package', '💳': 'credit-card', '🏢': 'building', '🗺': 'map-2',

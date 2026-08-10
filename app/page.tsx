@@ -142,7 +142,7 @@ export default async function Page() {
               <p className="t-b14 c-sec" style={{ margin: 0 }}>플랫폼 결제 건은 재시공·A/S를 설비고가 보장합니다.</p></div>
             <div><div className="t-h16" style={{ marginBottom: 4 }}><Ic id="lock" /> 에스크로 결제</div>
               <p className="t-b14 c-sec" style={{ margin: 0 }}>시공 완료를 확인한 뒤 대금이 사업자에게 지급됩니다.</p></div>
-            <div><div className="t-h16" style={{ marginBottom: 4 }}>📄 보험 Fast-Track</div>
+            <div><div className="t-h16" style={{ marginBottom: 4 }}><Ic id="file-text" /> 보험 Fast-Track</div>
               <p className="t-b14 c-sec" style={{ margin: 0 }}>공식 내역서가 보험사 청구 서류로 바로 이어집니다.</p></div>
             <div><div className="t-h16" style={{ marginBottom: 4 }}><Ic id="camera" /> 조작 불가 필모그래피</div>
               <p className="t-b14 c-sec" style={{ margin: 0 }}>Before/After 촬영 메타데이터를 시공 일정과 대조 검증합니다.</p></div>
