@@ -38,6 +38,8 @@ img{max-width:100%;display:block}
 .btn.primary{background:var(--sg-bg-brand);color:#fff}
 .btn.primary:hover{background:var(--sg-bg-brand-hover)}
 .btn.primary:disabled{background:var(--sg-bg-emphasis);color:var(--sg-text-disabled)}
+.btn.procta{background:var(--sb-role-pro);color:#1C242F}
+.btn.procta:hover{background:#F26B00}
 .btn.outlined{background:#fff;box-shadow:0 0 0 1px var(--sg-border-default) inset}
 .btn.outlined:hover{background:var(--sg-bg-subtle)}
 .btn.brandline{background:#fff;color:var(--sg-text-brand);box-shadow:0 0 0 1px var(--sg-border-default) inset}

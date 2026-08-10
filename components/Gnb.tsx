@@ -64,7 +64,7 @@ export default function Gnb() {
                   onClick={logout}>로그아웃</button>
               </>
             : <Link className="lk" href="/login">로그인 / 회원가입</Link>}
-          <Link className="btn small primary" href="/pro-center" style={{ textDecoration: 'none' }}>사업자 센터</Link>
+          <Link className="btn small procta" href="/pro-center" style={{ textDecoration: 'none' }}>사업자 센터</Link>
         </div>
         <button className="mbtn" aria-label="메뉴" onClick={() => setOpen(v => !v)}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none">

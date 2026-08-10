@@ -46,7 +46,7 @@ export default function LoginClient({ enabled }: { enabled: boolean }) {
         <p className="sub">진단 이력·예약·보증을 내 계정으로 관리하세요.</p>
       </div></div>
 
-      <div className="flow" style={{ justifyContent: 'center' }}>
+      <div className="flow solo" style={{ justifyItems: "center" }}>
         <div style={{ maxWidth: 420, width: '100%' }}>
           {!enabled && (
             <div className="callout" style={{ marginBottom: 16 }}>
