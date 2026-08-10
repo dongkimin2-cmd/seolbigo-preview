@@ -66,6 +66,9 @@ img{max-width:100%;display:block}
 .badge.b-blue{background:var(--sg-bg-info-subtle);color:var(--sg-text-info)}
 .badge.b-navy{background:var(--sb-role-insurer-subtle);color:var(--sb-role-insurer)}
 .c-insurer{color:var(--sb-role-insurer)}
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.cat i .ic{width:26px;height:26px}
+.pronav a .ic{width:18px;height:18px}
 .badge.b-green{background:var(--sg-bg-success-subtle);color:var(--sg-text-success)}
 .badge.b-red{background:var(--sg-bg-danger-subtle);color:var(--sg-text-danger)}
 .badge.b-orange{background:var(--sg-bg-warning-subtle);color:var(--sg-text-warning)}
@@ -256,7 +259,7 @@ main{flex:1;background:var(--sg-bg-subtle)}
   box-shadow:0 0 0 1px rgba(0,0,0,.15)}
 .ba__hd::after{content:"";position:absolute;top:50%;left:50%;width:32px;height:32px;border-radius:50%;
   background:#fff;transform:translate(-50%,-50%);box-shadow:var(--sg-shadow-up-2)}
-.ba__hd::before{content:"⇄";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+.ba__hd::before{content:"<svg class="ic"><use href="#tb-arrows-exchange"/></svg>";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   z-index:5;font-size:14px;color:var(--sg-gray-700)}
 
 /* 검증 배지 */
@@ -527,6 +530,137 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
 </style>
 </head>
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="tb-droplet" viewBox="0 0 24 24">
+  <path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546" /></symbol><symbol id="tb-tools" viewBox="0 0 24 24">
+  <path d="M3 21h4l13 -13a1.5 1.5 0 0 0 -4 -4l-13 13v4" />
+  <path d="M14.5 5.5l4 4" />
+  <path d="M12 8l-5 -5l-4 4l5 5" />
+  <path d="M7 8l-1.5 1.5" />
+  <path d="M16 12l5 5l-4 4l-5 -5" />
+  <path d="M16 17l-1.5 1.5" /></symbol><symbol id="tb-zoom-scan" viewBox="0 0 24 24">
+  <path d="M8 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+  <path d="M16 16l-2.5 -2.5" />
+  <path d="M3 7v-2a2 2 0 0 1 2 -2h2" />
+  <path d="M3 17v2a2 2 0 0 0 2 2h2" />
+  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+  <path d="M17 21h2a2 2 0 0 0 2 -2v-2" /></symbol><symbol id="tb-search" viewBox="0 0 24 24">
+  <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+  <path d="M21 21l-6 -6" /></symbol><symbol id="tb-spray" viewBox="0 0 24 24">
+  <path d="M4 12a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2l0 -7" />
+  <path d="M6 10v-4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v4" />
+  <path d="M15 7h.01" />
+  <path d="M18 9h.01" />
+  <path d="M18 5h.01" />
+  <path d="M21 3h.01" />
+  <path d="M21 7h.01" />
+  <path d="M21 11h.01" />
+  <path d="M10 7h1" /></symbol><symbol id="tb-paint" viewBox="0 0 24 24">
+  <path d="M5 5a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -2" />
+  <path d="M19 6h1a2 2 0 0 1 2 2a5 5 0 0 1 -5 5l-5 0v2" />
+  <path d="M10 16a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -4" /></symbol><symbol id="tb-droplets" viewBox="0 0 24 24">
+  <path d="M4.072 20.3a2.999 2.999 0 0 0 3.856 0a3.002 3.002 0 0 0 .67 -3.798l-2.095 -3.227a.6 .6 0 0 0 -1.005 0l-2.098 3.227a3.003 3.003 0 0 0 .671 3.798" />
+  <path d="M16.072 20.3a2.999 2.999 0 0 0 3.856 0a3.002 3.002 0 0 0 .67 -3.798l-2.095 -3.227a.6 .6 0 0 0 -1.005 0l-2.098 3.227a3.003 3.003 0 0 0 .671 3.798" />
+  <path d="M10.072 10.3a2.999 2.999 0 0 0 3.856 0a3.002 3.002 0 0 0 .67 -3.798l-2.095 -3.227a.6 .6 0 0 0 -1.005 0l-2.098 3.227a3.003 3.003 0 0 0 .671 3.798l.001 0" /></symbol><symbol id="tb-flame" viewBox="0 0 24 24">
+  <path d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.294 -2.333 5.588c0 3.704 3.134 6.706 7 6.706c3.866 0 7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235" /></symbol><symbol id="tb-drone" viewBox="0 0 24 24">
+  <path d="M10 10h4v4h-4l0 -4" />
+  <path d="M10 10l-3.5 -3.5" />
+  <path d="M9.96 6a3.5 3.5 0 1 0 -3.96 3.96" />
+  <path d="M14 10l3.5 -3.5" />
+  <path d="M18 9.96a3.5 3.5 0 1 0 -3.96 -3.96" />
+  <path d="M14 14l3.5 3.5" />
+  <path d="M14.04 18a3.5 3.5 0 1 0 3.96 -3.96" />
+  <path d="M10 14l-3.5 3.5" />
+  <path d="M6 14.04a3.5 3.5 0 1 0 3.96 3.96" /></symbol><symbol id="tb-home" viewBox="0 0 24 24">
+  <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></symbol><symbol id="tb-inbox" viewBox="0 0 24 24">
+  <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" />
+  <path d="M4 13h3l3 3h4l3 -3h3" /></symbol><symbol id="tb-file-pencil" viewBox="0 0 24 24">
+  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+  <path d="M10 18l5 -5a1.414 1.414 0 0 0 -2 -2l-5 5v2h2" /></symbol><symbol id="tb-video" viewBox="0 0 24 24">
+  <path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4" />
+  <path d="M3 8a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2l0 -8" /></symbol><symbol id="tb-camera" viewBox="0 0 24 24">
+  <path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
+  <path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></symbol><symbol id="tb-medal" viewBox="0 0 24 24">
+  <path d="M12 4v3m-4 -3v6m8 -6v6" />
+  <path d="M12 18.5l-3 1.5l.5 -3.5l-2 -2l3 -.5l1.5 -3l1.5 3l3 .5l-2 2l.5 3.5l-3 -1.5" /></symbol><symbol id="tb-package" viewBox="0 0 24 24">
+  <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+  <path d="M12 12l8 -4.5" />
+  <path d="M12 12l0 9" />
+  <path d="M12 12l-8 -4.5" />
+  <path d="M16 5.25l-8 4.5" /></symbol><symbol id="tb-credit-card" viewBox="0 0 24 24">
+  <path d="M3 8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -8" />
+  <path d="M3 10l18 0" />
+  <path d="M7 15l.01 0" />
+  <path d="M11 15l2 0" /></symbol><symbol id="tb-building" viewBox="0 0 24 24">
+  <path d="M3 21l18 0" />
+  <path d="M9 8l1 0" />
+  <path d="M9 12l1 0" />
+  <path d="M9 16l1 0" />
+  <path d="M14 8l1 0" />
+  <path d="M14 12l1 0" />
+  <path d="M14 16l1 0" />
+  <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /></symbol><symbol id="tb-map-2" viewBox="0 0 24 24">
+  <path d="M12 18.5l-3 -1.5l-6 3v-13l6 -3l6 3l6 -3v7.5" />
+  <path d="M9 4v13" />
+  <path d="M15 7v5.5" />
+  <path d="M21.121 20.121a3 3 0 1 0 -4.242 0c.418 .419 1.125 1.045 2.121 1.879c1.051 -.89 1.759 -1.516 2.121 -1.879" />
+  <path d="M19 18v.01" /></symbol><symbol id="tb-clipboard-list" viewBox="0 0 24 24">
+  <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+  <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2" />
+  <path d="M9 12l.01 0" />
+  <path d="M13 12l2 0" />
+  <path d="M9 16l.01 0" />
+  <path d="M13 16l2 0" /></symbol><symbol id="tb-file-text" viewBox="0 0 24 24">
+  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+  <path d="M9 9l1 0" />
+  <path d="M9 13l6 0" />
+  <path d="M9 17l6 0" /></symbol><symbol id="tb-calendar-event" viewBox="0 0 24 24">
+  <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" />
+  <path d="M16 3l0 4" />
+  <path d="M8 3l0 4" />
+  <path d="M4 11l16 0" />
+  <path d="M8 15h2v2h-2l0 -2" /></symbol><symbol id="tb-chart-bar" viewBox="0 0 24 24">
+  <path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -6" />
+  <path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -10" />
+  <path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -14" />
+  <path d="M4 20h14" /></symbol><symbol id="tb-chart-line" viewBox="0 0 24 24">
+  <path d="M4 19l16 0" />
+  <path d="M4 15l4 -6l4 2l4 -5l4 4" /></symbol><symbol id="tb-ticket" viewBox="0 0 24 24">
+  <path d="M15 5l0 2" />
+  <path d="M15 11l0 2" />
+  <path d="M15 17l0 2" />
+  <path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2" /></symbol><symbol id="tb-arrow-back-up" viewBox="0 0 24 24">
+  <path d="M9 14l-4 -4l4 -4" />
+  <path d="M5 10h11a4 4 0 1 1 0 8h-1" /></symbol><symbol id="tb-message-circle" viewBox="0 0 24 24">
+  <path d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1" /></symbol><symbol id="tb-scale" viewBox="0 0 24 24">
+  <path d="M7 20l10 0" />
+  <path d="M6 6l6 -1l6 1" />
+  <path d="M12 3l0 17" />
+  <path d="M9 12l-3 -6l-3 6a3 3 0 0 0 6 0" />
+  <path d="M21 12l-3 -6l-3 6a3 3 0 0 0 6 0" /></symbol><symbol id="tb-lock" viewBox="0 0 24 24">
+  <path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6" />
+  <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+  <path d="M8 11v-4a4 4 0 1 1 8 0v4" /></symbol><symbol id="tb-phone" viewBox="0 0 24 24">
+  <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></symbol><symbol id="tb-shield-check" viewBox="0 0 24 24">
+  <path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" />
+  <path d="M15 19l2 2l4 -4" /></symbol><symbol id="tb-alert-triangle" viewBox="0 0 24 24">
+  <path d="M12 9v4" />
+  <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0" />
+  <path d="M12 16h.01" /></symbol><symbol id="tb-bolt" viewBox="0 0 24 24">
+  <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" /></symbol><symbol id="tb-ruler" viewBox="0 0 24 24">
+  <path d="M5 4h14a1 1 0 0 1 1 1v5a1 1 0 0 1 -1 1h-7a1 1 0 0 0 -1 1v7a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1" />
+  <path d="M4 8l2 0" />
+  <path d="M4 12l3 0" />
+  <path d="M4 16l2 0" />
+  <path d="M8 4l0 2" />
+  <path d="M12 4l0 3" />
+  <path d="M16 4l0 2" /></symbol><symbol id="tb-folder" viewBox="0 0 24 24">
+  <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" /></symbol><symbol id="tb-arrows-exchange" viewBox="0 0 24 24">
+  <path d="M7 10h14l-4 -4" />
+  <path d="M17 14h-14l4 4" /></symbol></svg>
 <div id="app">
 
 <header class="gnb">
@@ -587,28 +721,28 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
 
       <div class="cats">
         <button class="cat" data-go="diag1" data-svc="누수피해복구">
-          <i style="background:#FDEBEC">💧</i><span>누수피해<br>복구</span>
+          <i style="background:#FDEBEC;color:#E5484D"><svg class="ic"><use href="#tb-droplet"/></svg></i><span>누수피해<br>복구</span>
           <em class="cat__how">사진 진단</em></button>
         <button class="cat" data-go="survey" data-svc="배관 설계·교체">
-          <i style="background:#F1EEFF">🔧</i><span>배관 설계<br>· 교체</span>
+          <i style="background:#F1EEFF;color:#693BF2"><svg class="ic"><use href="#tb-tools"/></svg></i><span>배관 설계<br>· 교체</span>
           <em class="cat__how how-b">현장 실측</em></button>
         <button class="cat" data-go="diag1" data-svc="누수 탐지·공사">
-          <i style="background:#E7F4FF">🔍</i><span>누수 탐지<br>· 공사</span>
+          <i style="background:#E7F4FF;color:#0087FF"><svg class="ic"><use href="#tb-zoom-scan"/></svg></i><span>누수 탐지<br>· 공사</span>
           <em class="cat__how">사진 진단</em></button>
         <button class="cat" data-go="scope" data-svc="고압세정·준설">
-          <i style="background:#FFF7F0">🌀</i><span>고압세정<br>· 준설</span>
+          <i style="background:#FFF7F0;color:#FF7C11"><svg class="ic"><use href="#tb-spray"/></svg></i><span>고압세정<br>· 준설</span>
           <em class="cat__how how-c">관로 조사</em></button>
         <button class="cat" data-go="area" data-svc="방수·도장">
-          <i style="background:#E7FCEF">🧱</i><span>방수<br>· 도장</span>
+          <i style="background:#E7FCEF;color:#00A163"><svg class="ic"><use href="#tb-paint"/></svg></i><span>방수<br>· 도장</span>
           <em class="cat__how how-e">사진+면적</em></button>
         <button class="cat" data-go="instant" data-svc="수도배관 클리닝">
-          <i style="background:#E7F4FF">🚿</i><span>수도배관<br>클리닝</span>
+          <i style="background:#E7F4FF;color:#0E7490"><svg class="ic"><use href="#tb-droplets"/></svg></i><span>수도배관<br>클리닝</span>
           <em class="cat__how how-d">즉시 견적</em></button>
         <button class="cat" data-go="instant" data-svc="난방배관 클리닝">
-          <i style="background:#FFFCDE">♨️</i><span>난방배관<br>클리닝</span>
+          <i style="background:#FFFCDE;color:#E8A200"><svg class="ic"><use href="#tb-flame"/></svg></i><span>난방배관<br>클리닝</span>
           <em class="cat__how how-d">즉시 견적</em></button>
         <button class="cat" data-go="drone" data-svc="드론 외벽 점검">
-          <i style="background:#EFF4FF">🛸</i><span>드론<br>외벽 점검</span>
+          <i style="background:#EFF4FF;color:#4263EB"><svg class="ic"><use href="#tb-drone"/></svg></i><span>드론<br>외벽 점검</span>
           <em class="cat__how how-c">드론 점검</em></button>
       </div>
       <div class="t-b12 c-ter" style="margin-top:14px">
@@ -710,13 +844,13 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
 
     <section class="sec">
       <div class="grid g4">
-        <div><div class="t-h16" style="margin-bottom:4px">🛡️ 1년 안심 보증</div>
+        <div><div class="t-h16" style="margin-bottom:4px"><svg class="ic"><use href="#tb-shield-check"/></svg> 1년 안심 보증</div>
           <p class="t-b14 c-sec" style="margin:0">플랫폼 결제 건은 재시공·A/S를 설비고가 보장합니다.</p></div>
-        <div><div class="t-h16" style="margin-bottom:4px">🔒 에스크로 결제</div>
+        <div><div class="t-h16" style="margin-bottom:4px"><svg class="ic"><use href="#tb-lock"/></svg> 에스크로 결제</div>
           <p class="t-b14 c-sec" style="margin:0">시공 완료를 확인한 뒤 대금이 사업자에게 지급됩니다.</p></div>
-        <div><div class="t-h16" style="margin-bottom:4px">📄 보험 Fast-Track</div>
+        <div><div class="t-h16" style="margin-bottom:4px"><svg class="ic"><use href="#tb-file-text"/></svg> 보험 Fast-Track</div>
           <p class="t-b14 c-sec" style="margin:0">공식 내역서가 보험사 청구 서류로 바로 이어집니다.</p></div>
-        <div><div class="t-h16" style="margin-bottom:4px">📷 조작 불가 필모그래피</div>
+        <div><div class="t-h16" style="margin-bottom:4px"><svg class="ic"><use href="#tb-camera"/></svg> 조작 불가 필모그래피</div>
           <p class="t-b14 c-sec" style="margin:0">Before/After 촬영 메타데이터를 시공 일정과 대조 검증합니다.</p></div>
       </div>
     </section>
@@ -828,7 +962,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   <div class="flow solo" style="padding-top:80px;padding-bottom:120px">
     <div style="max-width:520px;margin:0 auto;text-align:center">
       <div style="width:112px;height:112px;border-radius:50%;background:var(--sg-bg-brand-subtle);
-        display:flex;align-items:center;justify-content:center;font-size:44px;margin:0 auto 24px">🔎</div>
+        display:flex;align-items:center;justify-content:center;font-size:44px;margin:0 auto 24px"><svg class="ic"><use href="#tb-search"/></svg></div>
       <h2 class="t-h24" style="margin:0 0 6px">사진을 분석하고 있어요</h2>
       <p class="t-b16 c-sec" style="margin:0 0 28px">보통 20초 정도 걸립니다</p>
       <div class="gauge" style="height:8px"><i id="diagbar" style="width:12%;transition:width .5s ease"></i></div>
@@ -1130,7 +1264,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
       <div class="block" style="margin-bottom:0">
         <h2 class="block__t">고객 후기</h2>
         <div class="callout" style="margin-top:12px">
-          <span style="flex:0 0 20px">💬</span>
+          <span style="flex:0 0 20px"><svg class="ic"><use href="#tb-message-circle"/></svg></span>
           <div><div class="row gap4" style="margin-bottom:4px">
             <span style="color:var(--sg-accent-amber)">★★★★★</span>
             <span class="t-b12 c-sec">1204호 고객 · 2026.11.15</span></div>
@@ -1361,14 +1495,14 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
         <h2 class="block__t">후기 126건</h2>
         <div class="col gap12" style="margin-top:14px">
           <div class="callout">
-            <span style="flex:0 0 20px">💬</span>
+            <span style="flex:0 0 20px"><svg class="ic"><use href="#tb-message-circle"/></svg></span>
             <div><div class="row gap4" style="margin-bottom:4px">
               <span style="color:var(--sg-accent-amber)">★★★★★</span>
               <span class="t-b12 c-sec">청솔 1204호 · 배관 이음부 보수</span></div>
             <p class="t-b14" style="margin:0">추가금이 왜 붙는지 앱에서 항목으로 보여줘서 납득이 됐어요. 다음에도 여기로 부를 겁니다.</p></div>
           </div>
           <div class="callout">
-            <span style="flex:0 0 20px">💬</span>
+            <span style="flex:0 0 20px"><svg class="ic"><use href="#tb-message-circle"/></svg></span>
             <div><div class="row gap4" style="margin-bottom:4px">
               <span style="color:var(--sg-accent-amber)">★★★★★</span>
               <span class="t-b12 c-sec">개포늘푸른 · 난방배관 클리닝</span></div>
@@ -1441,7 +1575,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
             <textarea class="inp" placeholder="예: 낮에는 집에 사람이 없어 경비실에 연락 부탁드립니다."></textarea></div>
         </div>
         <div class="callout info" style="margin-top:16px">
-          <span class="c-inf" style="flex:0 0 20px">☎</span>
+          <span class="c-inf" style="flex:0 0 20px"><svg class="ic"><use href="#tb-phone"/></svg></span>
           <p class="t-b14 c-sec" style="margin:0">연락처는 <b>안심번호</b>로 연결되어 실제 번호가 사업자에게 공개되지 않습니다.</p>
         </div>
       </div>
@@ -1485,7 +1619,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
           data-toast="410,000원 결제 완료 · 예약이 확정되었습니다">결제하고 예약 확정</button>
       </div>
       <div class="panel" style="background:var(--sg-bg-info-subtle);box-shadow:none">
-        <div class="t-b14 fw7" style="margin-bottom:6px">🔒 에스크로로 보관됩니다</div>
+        <div class="t-b14 fw7" style="margin-bottom:6px"><svg class="ic"><use href="#tb-lock"/></svg> 에스크로로 보관됩니다</div>
         <p class="t-b12 c-sec" style="margin:0">시공 완료를 확인하고 승인하시면 그때 사업자에게 지급됩니다.
           중개 수수료 8%는 지급 시 공제되며, 고객이 따로 부담하는 금액은 없습니다.</p>
       </div>
@@ -1643,7 +1777,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
       <div class="block" style="margin-bottom:0">
         <h2 class="block__t">기사님과 연락</h2>
         <div class="callout info" style="margin-top:12px">
-          <span class="c-inf" style="flex:0 0 20px">☎</span>
+          <span class="c-inf" style="flex:0 0 20px"><svg class="ic"><use href="#tb-phone"/></svg></span>
           <p class="t-b14 c-sec" style="margin:0">안심번호로 통화할 수 있습니다. 양쪽의 실제 번호는 공개되지 않으며,
             통화 내역은 분쟁 발생 시 증빙으로 사용됩니다.</p>
         </div>
@@ -1843,7 +1977,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
           </div>
         </div>
         <div class="callout" style="margin-top:16px">
-          <span class="c-ter" style="flex:0 0 20px">⚖️</span>
+          <span class="c-ter" style="flex:0 0 20px"><svg class="ic"><use href="#tb-scale"/></svg></span>
           <p class="t-b12 c-sec" style="margin:0">본 리포트는 <b>사실자료 제공</b>에 한하며, 보험금 사정이나 적정성 판단을 대행하지 않습니다.
             손해사정 업무는 등록 손해사정법인이 수행합니다.</p>
         </div>
@@ -1926,7 +2060,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
           </div>
         </div>
         <div class="callout" style="margin-top:20px;background:var(--sg-bg-warning-subtle)">
-          <span style="flex:0 0 20px;color:var(--sg-text-warning)">⚠</span>
+          <span style="flex:0 0 20px;color:var(--sg-text-warning)"><svg class="ic"><use href="#tb-alert-triangle"/></svg></span>
           <div><p class="t-b14 fw6" style="margin:0 0 2px">수도·난방배관 클리닝을 권장합니다</p>
             <p class="t-b12 c-sec" style="margin:0">준공 25년을 넘긴 중앙난방 세대는 스케일 1mm만 쌓여도 약 2%의 에너지가 손실됩니다.
               같은 조건 세대의 시공 후 난방비는 평균 18% 줄었습니다.</p></div>
@@ -2114,19 +2248,19 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
       <!-- A -->
       <div class="block">
         <div class="row between" style="margin-bottom:4px">
-          <h2 class="block__t" style="margin:0">📷 사진으로 진단합니다</h2>
+          <h2 class="block__t" style="margin:0"><svg class="ic"><use href="#tb-camera"/></svg> 사진으로 진단합니다</h2>
           <span class="badge b-brand b12">AI 사진 진단 · 무료 · 약 20초</span>
         </div>
         <p class="block__d">겉으로 증상이 드러나는 하자입니다. 사진의 얼룩 형태와 번진 방향만으로도
           원인을 상당 부분 좁힐 수 있어, 방문 전에 기준가 범위를 먼저 확인할 수 있습니다.</p>
         <div class="grid g3" style="gap:12px">
           <button class="svc" data-go="diag1" data-svc="누수피해복구">
-            <i style="background:#FDEBEC">💧</i>
+            <i style="background:#FDEBEC;color:#E5484D"><svg class="ic"><use href="#tb-droplet"/></svg></i>
             <div><div class="t-b16 fw7">누수피해복구</div>
               <div class="t-b12 c-sec">천장·벽 누수와 젖은 마감재 복구까지</div></div>
             <span class="svc__go">›</span></button>
           <button class="svc" data-go="diag1" data-svc="누수 탐지·공사">
-            <i style="background:#E7F4FF">🔍</i>
+            <i style="background:#E7F4FF;color:#0087FF"><svg class="ic"><use href="#tb-zoom-scan"/></svg></i>
             <div><div class="t-b16 fw7">누수 탐지·공사</div>
               <div class="t-b12 c-sec">어디서 새는지 모를 때, 청음·열화상 탐지부터</div></div>
             <span class="svc__go">›</span></button>
@@ -2136,14 +2270,14 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
       <!-- A-2 -->
       <div class="block">
         <div class="row between" style="margin-bottom:4px">
-          <h2 class="block__t" style="margin:0">📷📐 사진과 면적을 함께 받습니다</h2>
+          <h2 class="block__t" style="margin:0"><svg class="ic"><use href="#tb-camera"/></svg><svg class="ic"><use href="#tb-ruler"/></svg> 사진과 면적을 함께 받습니다</h2>
           <span class="badge b-blue b12">하이브리드 · 즉시 산출</span>
         </div>
         <p class="block__d">누수는 원인 <b>하나</b>를 찾으면 되지만, 방수는 면적 <b>전체</b>에 재료를 바르는 일입니다.
           같은 들뜸 사진이어도 20㎡와 120㎡의 금액은 여섯 배 차이납니다. 그래서 상태(사진)와 물량(면적)을 함께 받습니다.</p>
         <div class="grid g3" style="gap:12px">
           <button class="svc" data-go="area" data-svc="방수·도장">
-            <i style="background:#E7FCEF">🧱</i>
+            <i style="background:#E7FCEF;color:#00A163"><svg class="ic"><use href="#tb-paint"/></svg></i>
             <div><div class="t-b16 fw7">방수·도장</div>
               <div class="t-b12 c-sec">옥상·베란다·욕실·외벽 방수층 재시공</div></div>
             <span class="svc__go">›</span></button>
@@ -2153,14 +2287,14 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
       <!-- B -->
       <div class="block">
         <div class="row between" style="margin-bottom:4px">
-          <h2 class="block__t" style="margin:0">📐 현장을 재야 합니다</h2>
+          <h2 class="block__t" style="margin:0"><svg class="ic"><use href="#tb-ruler"/></svg> 현장을 재야 합니다</h2>
           <span class="badge b-blue b12">무료 실측 방문 · 약 40분</span>
         </div>
         <p class="block__d">관로 길이와 세대 수에 따라 금액이 열 배까지 벌어지는 공사입니다.
           사진으로 견적을 내는 것 자체가 부정확하므로, 무료 실측 후 도면 기반 설계 견적을 드립니다.</p>
         <div class="grid g3" style="gap:12px">
           <button class="svc" data-go="survey" data-svc="배관 설계·교체">
-            <i style="background:#F1EEFF">🔧</i>
+            <i style="background:#F1EEFF;color:#693BF2"><svg class="ic"><use href="#tb-tools"/></svg></i>
             <div><div class="t-b16 fw7">배관 설계·교체</div>
               <div class="t-b12 c-sec">세대 전체 교체, 공용 입상관 교체, 신설 배관 설계</div></div>
             <span class="svc__go">›</span></button>
@@ -2170,14 +2304,14 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
       <!-- C -->
       <div class="block">
         <div class="row between" style="margin-bottom:4px">
-          <h2 class="block__t" style="margin:0">🎥 관 속을 봐야 합니다</h2>
+          <h2 class="block__t" style="margin:0"><svg class="ic"><use href="#tb-video"/></svg> 관 속을 봐야 합니다</h2>
           <span class="badge b-green b12">내시경 관로 조사 · 오염도 리포트</span>
         </div>
         <p class="block__d">관 내부 상태는 밖에서 보이지 않습니다. 내시경으로 촬영한 오염도를 수치화해
           지금 세정이 필요한지, 다음은 언제인지를 <b>그 건물의 데이터로</b> 산출합니다.</p>
         <div class="grid g3" style="gap:12px">
           <button class="svc" data-go="scope" data-svc="고압세정·준설">
-            <i style="background:#FFF7F0">🌀</i>
+            <i style="background:#FFF7F0;color:#FF7C11"><svg class="ic"><use href="#tb-spray"/></svg></i>
             <div><div class="t-b16 fw7">고압세정·준설</div>
               <div class="t-b12 c-sec">공용 입상관·오수관, 상가 그리스트랩, 저층 역류 예방</div></div>
             <span class="svc__go">›</span></button>
@@ -2187,14 +2321,14 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
       <!-- C-2 -->
       <div class="block">
         <div class="row between" style="margin-bottom:4px">
-          <h2 class="block__t" style="margin:0">🛸 높은 곳은 드론으로 봅니다</h2>
+          <h2 class="block__t" style="margin:0"><svg class="ic"><use href="#tb-drone"/></svg> 높은 곳은 드론으로 봅니다</h2>
           <span class="badge b-green b12">드론 점검 · 균열 리포트</span>
         </div>
         <p class="block__d">로프나 곤돌라 없이 외벽 전면을 고해상·열화상으로 촬영합니다.
           AI가 균열·박리·백화를 검출해 좌표 단위 리포트로 만들고, 보수가 필요하면 방수·도장 견적으로 바로 이어집니다.</p>
         <div class="grid g3" style="gap:12px">
           <button class="svc" data-go="drone" data-svc="드론 외벽 점검">
-            <i style="background:#EFF4FF">🛸</i>
+            <i style="background:#EFF4FF;color:#4263EB"><svg class="ic"><use href="#tb-drone"/></svg></i>
             <div><div class="t-b16 fw7">드론 외벽 점검</div>
               <div class="t-b12 c-sec">외벽 균열·박리·백화 검출, 창호 주변 누수 추적</div></div>
             <span class="svc__go">›</span></button>
@@ -2204,19 +2338,19 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
       <!-- D -->
       <div class="block" style="margin-bottom:0">
         <div class="row between" style="margin-bottom:4px">
-          <h2 class="block__t" style="margin:0">⚡ 규격이 정해져 있습니다</h2>
+          <h2 class="block__t" style="margin:0"><svg class="ic"><use href="#tb-bolt"/></svg> 규격이 정해져 있습니다</h2>
           <span class="badge b-brands b12">즉시 확정가 · 진단 불필요</span>
         </div>
         <p class="block__d">평형과 난방 방식만 고르면 가격이 바로 확정됩니다.
           같은 동 세대를 묶는 공동구매로 참여하면 단가가 더 내려갑니다.</p>
         <div class="grid g3" style="gap:12px">
           <button class="svc" data-go="instant" data-svc="수도배관 클리닝">
-            <i style="background:#E7F4FF">🚿</i>
+            <i style="background:#E7F4FF;color:#0E7490"><svg class="ic"><use href="#tb-droplets"/></svg></i>
             <div><div class="t-b16 fw7">수도배관 클리닝</div>
               <div class="t-b12 c-sec">녹물·침전물 제거, 수압 회복</div></div>
             <span class="svc__go">›</span></button>
           <button class="svc" data-go="instant" data-svc="난방배관 클리닝">
-            <i style="background:#FFFCDE">♨️</i>
+            <i style="background:#FFFCDE;color:#E8A200"><svg class="ic"><use href="#tb-flame"/></svg></i>
             <div><div class="t-b16 fw7">난방배관 클리닝</div>
               <div class="t-b12 c-sec">스케일 제거, 난방효율·온도 편차 개선</div></div>
             <span class="svc__go">›</span></button>
@@ -2241,7 +2375,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
       </div>
 
       <div class="callout info" style="margin-bottom:16px">
-        <span class="c-inf" style="flex:0 0 20px">📐</span>
+        <span class="c-inf" style="flex:0 0 20px"><svg class="ic"><use href="#tb-ruler"/></svg></span>
         <div><p class="t-b14 fw6" style="margin:0 0 2px">왜 사진으로 견적을 내지 않나요?</p>
           <p class="t-b14 c-sec" style="margin:0">같은 34평이어도 매립 구간이 3m인 집과 12m인 집의 공사비는 세 배 이상 차이납니다.
             설비고는 근거 없는 숫자를 먼저 던지지 않습니다.</p></div>
@@ -2527,7 +2661,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
           <div class="t-b12 c-ter" style="margin-top:8px">※ 예시 화면입니다. 실제 리포트는 촬영 후 생성됩니다.</div>
         </div>
         <div class="callout" style="margin-top:16px">
-          <span class="c-ter" style="flex:0 0 20px">⚖️</span>
+          <span class="c-ter" style="flex:0 0 20px"><svg class="ic"><use href="#tb-scale"/></svg></span>
           <p class="t-b12 c-sec" style="margin:0">본 점검은 <b>참고용 상태 조사</b>이며, 시설물안전법상
             정밀안전점검·정밀안전진단을 대체하지 않습니다. 드론 비행 승인·항공촬영 신고는 설비고가 일괄 대행합니다.</p>
         </div>
@@ -2851,15 +2985,15 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a class="on" data-go="pro-home">🏠 대시보드</a>
-      <a data-go="pro-inbox">📥 요청 인박스 <span class="pronav__n">4</span></a>
-      <a data-go="pro-quote">📝 견적 작성</a>
-      <a data-go="pro-film">📷 필모그래피</a>
-      <a data-go="pro-grade">🏅 신용등급</a>
-      <a data-go="pro-store">📦 자재 구매</a>
-      <a data-go="pro-settle">💳 정산</a>
+      <a class="on" data-go="pro-home"><svg class="ic"><use href="#tb-home"/></svg> 대시보드</a>
+      <a data-go="pro-inbox"><svg class="ic"><use href="#tb-inbox"/></svg> 요청 인박스 <span class="pronav__n">4</span></a>
+      <a data-go="pro-quote"><svg class="ic"><use href="#tb-file-pencil"/></svg> 견적 작성</a>
+      <a data-go="pro-film"><svg class="ic"><use href="#tb-camera"/></svg> 필모그래피</a>
+      <a data-go="pro-grade"><svg class="ic"><use href="#tb-medal"/></svg> 신용등급</a>
+      <a data-go="pro-store"><svg class="ic"><use href="#tb-package"/></svg> 자재 구매</a>
+      <a data-go="pro-settle"><svg class="ic"><use href="#tb-credit-card"/></svg> 정산</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
@@ -2974,15 +3108,15 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="pro-home">🏠 대시보드</a>
-      <a class="on" data-go="pro-inbox">📥 요청 인박스 <span class="pronav__n">4</span></a>
-      <a data-go="pro-quote">📝 견적 작성</a>
-      <a data-go="pro-film">📷 필모그래피</a>
-      <a data-go="pro-grade">🏅 신용등급</a>
-      <a data-go="pro-store">📦 자재 구매</a>
-      <a data-go="pro-settle">💳 정산</a>
+      <a data-go="pro-home"><svg class="ic"><use href="#tb-home"/></svg> 대시보드</a>
+      <a class="on" data-go="pro-inbox"><svg class="ic"><use href="#tb-inbox"/></svg> 요청 인박스 <span class="pronav__n">4</span></a>
+      <a data-go="pro-quote"><svg class="ic"><use href="#tb-file-pencil"/></svg> 견적 작성</a>
+      <a data-go="pro-film"><svg class="ic"><use href="#tb-camera"/></svg> 필모그래피</a>
+      <a data-go="pro-grade"><svg class="ic"><use href="#tb-medal"/></svg> 신용등급</a>
+      <a data-go="pro-store"><svg class="ic"><use href="#tb-package"/></svg> 자재 구매</a>
+      <a data-go="pro-settle"><svg class="ic"><use href="#tb-credit-card"/></svg> 정산</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <h1 class="t-h24" style="margin:0 0 4px">요청 인박스</h1>
@@ -3091,15 +3225,15 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="pro-home">🏠 대시보드</a>
-      <a data-go="pro-inbox">📥 요청 인박스 <span class="pronav__n">4</span></a>
-      <a class="on" data-go="pro-quote">📝 견적 작성</a>
-      <a data-go="pro-film">📷 필모그래피</a>
-      <a data-go="pro-grade">🏅 신용등급</a>
-      <a data-go="pro-store">📦 자재 구매</a>
-      <a data-go="pro-settle">💳 정산</a>
+      <a data-go="pro-home"><svg class="ic"><use href="#tb-home"/></svg> 대시보드</a>
+      <a data-go="pro-inbox"><svg class="ic"><use href="#tb-inbox"/></svg> 요청 인박스 <span class="pronav__n">4</span></a>
+      <a class="on" data-go="pro-quote"><svg class="ic"><use href="#tb-file-pencil"/></svg> 견적 작성</a>
+      <a data-go="pro-film"><svg class="ic"><use href="#tb-camera"/></svg> 필모그래피</a>
+      <a data-go="pro-grade"><svg class="ic"><use href="#tb-medal"/></svg> 신용등급</a>
+      <a data-go="pro-store"><svg class="ic"><use href="#tb-package"/></svg> 자재 구매</a>
+      <a data-go="pro-settle"><svg class="ic"><use href="#tb-credit-card"/></svg> 정산</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <div class="crumb" style="margin-bottom:6px"><a data-go="pro-inbox">요청 인박스</a><span>›</span><b>견적 작성</b></div>
@@ -3244,15 +3378,15 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="pro-home">🏠 대시보드</a>
-      <a data-go="pro-inbox">📥 요청 인박스 <span class="pronav__n">4</span></a>
-      <a data-go="pro-quote">📝 견적 작성</a>
-      <a class="on" data-go="pro-film">📷 필모그래피</a>
-      <a data-go="pro-grade">🏅 신용등급</a>
-      <a data-go="pro-store">📦 자재 구매</a>
-      <a data-go="pro-settle">💳 정산</a>
+      <a data-go="pro-home"><svg class="ic"><use href="#tb-home"/></svg> 대시보드</a>
+      <a data-go="pro-inbox"><svg class="ic"><use href="#tb-inbox"/></svg> 요청 인박스 <span class="pronav__n">4</span></a>
+      <a data-go="pro-quote"><svg class="ic"><use href="#tb-file-pencil"/></svg> 견적 작성</a>
+      <a class="on" data-go="pro-film"><svg class="ic"><use href="#tb-camera"/></svg> 필모그래피</a>
+      <a data-go="pro-grade"><svg class="ic"><use href="#tb-medal"/></svg> 신용등급</a>
+      <a data-go="pro-store"><svg class="ic"><use href="#tb-package"/></svg> 자재 구매</a>
+      <a data-go="pro-settle"><svg class="ic"><use href="#tb-credit-card"/></svg> 정산</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
@@ -3329,15 +3463,15 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="pro-home">🏠 대시보드</a>
-      <a data-go="pro-inbox">📥 요청 인박스 <span class="pronav__n">4</span></a>
-      <a data-go="pro-quote">📝 견적 작성</a>
-      <a data-go="pro-film">📷 필모그래피</a>
-      <a class="on" data-go="pro-grade">🏅 신용등급</a>
-      <a data-go="pro-store">📦 자재 구매</a>
-      <a data-go="pro-settle">💳 정산</a>
+      <a data-go="pro-home"><svg class="ic"><use href="#tb-home"/></svg> 대시보드</a>
+      <a data-go="pro-inbox"><svg class="ic"><use href="#tb-inbox"/></svg> 요청 인박스 <span class="pronav__n">4</span></a>
+      <a data-go="pro-quote"><svg class="ic"><use href="#tb-file-pencil"/></svg> 견적 작성</a>
+      <a data-go="pro-film"><svg class="ic"><use href="#tb-camera"/></svg> 필모그래피</a>
+      <a class="on" data-go="pro-grade"><svg class="ic"><use href="#tb-medal"/></svg> 신용등급</a>
+      <a data-go="pro-store"><svg class="ic"><use href="#tb-package"/></svg> 자재 구매</a>
+      <a data-go="pro-settle"><svg class="ic"><use href="#tb-credit-card"/></svg> 정산</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <h1 class="t-h24" style="margin:0 0 4px">신용등급</h1>
@@ -3432,15 +3566,15 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="pro-home">🏠 대시보드</a>
-      <a data-go="pro-inbox">📥 요청 인박스 <span class="pronav__n">4</span></a>
-      <a data-go="pro-quote">📝 견적 작성</a>
-      <a data-go="pro-film">📷 필모그래피</a>
-      <a data-go="pro-grade">🏅 신용등급</a>
-      <a class="on" data-go="pro-store">📦 자재 구매</a>
-      <a data-go="pro-settle">💳 정산</a>
+      <a data-go="pro-home"><svg class="ic"><use href="#tb-home"/></svg> 대시보드</a>
+      <a data-go="pro-inbox"><svg class="ic"><use href="#tb-inbox"/></svg> 요청 인박스 <span class="pronav__n">4</span></a>
+      <a data-go="pro-quote"><svg class="ic"><use href="#tb-file-pencil"/></svg> 견적 작성</a>
+      <a data-go="pro-film"><svg class="ic"><use href="#tb-camera"/></svg> 필모그래피</a>
+      <a data-go="pro-grade"><svg class="ic"><use href="#tb-medal"/></svg> 신용등급</a>
+      <a class="on" data-go="pro-store"><svg class="ic"><use href="#tb-package"/></svg> 자재 구매</a>
+      <a data-go="pro-settle"><svg class="ic"><use href="#tb-credit-card"/></svg> 정산</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <h1 class="t-h24" style="margin:0 0 4px">자재 · 장비 구매</h1>
@@ -3519,15 +3653,15 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="pro-home">🏠 대시보드</a>
-      <a data-go="pro-inbox">📥 요청 인박스 <span class="pronav__n">4</span></a>
-      <a data-go="pro-quote">📝 견적 작성</a>
-      <a data-go="pro-film">📷 필모그래피</a>
-      <a data-go="pro-grade">🏅 신용등급</a>
-      <a data-go="pro-store">📦 자재 구매</a>
-      <a class="on" data-go="pro-settle">💳 정산</a>
+      <a data-go="pro-home"><svg class="ic"><use href="#tb-home"/></svg> 대시보드</a>
+      <a data-go="pro-inbox"><svg class="ic"><use href="#tb-inbox"/></svg> 요청 인박스 <span class="pronav__n">4</span></a>
+      <a data-go="pro-quote"><svg class="ic"><use href="#tb-file-pencil"/></svg> 견적 작성</a>
+      <a data-go="pro-film"><svg class="ic"><use href="#tb-camera"/></svg> 필모그래피</a>
+      <a data-go="pro-grade"><svg class="ic"><use href="#tb-medal"/></svg> 신용등급</a>
+      <a data-go="pro-store"><svg class="ic"><use href="#tb-package"/></svg> 자재 구매</a>
+      <a class="on" data-go="pro-settle"><svg class="ic"><use href="#tb-credit-card"/></svg> 정산</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <h1 class="t-h24" style="margin:0 0 4px">정산</h1>
@@ -3634,14 +3768,14 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a class="on" data-go="mgr-home">🏢 단지 현황</a>
-      <a data-go="mgr-map">🗺 디지털 이력 지도</a>
-      <a data-go="mgr-report">🎥 오염도 리포트</a>
-      <a data-go="mgr-contract">📅 정기 세정 계약</a>
-      <a data-go="mgr-bid">📋 입찰 대응</a>
-      <a data-go="mgr-brief">📊 입대의 보고자료</a>
+      <a class="on" data-go="mgr-home"><svg class="ic"><use href="#tb-building"/></svg> 단지 현황</a>
+      <a data-go="mgr-map"><svg class="ic"><use href="#tb-map-2"/></svg> 디지털 이력 지도</a>
+      <a data-go="mgr-report"><svg class="ic"><use href="#tb-video"/></svg> 오염도 리포트</a>
+      <a data-go="mgr-contract"><svg class="ic"><use href="#tb-calendar-event"/></svg> 정기 세정 계약</a>
+      <a data-go="mgr-bid"><svg class="ic"><use href="#tb-clipboard-list"/></svg> 입찰 대응</a>
+      <a data-go="mgr-brief"><svg class="ic"><use href="#tb-chart-bar"/></svg> 입대의 보고자료</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
@@ -3748,14 +3882,14 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="mgr-home">🏢 단지 현황</a>
-      <a class="on" data-go="mgr-map">🗺 디지털 이력 지도</a>
-      <a data-go="mgr-report">🎥 오염도 리포트</a>
-      <a data-go="mgr-contract">📅 정기 세정 계약</a>
-      <a data-go="mgr-bid">📋 입찰 대응</a>
-      <a data-go="mgr-brief">📊 입대의 보고자료</a>
+      <a data-go="mgr-home"><svg class="ic"><use href="#tb-building"/></svg> 단지 현황</a>
+      <a class="on" data-go="mgr-map"><svg class="ic"><use href="#tb-map-2"/></svg> 디지털 이력 지도</a>
+      <a data-go="mgr-report"><svg class="ic"><use href="#tb-video"/></svg> 오염도 리포트</a>
+      <a data-go="mgr-contract"><svg class="ic"><use href="#tb-calendar-event"/></svg> 정기 세정 계약</a>
+      <a data-go="mgr-bid"><svg class="ic"><use href="#tb-clipboard-list"/></svg> 입찰 대응</a>
+      <a data-go="mgr-brief"><svg class="ic"><use href="#tb-chart-bar"/></svg> 입대의 보고자료</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <div class="row between" style="margin-bottom:16px;align-items:flex-start">
@@ -3841,14 +3975,14 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="mgr-home">🏢 단지 현황</a>
-      <a data-go="mgr-map">🗺 디지털 이력 지도</a>
-      <a class="on" data-go="mgr-report">🎥 오염도 리포트</a>
-      <a data-go="mgr-contract">📅 정기 세정 계약</a>
-      <a data-go="mgr-bid">📋 입찰 대응</a>
-      <a data-go="mgr-brief">📊 입대의 보고자료</a>
+      <a data-go="mgr-home"><svg class="ic"><use href="#tb-building"/></svg> 단지 현황</a>
+      <a data-go="mgr-map"><svg class="ic"><use href="#tb-map-2"/></svg> 디지털 이력 지도</a>
+      <a class="on" data-go="mgr-report"><svg class="ic"><use href="#tb-video"/></svg> 오염도 리포트</a>
+      <a data-go="mgr-contract"><svg class="ic"><use href="#tb-calendar-event"/></svg> 정기 세정 계약</a>
+      <a data-go="mgr-bid"><svg class="ic"><use href="#tb-clipboard-list"/></svg> 입찰 대응</a>
+      <a data-go="mgr-brief"><svg class="ic"><use href="#tb-chart-bar"/></svg> 입대의 보고자료</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <h1 class="t-h24" style="margin:0 0 4px">오염도 리포트 — 103동 오수관</h1>
@@ -3947,14 +4081,14 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="mgr-home">🏢 단지 현황</a>
-      <a data-go="mgr-map">🗺 디지털 이력 지도</a>
-      <a data-go="mgr-report">🎥 오염도 리포트</a>
-      <a class="on" data-go="mgr-contract">📅 정기 세정 계약</a>
-      <a data-go="mgr-bid">📋 입찰 대응</a>
-      <a data-go="mgr-brief">📊 입대의 보고자료</a>
+      <a data-go="mgr-home"><svg class="ic"><use href="#tb-building"/></svg> 단지 현황</a>
+      <a data-go="mgr-map"><svg class="ic"><use href="#tb-map-2"/></svg> 디지털 이력 지도</a>
+      <a data-go="mgr-report"><svg class="ic"><use href="#tb-video"/></svg> 오염도 리포트</a>
+      <a class="on" data-go="mgr-contract"><svg class="ic"><use href="#tb-calendar-event"/></svg> 정기 세정 계약</a>
+      <a data-go="mgr-bid"><svg class="ic"><use href="#tb-clipboard-list"/></svg> 입찰 대응</a>
+      <a data-go="mgr-brief"><svg class="ic"><use href="#tb-chart-bar"/></svg> 입대의 보고자료</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <h1 class="t-h24" style="margin:0 0 4px">정기 세정 계약</h1>
@@ -4047,14 +4181,14 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="mgr-home">🏢 단지 현황</a>
-      <a data-go="mgr-map">🗺 디지털 이력 지도</a>
-      <a data-go="mgr-report">🎥 오염도 리포트</a>
-      <a data-go="mgr-contract">📅 정기 세정 계약</a>
-      <a class="on" data-go="mgr-bid">📋 입찰 대응</a>
-      <a data-go="mgr-brief">📊 입대의 보고자료</a>
+      <a data-go="mgr-home"><svg class="ic"><use href="#tb-building"/></svg> 단지 현황</a>
+      <a data-go="mgr-map"><svg class="ic"><use href="#tb-map-2"/></svg> 디지털 이력 지도</a>
+      <a data-go="mgr-report"><svg class="ic"><use href="#tb-video"/></svg> 오염도 리포트</a>
+      <a data-go="mgr-contract"><svg class="ic"><use href="#tb-calendar-event"/></svg> 정기 세정 계약</a>
+      <a class="on" data-go="mgr-bid"><svg class="ic"><use href="#tb-clipboard-list"/></svg> 입찰 대응</a>
+      <a data-go="mgr-brief"><svg class="ic"><use href="#tb-chart-bar"/></svg> 입대의 보고자료</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <h1 class="t-h24" style="margin:0 0 4px">입찰 대응 도구</h1>
@@ -4064,7 +4198,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
       <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start">
         <div>
           <div class="callout info" style="margin-bottom:16px">
-            <span class="c-inf" style="flex:0 0 20px">⚖️</span>
+            <span class="c-inf" style="flex:0 0 20px"><svg class="ic"><use href="#tb-scale"/></svg></span>
             <div><p class="t-b14 fw6" style="margin:0 0 2px">이번 건은 경쟁입찰 대상입니다</p>
               <p class="t-b14 c-sec" style="margin:0">21개동 입상관 일괄 세정 · 예정가격 <b class="num">2,940만원</b> —
                 「주택관리업자 및 사업자 선정지침」에 따라 K-apt 전자입찰을 거쳐야 합니다.</p></div>
@@ -4075,25 +4209,25 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
             <p class="block__d">단지 이력과 오염도 데이터를 근거로 채워집니다. 내려받아 수정한 뒤 K-apt에 올리세요.</p>
             <div class="col gap8" style="margin-top:14px">
               <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
-                <span style="font-size:20px">📄</span>
+                <span style="font-size:20px"><svg class="ic"><use href="#tb-file-text"/></svg></span>
                 <div style="flex:1"><div class="t-b14 fw7">입찰공고문 · 과업 사양서 (표준안)</div>
                   <div class="t-b12 c-sec">세정 범위·공법·검수 기준·하자보증 조건 — K-apt 게시용 12페이지</div></div>
                 <span class="verified">✓ 생성 완료</span>
                 <button class="btn small outlined" data-toast="데모에서는 다운로드가 생략됩니다">내려받기</button></div>
               <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
-                <span style="font-size:20px">📊</span>
+                <span style="font-size:20px"><svg class="ic"><use href="#tb-chart-bar"/></svg></span>
                 <div style="flex:1"><div class="t-b14 fw7">입찰가격 상한 산출 근거</div>
                   <div class="t-b12 c-sec">동일 규모 단지 42건의 실제 계약금액 분포 · 공고문에 상한 명시 시 첨부</div></div>
                 <span class="verified">✓ 생성 완료</span>
                 <button class="btn small outlined" data-toast="데모에서는 다운로드가 생략됩니다">내려받기</button></div>
               <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
-                <span style="font-size:20px">📋</span>
+                <span style="font-size:20px"><svg class="ic"><use href="#tb-clipboard-list"/></svg></span>
                 <div style="flex:1"><div class="t-b14 fw7">적격심사 평가표</div>
                   <div class="t-b12 c-sec">선정지침 [별표 6] 용역 사업자 표준평가표 기준 · 배점 자동 반영</div></div>
                 <span class="verified">✓ 생성 완료</span>
                 <button class="btn small outlined" data-toast="데모에서는 다운로드가 생략됩니다">내려받기</button></div>
               <div class="jobrow" style="background:#fff;box-shadow:0 0 0 1px var(--sg-border-subtle) inset">
-                <span style="font-size:20px">🗂</span>
+                <span style="font-size:20px"><svg class="ic"><use href="#tb-folder"/></svg></span>
                 <div style="flex:1"><div class="t-b14 fw7">현장설명회 자료</div>
                   <div class="t-b12 c-sec">이력 지도 · 오염도 리포트 발췌본</div></div>
                 <span class="badge b-orange">생성중</span>
@@ -4183,14 +4317,14 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="mgr-home">🏢 단지 현황</a>
-      <a data-go="mgr-map">🗺 디지털 이력 지도</a>
-      <a data-go="mgr-report">🎥 오염도 리포트</a>
-      <a data-go="mgr-contract">📅 정기 세정 계약</a>
-      <a data-go="mgr-bid">📋 입찰 대응</a>
-      <a class="on" data-go="mgr-brief">📊 입대의 보고자료</a>
+      <a data-go="mgr-home"><svg class="ic"><use href="#tb-building"/></svg> 단지 현황</a>
+      <a data-go="mgr-map"><svg class="ic"><use href="#tb-map-2"/></svg> 디지털 이력 지도</a>
+      <a data-go="mgr-report"><svg class="ic"><use href="#tb-video"/></svg> 오염도 리포트</a>
+      <a data-go="mgr-contract"><svg class="ic"><use href="#tb-calendar-event"/></svg> 정기 세정 계약</a>
+      <a data-go="mgr-bid"><svg class="ic"><use href="#tb-clipboard-list"/></svg> 입찰 대응</a>
+      <a class="on" data-go="mgr-brief"><svg class="ic"><use href="#tb-chart-bar"/></svg> 입대의 보고자료</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
@@ -4309,12 +4443,12 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a class="on" data-go="ins-home">📥 청구 심사</a>
-      <a data-go="ins-case">📄 사실자료 상세</a>
-      <a data-go="ins-analytics">📈 손해율 대시보드</a>
-      <a data-go="ins-campaign">🎟 예방 캠페인</a>
+      <a class="on" data-go="ins-home"><svg class="ic"><use href="#tb-inbox"/></svg> 청구 심사</a>
+      <a data-go="ins-case"><svg class="ic"><use href="#tb-file-text"/></svg> 사실자료 상세</a>
+      <a data-go="ins-analytics"><svg class="ic"><use href="#tb-chart-line"/></svg> 손해율 대시보드</a>
+      <a data-go="ins-campaign"><svg class="ic"><use href="#tb-ticket"/></svg> 예방 캠페인</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
@@ -4432,12 +4566,12 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="ins-home">📥 청구 심사</a>
-      <a class="on" data-go="ins-case">📄 사실자료 상세</a>
-      <a data-go="ins-analytics">📈 손해율 대시보드</a>
-      <a data-go="ins-campaign">🎟 예방 캠페인</a>
+      <a data-go="ins-home"><svg class="ic"><use href="#tb-inbox"/></svg> 청구 심사</a>
+      <a class="on" data-go="ins-case"><svg class="ic"><use href="#tb-file-text"/></svg> 사실자료 상세</a>
+      <a data-go="ins-analytics"><svg class="ic"><use href="#tb-chart-line"/></svg> 손해율 대시보드</a>
+      <a data-go="ins-campaign"><svg class="ic"><use href="#tb-ticket"/></svg> 예방 캠페인</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <div class="crumb" style="margin-bottom:6px"><a data-go="ins-home">청구 심사</a><span>›</span><b>2026-114-88213</b></div>
@@ -4570,12 +4704,12 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="ins-home">📥 청구 심사</a>
-      <a data-go="ins-case">📄 사실자료 상세</a>
-      <a class="on" data-go="ins-analytics">📈 손해율 대시보드</a>
-      <a data-go="ins-campaign">🎟 예방 캠페인</a>
+      <a data-go="ins-home"><svg class="ic"><use href="#tb-inbox"/></svg> 청구 심사</a>
+      <a data-go="ins-case"><svg class="ic"><use href="#tb-file-text"/></svg> 사실자료 상세</a>
+      <a class="on" data-go="ins-analytics"><svg class="ic"><use href="#tb-chart-line"/></svg> 손해율 대시보드</a>
+      <a data-go="ins-campaign"><svg class="ic"><use href="#tb-ticket"/></svg> 예방 캠페인</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
@@ -4694,12 +4828,12 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
   </div></header>
   <div class="prowrap">
     <nav class="pronav">
-      <a data-go="ins-home">📥 청구 심사</a>
-      <a data-go="ins-case">📄 사실자료 상세</a>
-      <a data-go="ins-analytics">📈 손해율 대시보드</a>
-      <a class="on" data-go="ins-campaign">🎟 예방 캠페인</a>
+      <a data-go="ins-home"><svg class="ic"><use href="#tb-inbox"/></svg> 청구 심사</a>
+      <a data-go="ins-case"><svg class="ic"><use href="#tb-file-text"/></svg> 사실자료 상세</a>
+      <a data-go="ins-analytics"><svg class="ic"><use href="#tb-chart-line"/></svg> 손해율 대시보드</a>
+      <a class="on" data-go="ins-campaign"><svg class="ic"><use href="#tb-ticket"/></svg> 예방 캠페인</a>
       <hr class="hair" style="margin:12px 8px">
-      <a data-go="home">↩ 고객 화면으로</a>
+      <a data-go="home"><svg class="ic"><use href="#tb-arrow-back-up"/></svg> 고객 화면으로</a>
     </nav>
     <div class="probody">
       <div class="row between" style="margin-bottom:20px;align-items:flex-start">
@@ -4761,7 +4895,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
           <h3 class="panel__t">진행 중인 캠페인</h3>
           <div class="col gap12" style="margin-top:14px">
             <div class="jobrow" style="align-items:flex-start">
-              <span style="font-size:22px">🚿</span>
+              <span style="font-size:22px"><svg class="ic"><use href="#tb-droplets"/></svg></span>
               <div style="flex:1">
                 <div class="row gap4" style="margin-bottom:4px">
                   <span class="t-b14 fw7">노후 단지 배관 클리닝 50% 지원</span>
@@ -4776,7 +4910,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
               <button class="btn small outlined">리포트</button></div>
 
             <div class="jobrow" style="align-items:flex-start">
-              <span style="font-size:22px">🔍</span>
+              <span style="font-size:22px"><svg class="ic"><use href="#tb-zoom-scan"/></svg></span>
               <div style="flex:1">
                 <div class="row gap4" style="margin-bottom:4px">
                   <span class="t-b14 fw7">재청구 이력 가입자 무료 점검</span>
@@ -4791,7 +4925,7 @@ h1,h2,.t-h24,.t-h20{letter-spacing:-0.02em}
               <button class="btn small outlined">리포트</button></div>
 
             <div class="jobrow" style="align-items:flex-start;opacity:.6">
-              <span style="font-size:22px">🌀</span>
+              <span style="font-size:22px"><svg class="ic"><use href="#tb-spray"/></svg></span>
               <div style="flex:1">
                 <div class="row gap4" style="margin-bottom:4px">
                   <span class="t-b14 fw7">상가 그리스트랩 정기 관리 제휴</span>
