@@ -2,7 +2,7 @@
 // DB 모드: bookings 행 생성 / 알림: notify 계층 (Solapi 키 있으면 실발송)
 // 실제 구현 시: PG 결제창 → 에스크로 예치 → 예약 확정 · 사업자 알림.
 import { NextResponse } from 'next/server';
-import { fetchQuotes, insertBooking } from '../../../lib/db';
+import { fetchQuotes, insertBooking, fetchLatestBooking, updateBookingStatus, type BookingStatus } from '../../../lib/db';
 import { currentUser } from '../../../lib/auth';
 import { notify } from '../../../lib/notify';
 
@@ -36,4 +36,22 @@ export async function POST(req: Request) {
       escrow: true,
     },
   });
+}
+
+
+// GET /api/bookings — 최신 예약 상태 (소비자 추적·사업자 대시보드 공유, E1-4)
+export async function GET() {
+  const booking = await fetchLatestBooking();
+  return NextResponse.json({ ok: true, booking });
+}
+
+// PATCH /api/bookings — 시공 상태 전이 (사업자 화면에서 호출, E1-4)
+// 허용 전이: escrow → in_progress → await_approval → paid_out
+export async function PATCH(req: Request) {
+  const body = await req.json().catch(() => ({}));
+  const id = typeof body.id === 'string' ? body.id : '';
+  const to = typeof body.status === 'string' ? (body.status as BookingStatus) : null;
+  if (!id || !to) return NextResponse.json({ ok: false, error: 'id · status 는 필수입니다.' }, { status: 400 });
+  const result = await updateBookingStatus(id, to);
+  return NextResponse.json(result, { status: result.ok ? 200 : 409 });
 }

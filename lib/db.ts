@@ -28,11 +28,23 @@ export function supabase(): SupabaseClient {
 type MockStore = {
   requests: LiveRequest[];
   quotes: Quote[];
+  bookings: LiveBooking[];
 };
 const g = globalThis as unknown as { __seolbigoMock?: MockStore };
 function mockStore(): MockStore {
-  if (!g.__seolbigoMock) g.__seolbigoMock = { requests: [], quotes: [] };
+  if (!g.__seolbigoMock) g.__seolbigoMock = { requests: [], quotes: [], bookings: [] };
   return g.__seolbigoMock;
+}
+
+// 예약 상태 실전이 (E1-4) — 사업자·소비자 화면이 공유
+export type BookingStatus = 'escrow' | 'in_progress' | 'await_approval' | 'paid_out' | 'refunded' | 'cancelled';
+export interface LiveBooking {
+  id: string;
+  status: BookingStatus;
+  day: string;
+  time: string;
+  amountWon: number;
+  createdAt: string;
 }
 
 // 소비자 요청 → 사업자 인박스로 흐르는 실요청 (E1-1)
@@ -138,7 +150,13 @@ async function insertDiagnosis(requestId: string) {
 }
 
 export async function insertBooking(b: { quoteId: string; day: string; time: string; method: string; amountWon: number; userId?: string }) {
-  if (!hasSupabase) return { id: 'B-2611-0342' };
+  if (!hasSupabase) {
+    const st = mockStore();
+    const id = 'B-' + Date.now().toString(36).toUpperCase();
+    st.bookings.unshift({ id, status: 'escrow', day: b.day, time: b.time,
+      amountWon: b.amountWon, createdAt: new Date().toISOString() });
+    return { id };
+  }
   try {
     const { data } = await supabase().from('bookings')
       .insert({ quote_id: b.quoteId, visit_day: b.day, visit_time: b.time, method: b.method,
@@ -224,9 +242,10 @@ export async function insertQuote(q: {
   requestId?: string; priceWon: number; note?: string;
   lineItems?: { name: string; won: number }[];
 }): Promise<{ ok: boolean; id?: string }> {
-  const FAIR_MIN = DEMO_DIAGNOSIS.fairMin * 10_000, FAIR_MAX = DEMO_DIAGNOSIS.fairMax * 10_000;
+  const FAIR_MAX = DEMO_DIAGNOSIS.fairMax * 10_000;
   const warning = q.priceWon > FAIR_MAX
-    ? `적정 구간(${DEMO_DIAGNOSIS.fairMin}~${DEMO_DIAGNOSIS.fairMax}만원)을 웃도는 금액입니다. 포함 공정을 확인하세요.`
+    ? `적정 구간(${DEMO_DIAGNOSIS.fairMin}~${DEMO_DIAGNOSIS.fairMax}만원)을 웃도는 금액입니다.` +
+      (q.note?.trim() ? ` 사업자 사유: ${q.note.trim()}` : ' 포함 공정을 확인하세요.')
     : undefined;
   if (!hasSupabase) {
     const st = mockStore();
@@ -265,5 +284,49 @@ export async function insertQuote(q: {
     if (error) return { ok: false };
     await sb.from('requests').update({ status: 'quoted' }).eq('id', requestId);
     return { ok: true, id: String(data?.id) };
+  } catch { return { ok: false }; }
+}
+
+
+/* ---------- E1-4 시공 상태 실전이 (2026-08-10) ---------- */
+
+const STATUS_FLOW: BookingStatus[] = ['escrow', 'in_progress', 'await_approval', 'paid_out'];
+
+export function nextBookingStatus(cur: BookingStatus): BookingStatus | null {
+  const i = STATUS_FLOW.indexOf(cur);
+  return i >= 0 && i < STATUS_FLOW.length - 1 ? STATUS_FLOW[i + 1] : null;
+}
+
+// 최신 예약 1건 — 사업자 대시보드·소비자 추적이 같은 원본을 봅니다
+export async function fetchLatestBooking(): Promise<LiveBooking | null> {
+  if (!hasSupabase) return mockStore().bookings[0] ?? null;
+  try {
+    const { data, error } = await supabase().from('bookings')
+      .select('id, status, visit_day, visit_time, amount_won, created_at')
+      .order('created_at', { ascending: false }).limit(1).single();
+    if (error || !data) return null;
+    return {
+      id: String(data.id), status: (data.status ?? 'escrow') as BookingStatus,
+      day: String(data.visit_day ?? ''), time: String(data.visit_time ?? ''),
+      amountWon: Number(data.amount_won ?? 0), createdAt: String(data.created_at ?? ''),
+    };
+  } catch { return null; }
+}
+
+// 상태 전이 — 정해진 순서(escrow→in_progress→await_approval→paid_out)만 허용
+export async function updateBookingStatus(id: string, to: BookingStatus): Promise<{ ok: boolean; status?: BookingStatus }> {
+  if (!hasSupabase) {
+    const b = mockStore().bookings.find(x => x.id === id);
+    if (!b || nextBookingStatus(b.status) !== to) return { ok: false };
+    b.status = to;
+    return { ok: true, status: to };
+  }
+  try {
+    const sb = supabase();
+    const { data: cur } = await sb.from('bookings').select('status').eq('id', id).single();
+    if (!cur || nextBookingStatus((cur.status ?? 'escrow') as BookingStatus) !== to) return { ok: false };
+    const { error } = await sb.from('bookings').update({ status: to }).eq('id', id);
+    if (error) return { ok: false };
+    return { ok: true, status: to };
   } catch { return { ok: false }; }
 }

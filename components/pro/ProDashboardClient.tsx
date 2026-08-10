@@ -7,9 +7,38 @@ import { useRouter } from 'next/navigation';
 import { GO_ROUTES } from '../../lib/routes';
 import { toast } from '../../lib/toast';
 import { PRO_KPIS, TODAY_JOBS, DASH_REQUESTS, DASH_WEEK_SETTLE } from '../../lib/pro-data';
+import type { LiveBooking, BookingStatus } from '../../lib/db';
 
-export default function ProDashboardClient() {
+// E1-4: 상태별 표기·다음 액션
+const STATUS_UI: Record<string, { label: string; badge: string; action?: { to: BookingStatus; label: string; toast: string } }> = {
+  escrow: { label: '예약 확정 · 에스크로 예치', badge: 'b-gline',
+    action: { to: 'in_progress', label: '시공 시작', toast: '시공을 시작했습니다 · 고객 추적 화면에 반영됩니다' } },
+  in_progress: { label: '시공중', badge: 'b-orange',
+    action: { to: 'await_approval', label: '시공 완료 · 승인 요청', toast: '완료를 보고했습니다 · 고객 확인을 기다립니다' } },
+  await_approval: { label: '고객 확인 대기', badge: 'b-blue' },
+  paid_out: { label: '정산 완료', badge: 'b-green' },
+  refunded: { label: '환불됨', badge: 'b-gray' },
+  cancelled: { label: '취소됨', badge: 'b-gray' },
+};
+
+export default function ProDashboardClient({ liveBooking = null }: { liveBooking?: LiveBooking | null }) {
   const router = useRouter();
+  const [moving, setMoving] = useState(false);
+
+  // E1-4: 상태 전이 → PATCH /api/bookings → 서버 컴포넌트 새로고침
+  const advance = async (b: LiveBooking, to: BookingStatus, doneToast: string) => {
+    if (moving) return;
+    setMoving(true);
+    try {
+      const res = await fetch('/api/bookings', {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: b.id, status: to }),
+      });
+      const out = await res.json().catch(() => ({ ok: false }));
+      if (out.ok) { toast(doneToast); router.refresh(); }
+      else toast('상태 변경에 실패했습니다 · 새로고침 후 다시 시도해주세요');
+    } finally { setMoving(false); }
+  };
   // 수락 완료된 요청 id 집합 (done 상태 전이)
   const [accepted, setAccepted] = useState<Set<string>>(() => new Set());
 
@@ -43,6 +72,21 @@ export default function ProDashboardClient() {
               <h3 className="panel__t" style={{ margin: "0" }}>오늘 일정</h3>
               <span className="t-b12 c-sec">2026.11.19 (수)</span></div>
             <div className="col gap8">
+              {liveBooking && (() => { const ui = STATUS_UI[liveBooking.status] ?? STATUS_UI.escrow; return (
+                <div className="jobrow" style={{ boxShadow: '0 0 0 2px var(--sg-brand-primary) inset', borderRadius: 10 }}>
+                  <span className="badge b-brands">{liveBooking.time || '시간 협의'}</span>
+                  <div style={{ flex: "1" }}>
+                    <div className="t-b14 fw7">실예약 · 배관 이음부 보수 <span className="badge b-brand b12" style={{ marginLeft: 4 }}>실시간</span></div>
+                    <div className="t-b12 c-sec">{liveBooking.day || '일정 협의'} · {liveBooking.amountWon.toLocaleString()}원 · 에스크로</div>
+                  </div>
+                  <span className={'badge ' + ui.badge}>{ui.label}</span>
+                  {ui.action && (
+                    <button className="btn small primary" disabled={moving} style={{ marginLeft: 8 }}
+                      onClick={() => advance(liveBooking, ui.action!.to, ui.action!.toast)}>
+                      {moving ? '처리 중…' : ui.action.label}</button>
+                  )}
+                </div>
+              ); })()}
               {TODAY_JOBS.map(j => (
                 <div key={j.time} className="jobrow">
                   <span className={'badge ' + j.timeBadge}>{j.time}</span>
