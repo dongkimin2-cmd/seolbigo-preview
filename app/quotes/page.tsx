@@ -81,7 +81,7 @@ export default async function Page() {
                   left: ((D.fairMin - D.priceMin) / span * 100).toFixed(1) + '%',
                   right: ((D.priceMax - D.fairMax) / span * 100).toFixed(1) + '%' }} />
                 {sorted.map((q, i) => (
-                  <div key={q.id} className="range__mark" style={{ left: pctOf(q.priceWon), background: MARK_COLORS[i] }} />
+                  <div key={q.id} className="range__mark" style={{ left: pctOf(q.priceWon), background: MARK_COLORS[i % MARK_COLORS.length] }} />
                 ))}
               </div>
               <div className="range__lbl">
@@ -93,7 +93,7 @@ export default async function Page() {
             <div className="row gap16" style={{ marginTop: 16, flexWrap: 'wrap' }}>
               {sorted.map((q, i) => (
                 <span key={q.id} className="t-b14 c-sec">
-                  <i style={{ display: 'inline-block', width: 9, height: 9, borderRadius: 2, background: MARK_COLORS[i], marginRight: 6 }} />
+                  <i style={{ display: 'inline-block', width: 9, height: 9, borderRadius: 2, background: MARK_COLORS[i % MARK_COLORS.length], marginRight: 6 }} />
                   {q.proName} {Math.round(q.priceWon / 10_000)}만원
                 </span>
               ))}

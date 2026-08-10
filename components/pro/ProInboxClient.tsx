@@ -9,8 +9,18 @@ import {
   INBOX_FILTERS, INBOX_REQUESTS, INBOX_SORTS,
   type InboxFilterId, type InboxSort,
 } from '../../lib/pro-data';
+import type { LiveRequest } from '../../lib/db';
 
-export default function ProInboxClient() {
+// 실요청 경과 시간 표기
+function ago(iso: string) {
+  const m = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60_000));
+  if (m < 1) return '방금 전';
+  if (m < 60) return `${m}분 전`;
+  const h = Math.round(m / 60);
+  return h < 24 ? `${h}시간 전` : `${Math.round(h / 24)}일 전`;
+}
+
+export default function ProInboxClient({ live = [] }: { live?: LiveRequest[] }) {
   const router = useRouter();
   const [filter, setFilter] = useState<InboxFilterId>('all');
   const [sort, setSort] = useState<InboxSort>('마감 임박순');
@@ -49,6 +59,35 @@ export default function ProInboxClient() {
       </div>
 
       <div className="col gap12">
+        {live.map(r => (
+          <div key={r.id} className="panel" style={{ padding: 20, boxShadow: '0 0 0 2px var(--sg-brand-primary) inset' }}>
+            <div className="row between" style={{ marginBottom: 12 }}>
+              <div className="row gap4">
+                <span className="badge b-brands">실시간 접수</span>
+                {r.status === 'quoted' && <span className="badge b-green">내 견적 제출됨</span>}
+              </div>
+              <span className="t-b12 c-sec">{ago(r.createdAt)}</span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "120px minmax(0,1fr) 200px", gap: 18, alignItems: "start" }}>
+              <div className="ph wet" style={{ aspectRatio: "1/1", borderRadius: 10 }} />
+              <div>
+                <div className="t-h18" style={{ marginBottom: 4 }}>
+                  {(r.symptoms[0] ?? '누수 의심')} — AI 진단 완료</div>
+                <div className="t-b14 c-sec" style={{ marginBottom: 10 }}>{r.address || '주소 미입력'}</div>
+                <div className="row gap6" style={{ flexWrap: "wrap" }}>
+                  {r.symptoms.map(t => <span key={t} className="badge b-gline">{t}</span>)}
+                </div>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <div className="t-b12 c-sec">플랫폼 기준가</div>
+                <div className="t-h20 num" style={{ marginBottom: 2 }}>32~58만원</div>
+                <div className="t-b12 c-sec" style={{ marginBottom: 12 }}>제출된 견적 {r.quoteCount}건</div>
+                <button className="btn medium primary block"
+                  onClick={() => router.push(GO_ROUTES['pro-quote'] + '?req=' + encodeURIComponent(r.id))}>견적 작성</button>
+              </div>
+            </div>
+          </div>
+        ))}
         {list.map(r => {
           const done = accepted.has(r.id);
           return (

@@ -22,10 +22,33 @@ export function supabase(): SupabaseClient {
   return client;
 }
 
+/* ---------- mock 인메모리 스토어 (키 없는 데모 모드 전용) ----------
+   next start 단일 프로세스에서만 유지됩니다. 서버리스(Vercel)에서는 인스턴스별로 초기화되므로
+   실플로우 검증은 DB 모드에서 하세요. HMR 을 견디도록 globalThis 에 보관. */
+type MockStore = {
+  requests: LiveRequest[];
+  quotes: Quote[];
+};
+const g = globalThis as unknown as { __seolbigoMock?: MockStore };
+function mockStore(): MockStore {
+  if (!g.__seolbigoMock) g.__seolbigoMock = { requests: [], quotes: [] };
+  return g.__seolbigoMock;
+}
+
+// 소비자 요청 → 사업자 인박스로 흐르는 실요청 (E1-1)
+export interface LiveRequest {
+  id: string;
+  symptoms: string[];
+  address: string;
+  createdAt: string;   // ISO
+  status: string;
+  quoteCount: number;  // 이 요청에 제출된 견적 수
+}
+
 /* ---------- 조회 ---------- */
 
 export async function fetchQuotes(): Promise<Quote[]> {
-  if (!hasSupabase) return DEMO_QUOTES;
+  if (!hasSupabase) return [...mockStore().quotes, ...DEMO_QUOTES];
   try {
     const { data, error } = await supabase()
       .from('quotes')
@@ -80,7 +103,13 @@ export async function fetchSimilarCases(): Promise<SimilarCase[]> {
 /* ---------- 쓰기 (mock 모드에서는 no-op) ---------- */
 
 export async function insertRequest(input: { symptoms: string[]; address: string }) {
-  if (!hasSupabase) return { id: 'mock-request' };
+  if (!hasSupabase) {
+    const st = mockStore();
+    const id = 'R-' + Date.now().toString(36).toUpperCase();
+    st.requests.unshift({ id, symptoms: input.symptoms, address: input.address,
+      createdAt: new Date().toISOString(), status: 'diagnosed', quoteCount: 0 });
+    return { id };
+  }
   try {
     const { data } = await supabase().from('requests')
       .insert({ symptoms: input.symptoms, address: input.address, service_id: 'leak-repair' })
@@ -166,3 +195,75 @@ export async function joinGroupbuy(): Promise<number> {
 /* ---------- 참고 ---------- */
 // services 카탈로그는 정적 성격이 강해 당분간 SERVICES(코드) 유지 — DB 이관 시 이 함수만 추가
 export function fetchServices() { return SERVICES; }
+
+
+/* ---------- E1 양방향 실플로우 (2026-08-10) ---------- */
+
+// E1-1: 열린 요청 목록 — 사업자 인박스가 서버에서 조회
+export async function fetchOpenRequests(): Promise<LiveRequest[]> {
+  if (!hasSupabase) return mockStore().requests;
+  try {
+    const { data, error } = await supabase().from('requests')
+      .select('id, symptoms, address, status, created_at, quotes(id)')
+      .in('status', ['submitted', 'analyzing', 'diagnosed', 'quoted'])
+      .order('created_at', { ascending: false }).limit(20);
+    if (error || !data) return [];
+    return data.map((r: Record<string, unknown>) => ({
+      id: String(r.id),
+      symptoms: (r.symptoms ?? []) as string[],
+      address: String(r.address ?? ''),
+      createdAt: String(r.created_at ?? ''),
+      status: String(r.status ?? 'submitted'),
+      quoteCount: Array.isArray(r.quotes) ? r.quotes.length : 0,
+    }));
+  } catch { return []; }
+}
+
+// E1-2: 사업자 견적 제출 — quotes 저장 (소비자 /quotes 비교 목록에 반영)
+export async function insertQuote(q: {
+  requestId?: string; priceWon: number; note?: string;
+  lineItems?: { name: string; won: number }[];
+}): Promise<{ ok: boolean; id?: string }> {
+  const FAIR_MIN = DEMO_DIAGNOSIS.fairMin * 10_000, FAIR_MAX = DEMO_DIAGNOSIS.fairMax * 10_000;
+  const warning = q.priceWon > FAIR_MAX
+    ? `적정 구간(${DEMO_DIAGNOSIS.fairMin}~${DEMO_DIAGNOSIS.fairMax}만원)을 웃도는 금액입니다. 포함 공정을 확인하세요.`
+    : undefined;
+  if (!hasSupabase) {
+    const st = mockStore();
+    const id = 'Q-' + Date.now().toString(36).toUpperCase();
+    st.quotes.unshift({
+      id, proId: 'pro-live', proName: '깨끗한집설비', initial: '깨',
+      rating: 4.9, reviews: 128, filmCount: 84, redoRate: 1.2, responseTime: '9분',
+      priceWon: q.priceWon,
+      lineItems: q.lineItems ?? [{ name: '견적 금액', won: q.priceWon }],
+      badges: [{ label: '방금 도착', tone: 'blue' }, { label: '사업자 직접 입력', tone: 'gline' }],
+      recommended: false, warning,
+    });
+    const req = st.requests.find(r => r.id === q.requestId);
+    if (req) { req.quoteCount += 1; req.status = 'quoted'; }
+    return { ok: true, id };
+  }
+  try {
+    const sb = supabase();
+    // 요청 id 확보 — 전달받은 uuid 가 유효하지 않으면 최신 요청에 귀속
+    let requestId = q.requestId && /^[0-9a-f-]{36}$/i.test(q.requestId) ? q.requestId : null;
+    if (!requestId) {
+      const { data: latest } = await sb.from('requests').select('id')
+        .order('created_at', { ascending: false }).limit(1).single();
+      requestId = latest?.id ? String(latest.id) : null;
+    }
+    if (!requestId) return { ok: false };
+    // 데모 사업자(첫 pros 행)에 귀속 — 사업자 계정 연동(E2-1) 전까지의 규약
+    const { data: pro } = await sb.from('pros').select('id').limit(1).single();
+    if (!pro?.id) return { ok: false };
+    const { data, error } = await sb.from('quotes').insert({
+      request_id: requestId, pro_id: pro.id, price_won: q.priceWon,
+      line_items: q.lineItems ?? [{ name: '견적 금액', won: q.priceWon }],
+      badges: [{ label: '방금 도착', tone: 'blue' }, { label: '사업자 직접 입력', tone: 'gline' }],
+      recommended: false, warning: warning ?? null,
+    }).select('id').single();
+    if (error) return { ok: false };
+    await sb.from('requests').update({ status: 'quoted' }).eq('id', requestId);
+    return { ok: true, id: String(data?.id) };
+  } catch { return { ok: false }; }
+}

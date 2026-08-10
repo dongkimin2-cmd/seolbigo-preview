@@ -2,19 +2,45 @@
 // 견적 작성 클라이언트 — lib/pro-data 의 표준 공정 항목·현장 변수 목록을 렌더.
 // data-go → Link/router.push, data-toast → toast() 로 교체 (2026-08-04)
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { GO_ROUTES } from '../../lib/routes';
 import { toast } from '../../lib/toast';
 import { QUOTE_LINE_ITEMS, QUOTE_VARIATIONS } from '../../lib/pro-data';
 
 export default function ProQuoteClient() {
   const router = useRouter();
+  const requestId = useSearchParams().get('req') ?? undefined;
+  const [sending, setSending] = useState(false);
+
+  // E1-2: 견적 제출 — quotes 저장 후 소비자 /quotes 비교 목록에 나타납니다.
+  // 금액은 데모 구성(공정 합계 410,000원) 고정 — 항목 입력 실동작은 후속 과제.
+  const send = async () => {
+    if (sending) return;
+    setSending(true);
+    try {
+      const res = await fetch('/api/quotes', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          requestId, priceWon: 410_000,
+          lineItems: QUOTE_LINE_ITEMS.map(i => ({ name: i.name, won: Number(i.price.replace(/[^0-9]/g, '')) || 0 })),
+        }),
+      });
+      const out = await res.json().catch(() => ({ ok: false }));
+      if (out.ok) {
+        toast('견적을 보냈습니다 · 고객 견적 비교에 반영되었습니다');
+        router.push(GO_ROUTES['pro-inbox']);
+      } else {
+        toast('견적 전송에 실패했습니다 · 잠시 후 다시 시도해주세요');
+      }
+    } finally { setSending(false); }
+  };
 
   return (
     <div data-react>
       <div className="crumb" style={{ marginBottom: 6 }}><Link href={GO_ROUTES['pro-inbox']}>요청 인박스</Link><span>›</span><b>견적 작성</b></div>
       <h1 className="t-h24" style={{ margin: "0 0 4px" }}>안방 천장 누수 — 배관 이음부 추정</h1>
-      <p className="t-b14 c-sec" style={{ margin: "0 0 20px" }}>청솔 103동 1204호 · 준공 1999년 · 중앙난방 · 요청번호 Q-2611-0417</p>
+      <p className="t-b14 c-sec" style={{ margin: "0 0 20px" }}>청솔 103동 1204호 · 준공 1999년 · 중앙난방 · 요청번호 {requestId ?? 'Q-2611-0417'}</p>
 
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) 340px", gap: 16, alignItems: "start" }}>
         <div>
@@ -103,8 +129,8 @@ export default function ProQuoteClient() {
             <hr className="hair" style={{ margin: "0 0 14px" }} />
             <div className="row between" style={{ marginBottom: 16 }}>
               <span className="t-h16">예상 수령액</span><span className="t-h20 num c-brand">377,200원</span></div>
-            <button className="btn large primary block"
-              onClick={() => { toast('견적을 보냈습니다 · 고객이 열람하면 알림이 옵니다'); router.push(GO_ROUTES['pro-inbox']); }}>견적 보내기</button>
+            <button className="btn large primary block" disabled={sending}
+              onClick={send}>{sending ? '보내는 중…' : '견적 보내기'}</button>
             <button className="btn medium ghost block" style={{ marginTop: 8 }}
               onClick={() => toast('임시 저장되었습니다')}>임시 저장</button>
           </div>
